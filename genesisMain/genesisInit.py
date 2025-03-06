@@ -1,4 +1,5 @@
 import subprocess
+import time
 
 class bcolors:
     HEADER = '\033[95m'
@@ -11,24 +12,20 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# multihain Generation
+# multihain Generation ~ timer to wait for initialing daemon
 def genChain():
      print(bcolors.OKGREEN + "Generating MultiChain" + bcolors.OKGREEN)
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=6010", "-default-rpc-port=6011"]
-     return cmd
+     time.sleep(15)
+     subprocess.run(cmd())
 
 # multichain Daemon
 def demChain():
      print(bcolors.OKGREEN + "Init chain" + bcolors.OKGREEN)
      cmd = ["multichaind", "logChain", "-daemon"]
-     return cmd
+     subprocess.run(cmd())
 
 genesisCmds=[genChain, demChain]
 
-# commands = [genesisCmds]
-
-# # Run Commands
-# for cmd_group in commands:
 for cmd in genesisCmds:
-    print(bcolors.OKGREEN + f"Running {cmd.__name__}..." + bcolors.ENDC)
-    subprocess.run(cmd())
+    cmd()
