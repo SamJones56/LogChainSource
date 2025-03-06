@@ -24,7 +24,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     rm -rf multichain-2.3.3.tar.gz
 
 
-EXPOSE 6010-6019
+EXPOSE 6000-7000
 
 WORKDIR /multichain
 # Download genesisInit for MultiChain
