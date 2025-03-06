@@ -21,14 +21,19 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
 
+# Set working directory
 WORKDIR /app
 
-# Download geneisInit for multichain
+# Download genesisInit for MultiChain
 RUN git clone --depth=1 https://github.com/SamJones56/LogChainSource.git && \
     mv LogChainSource/genesisMain ./genesisMain && \
     rm -rf LogChainSource
 
+# Set working directory to genesisMain
 WORKDIR /app/genesisMain
+
+# run python
+RUN python3 genesisInit.py
 
 # Start chain
 RUN python3 genesisInit.py
