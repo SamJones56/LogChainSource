@@ -21,13 +21,16 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
 
+WORKDIR /app
+
 # Download geneisInit for multichain
 RUN git clone --depth=1 https://github.com/SamJones56/LogChainSource.git && \
     mv LogChainSource/genesisMain ./genesisMain && \
     rm -rf LogChainSource
+
+WORKDIR /app/genesisMain
 # Start chain
-RUN cd ./genesisMain && \
-    python3 geneisInit.py
+RUN python3 genesisInit.py
 
 # Expose ports
 EXPOSE 6010-6012
