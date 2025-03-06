@@ -11,6 +11,6 @@
          "--network", "Multichain-Network",
         "-v", "./node1:/root/.multichain",
         "-p", "6020:6020", "-p","6021:6021", "-p","6022:6022",
-        "multichain_node_image", "bash"
+        "multichain_genesis_image", "bash"
     ]
 }

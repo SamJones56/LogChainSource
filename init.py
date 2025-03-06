@@ -24,6 +24,12 @@ def remNodeLocal():
 remLocal = [remGenLocal, remNodeLocal]
 
 #### Create the docker network ####
+# Delete current network if exists
+def netDelete():
+    print(bcolors.WARNING + "Removing old netwokrs" + bcolors.WARNING)
+    cmd = ["docker", "network", "rm", "Multichain-Network"]
+    return cmd
+
 # Leave swarm node
 def swarmLeave():
     cmd=["docker", "swarm", "leave", "--force"]
@@ -32,12 +38,6 @@ def swarmLeave():
 # Define as a swarm node
 def swarmCreate():
     cmd = ["docker","swarm","init"]
-    return cmd
-
-# Delete current network if exists
-def netDelete():
-    print(bcolors.WARNING + "Removing old netwokrs" + bcolors.WARNING)
-    cmd = ["docker", "network", "rm", "Multichain-Network"]
     return cmd
 
 # Create new network
@@ -68,13 +68,13 @@ def genesisCreate():
     return cmd
 
 # Build New Docker Image
-def nodeCreate():
-    print(bcolors.OKBLUE + "Creating image" + bcolors.ENDC)
-    cmd = ["docker", "build", "-f", "./genesisMain/Docker", "-t", "multichain_node_image", "."]
-    return cmd
+# def nodeCreate():
+#     print(bcolors.OKBLUE + "Creating image" + bcolors.ENDC)
+#     cmd = ["docker", "build", "-f", "./genesisMain/Docker", "-t", "multichain_node_image", "."]
+#     return cmd
 
 # Image Generation Commands
-imageGen = [genDelete, nodeDelete,genesisCreate, nodeCreate]
+imageGen = [genDelete, nodeDelete,genesisCreate]
 
 #### Docker Container Setup ####
 # host count for ips
