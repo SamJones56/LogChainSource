@@ -12,6 +12,17 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+# Remove local directories
+def remGenLocal():
+    cmd=["rm", "-rf", "genesis"]
+    return cmd
+
+def remNodeLocal():
+    cmd=["rm", "-rf", "node1"]
+    return cmd
+
+remLocal = [remGenLocal, remNodeLocal]
+
 #### Create the docker network ####
 # Define as a swarm node
 def swarmCreate():
@@ -97,7 +108,7 @@ def node1Create():
 contGen = [contClear, genesisCreate, node1Create]
 
 
-commands = [netGen, imageGen, contGen]
+commands = [remLocal ,netGen, imageGen, contGen]
 
 # Run Commands
 for cmd_group in commands:

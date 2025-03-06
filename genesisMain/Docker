@@ -32,4 +32,4 @@ RUN chmod +x genesisInit.py
 
 # Set working directory to genesisMain
 # CMD ["python3", "genesisInit.py]
-RUN ["python3", "genesisInit.py"]
+CMD ["python3", "genesisInit.py"]
