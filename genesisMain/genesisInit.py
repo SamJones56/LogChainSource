@@ -16,14 +16,14 @@ class bcolors:
 def genChain():
      print(bcolors.OKGREEN + "Generating MultiChain" + bcolors.OKGREEN)
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=6010", "-default-rpc-port=6011"]
+     subprocess.run(cmd)
      time.sleep(15)
-     subprocess.run(cmd())
 
 # multichain Daemon
 def demChain():
      print(bcolors.OKGREEN + "Init chain" + bcolors.OKGREEN)
      cmd = ["multichaind", "logChain", "-daemon"]
-     subprocess.run(cmd())
+     subprocess.run(cmd)
 
 genesisCmds=[genChain, demChain]
 
