@@ -26,7 +26,7 @@ remLocal = [remGenLocal, remNodeLocal]
 #### Create the docker network ####
 # Leave swarm node
 def swarmLeave():
-    cmd=["docker", "swarm", "leave"]
+    cmd=["docker", "swarm", "leave", "--force"]
     return cmd
 
 # Define as a swarm node
