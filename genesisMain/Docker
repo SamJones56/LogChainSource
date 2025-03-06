@@ -25,17 +25,13 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 WORKDIR /app
 
 # Download genesisInit for MultiChain
-RUN git clone --depth=1 https://github.com/SamJones56/LogChainSource.git && \
-    mv LogChainSource/genesisMain ./genesisMain && \
-    rm -rf LogChainSource
+RUN mkdir -p /app/genesisMain && \
+    curl -o /app/genesisMain/genesisInit.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
 
 # Set working directory to genesisMain
 WORKDIR /app/genesisMain
 
 # run
-RUN python3 genesisInit.py
-
-# Start chain
 RUN python3 genesisInit.py
 
 # Expose ports
