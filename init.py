@@ -24,6 +24,11 @@ def remNodeLocal():
 remLocal = [remGenLocal, remNodeLocal]
 
 #### Create the docker network ####
+# Leave swarm node
+def swarmLeave():
+    cmd=["docker", "swarm", "leave"]
+    return cmd
+
 # Define as a swarm node
 def swarmCreate():
     cmd = ["docker","swarm","init"]
@@ -42,7 +47,7 @@ def netCreate():
     return cmd
 
 # Network Generation Commands
-netGen = [swarmCreate, netDelete, netCreate]
+netGen = [swarmLeave, swarmCreate, netDelete, netCreate]
 
 #### Docker Image Setup ####
 # Delete Old Image
@@ -89,7 +94,7 @@ def contClear():
 def genesisCreate():
     global hosts
     hosts += 1
-    print(bcolors.OKBLUE + "Creating Genesis: IP: 192.168.1.2, Ports - 6000,6001,6002" + bcolors.ENDC)
+    print(bcolors.OKBLUE + "Creating Genesis: IP: 192.168.1.2, Ports - 6010-6019" + bcolors.ENDC)
     with open("cont.json", "r") as file:
         data = json.load(file)
         return data.get("genesis", [])
@@ -98,7 +103,7 @@ def genesisCreate():
 def node1Create():
     global hosts
     hosts += 1
-    print(bcolors.OKBLUE + "Creating Node1: IP: 192.168.1.3 Ports - 6010,6011,6012" + bcolors.ENDC)
+    print(bcolors.OKBLUE + "Creating Node1: IP: 192.168.1.3 Ports - 6020-6029" + bcolors.ENDC)
     with open("cont.json", "r") as file:
         data = json.load(file)
         return data.get("node1", [])

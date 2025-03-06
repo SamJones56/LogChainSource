@@ -1,8 +1,7 @@
 # https://medium.com/@akramwired/private-data-hosting-with-multichain-in-docker-3e4ed8037a6b
 FROM ubuntu:latest
 
-# Expose ports
-EXPOSE 6010-6012
+
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -29,6 +28,9 @@ WORKDIR /multichain
 # Download genesisInit for MultiChain
 RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
 RUN chmod +x genesisInit.py
+
+# Expose ports
+EXPOSE 6010-6019
 
 # Set working directory to genesisMain
 # CMD ["python3", "genesisInit.py]
