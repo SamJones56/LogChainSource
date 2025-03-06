@@ -29,9 +29,9 @@ RUN mkdir -p /app/genesisMain && \
     curl -o /app/genesisMain/genesisInit.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
 
 # Set working directory to genesisMain
-WORKDIR /app/genesisMain
+CMD ["python3", "genesisInit.py"]
 
-# run
+# Run on startup
 RUN python3 genesisInit.py
 
 # Expose ports

@@ -49,7 +49,7 @@ def genesisCreate():
 # Build New Docker Image
 def nodeCreate():
     print(bcolors.OKBLUE + "Creating image" + bcolors.ENDC)
-    cmd = ["docker", "build", "-f", "./node1Main/Docker", "-t", "multichain_node_image", "."]
+    cmd = ["docker", "build", "-f", "./nodeMain/Docker", "-t", "multichain_node_image", "."]
     return cmd
 
 # Image Generation Commands
