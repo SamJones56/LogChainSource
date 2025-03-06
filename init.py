@@ -13,6 +13,10 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 #### Create the docker network ####
+# Define as a swarm node
+def swarmCreate():
+    cmd = ["docker","swarm","init"]
+    return cmd
 # Delete current network if exists
 def netDelete():
     print(bcolors.WARNING + "Removing old netwokrs" + bcolors.WARNING)
@@ -26,7 +30,7 @@ def netCreate():
     return cmd
 
 # Network Generation Commands
-netGen = [netDelete, netCreate]
+netGen = [swarmCreate, netDelete, netCreate]
 
 #### Docker Image Setup ####
 # Delete Old Image
