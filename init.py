@@ -35,9 +35,14 @@ netGen = [swarmCreate, netDelete, netCreate]
 
 #### Docker Image Setup ####
 # Delete Old Image
-def imageDelete():
+def genDelete():
     print(bcolors.WARNING + "Removing old images" + bcolors.WARNING)
-    cmd = ["docker", "rmi", "multichain_image", "."]
+    cmd = ["docker", "rmi", "multichain_genesis_image", "."]
+    return cmd
+
+def nodeDelete():
+    print(bcolors.WARNING + "Removing old images" + bcolors.WARNING)
+    cmd = ["docker", "rmi", "multichain_node_image", "."]
     return cmd
  
 # Build New Docker Image
@@ -53,7 +58,7 @@ def nodeCreate():
     return cmd
 
 # Image Generation Commands
-imageGen = [imageDelete, genesisCreate, nodeCreate]
+imageGen = [genDelete, nodeDelete,genesisCreate, nodeCreate]
 
 #### Docker Container Setup ####
 # host count for ips
@@ -62,8 +67,12 @@ hosts = 0
 # Delete old containers
 def contClear():
     print(bcolors.WARNING + "Removing old containers" + bcolors.WARNING)
-    cmd = ["docker", "rm", "$(docker ps -q)"]
-    return cmd
+    running = subprocess.run("docker", "ps", "-q", capture_output=True, text=True)
+    contId = running.stdout.strip().split('\n')
+    for i in contId:
+        cmd = ["docker", "rm", "-f", i]
+        return cmd
+    
 
 # Create Genesis node
 def genesisCreate():
