@@ -27,7 +27,7 @@ RUN git clone --depth=1 https://github.com/SamJones56/LogChainSource.git && \
     rm -rf LogChainSource
 # Start chain
 RUN cd ./genesisMain && \
-    python3 
+    python3 geneisInit.py
 
 # Expose ports
 EXPOSE 6010-6012
