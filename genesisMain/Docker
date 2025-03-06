@@ -1,6 +1,9 @@
 # https://medium.com/@akramwired/private-data-hosting-with-multichain-in-docker-3e4ed8037a6b
 FROM ubuntu:latest
 
+# Expose ports
+EXPOSE 6010-6012
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     curl \
@@ -21,20 +24,10 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
 
-# Set working directory
-WORKDIR /app
 
+WORKDIR /multichain
 # Download genesisInit for MultiChain
-RUN mkdir -p /app/genesisMain && \
-    curl -o /app/genesisMain/genesisInit.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
+RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
 
 # Set working directory to genesisMain
 CMD ["python3", "genesisInit.py"]
-
-# Run on startup
-RUN python3 genesisInit.py
-
-# Expose ports
-EXPOSE 6010-6012
-
-WORKDIR /multichain
