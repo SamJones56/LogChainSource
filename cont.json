@@ -2,14 +2,14 @@
     "genesis":[
         "docker", "run", "-dit", "--name", "multichain-genesis",
          "--network", "Multichain-Network",
-        "-v", "/root/go/src/project/genesis:/root/.multichain",
+        "-v", "./genesis:/root/.multichain",
         "-p", "6010:6010", "-p","6011:6011", "-p","6012:6012", 
         "multichain_image", "bash"
     ],
     "node1":[
         "docker", "run", "-dit", "--name", "multichain-node1",
          "--network", "Multichain-Network",
-        "-v", "/root/go/src/project/node1:/root/.multichain",
+        "-v", "./node1:/root/.multichain",
         "-p", "6020:6020", "-p","6021:6021", "-p","6022:6022",
         "multichain_image", "bash"
     ]
