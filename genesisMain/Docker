@@ -28,6 +28,8 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 WORKDIR /multichain
 # Download genesisInit for MultiChain
 RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
+RUN chmod +x genesisInit.py
 
 # Set working directory to genesisMain
-CMD ["python3", "genesisInit.py"]
+# CMD ["python3", "genesisInit.py]
+ENTRYPOINT ["python3", "genesisInit.py"]
