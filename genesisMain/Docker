@@ -24,13 +24,15 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     rm -rf multichain-2.3.3.tar.gz
 
 
+EXPOSE 6010-6019
+
 WORKDIR /multichain
 # Download genesisInit for MultiChain
 RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/genesisMain/genesisInit.py
 RUN chmod +x genesisInit.py
 
 # Expose ports
-EXPOSE 6010-6019
+
 
 # Set working directory to genesisMain
 # CMD ["python3", "genesisInit.py]
