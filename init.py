@@ -67,7 +67,7 @@ hosts = 0
 # Delete old containers
 def contClear():
     print(bcolors.WARNING + "Removing old containers" + bcolors.WARNING)
-    running = subprocess.run("docker", "ps", "-q", capture_output=True, text=True)
+    running = subprocess.run(["docker", "ps", "-q"], capture_output=True, text=True)
     contId = running.stdout.strip().split('\n')
     for i in contId:
         cmd = ["docker", "rm", "-f", i]
