@@ -32,7 +32,7 @@ RUN git clone --depth=1 https://github.com/SamJones56/LogChainSource.git && \
 # Set working directory to genesisMain
 WORKDIR /app/genesisMain
 
-# run python
+# run
 RUN python3 genesisInit.py
 
 # Start chain
