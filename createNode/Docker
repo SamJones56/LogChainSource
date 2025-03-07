@@ -13,6 +13,7 @@ RUN apt update && apt install git -y
 RUN apt update && apt install net-tools -y
 RUN apt update && apt install python3 -y
 RUN apt update && apt install iputils-ping -y
+RUN apt update && apt install netcat-openbsd -y
 
 # Download and install MultiChain
 RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
@@ -22,6 +23,6 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     rm -rf multichain-2.3.3.tar.gz
 
 # Expose ports
-EXPOSE 6004 6005 6006
+EXPOSE 0-65000
 
 WORKDIR /multichain
