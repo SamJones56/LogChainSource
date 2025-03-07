@@ -20,7 +20,7 @@ services:
     # volumes:
     #   - ./genesis:/root/.multichain
     ports:
-      - "30000-50000:30000-50000"
+      - "6000-6500:6000-6500"
     entrypoint: ["sh", "-c", "python3 genesisInit.py && tail -f /dev/null"]
 
 
@@ -35,5 +35,5 @@ services:
     # volumes:
     #   - ./node1:/root/.multichain
     ports:
-      - "30000-50000:30000-50000"
+      - "6000-6500:6000-6500"
     entrypoint: ["bash", "-c", "tail -f /dev/null"]
