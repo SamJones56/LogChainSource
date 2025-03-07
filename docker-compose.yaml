@@ -2,7 +2,8 @@ version: '3.8'
 
 networks:
   Multichain-Network:
-    driver: bridge
+    driver: overlay
+    attachable: true
     ipam:
       config:
         - subnet: 192.168.1.0/24
@@ -15,13 +16,13 @@ services:
     container_name: multichain-genesis
     networks:
       Multichain-Network:
-        ipv4_address: 192.168.1.3
+        ipv4_address: 192.168.1.10
     # volumes:
     #   - ./genesis:/root/.multichain
     ports:
-      - "6010:6010"
-      - "6011:6011"
-      - "6012:6012"
+      - "6001:6001"
+      - "6002:6002"
+      - "6003:6003"
     entrypoint: ["sh", "-c", "python3 genesisInit.py && tail -f /dev/null"]
 
 
@@ -32,11 +33,11 @@ services:
     container_name: multichain-node1
     networks:
       Multichain-Network:
-        ipv4_address: 192.168.1.4
+        ipv4_address: 192.168.1.11
     # volumes:
     #   - ./node1:/root/.multichain
     ports:
-      - "6020:6020"
-      - "6021:6021"
-      - "6022:6022"
+      - "6004:6004"
+      - "6005:6005"
+      - "6006:6006"
     entrypoint: ["bash", "-c", "tail -f /dev/null"]

@@ -15,7 +15,7 @@ class bcolors:
 # multihain Generation ~ timer to wait for initialing daemon
 def genChain():
      print(bcolors.OKGREEN + "Generating MultiChain" + bcolors.OKGREEN)
-     cmd = ["multichain-util", "create", "logChain", "-default-network-port=6010", "-default-rpc-port=6011"]
+     cmd = ["multichain-util", "create", "logChain", "-default-network-port=6001", "-default-rpc-port=6003"]
      subprocess.run(cmd)
      time.sleep(15)
 
