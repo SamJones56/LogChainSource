@@ -68,17 +68,15 @@ def genesisCreate():
     return cmd
 
 # Build New Docker Image
-# def nodeCreate():
-#     print(bcolors.OKBLUE + "Creating image" + bcolors.ENDC)
-#     cmd = ["docker", "build", "-f", "./genesisMain/Docker", "-t", "multichain_node_image", "."]
-#     return cmd
+def nodeCreate():
+    print(bcolors.OKBLUE + "Creating image" + bcolors.ENDC)
+    cmd = ["docker", "build", "-f", "./nodeMain/Docker", "-t", "multichain_node_image", "."]
+    return cmd
 
 # Image Generation Commands
-imageGen = [genDelete, nodeDelete,genesisCreate]
+imageGen = [genDelete, nodeDelete, genesisCreate, nodeCreate]
 
 #### Docker Container Setup ####
-# host count for ips
-hosts = 0
 
 # Delete old containers
 def contClear():
@@ -92,8 +90,6 @@ def contClear():
 
 # Create Genesis node
 def genesisCreate():
-    global hosts
-    hosts += 1
     print(bcolors.OKBLUE + "Creating Genesis: IP: 192.168.1.2, Ports - 6010-6019" + bcolors.ENDC)
     with open("cont.json", "r") as file:
         data = json.load(file)
@@ -101,8 +97,6 @@ def genesisCreate():
 
 # Create Node1
 def node1Create():
-    global hosts
-    hosts += 1
     print(bcolors.OKBLUE + "Creating Node1: IP: 192.168.1.3 Ports - 6020-6029" + bcolors.ENDC)
     with open("cont.json", "r") as file:
         data = json.load(file)
