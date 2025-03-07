@@ -19,7 +19,7 @@ services:
         ipv4_address: 192.168.1.10
     # volumes:
     #   - ./genesis:/root/.multichain
-    ports:
+    expose:
       - "1-65535:1-65535"
     entrypoint: ["sh", "-c", "python3 genesisInit.py && tail -f /dev/null"]
 
@@ -34,6 +34,6 @@ services:
         ipv4_address: 192.168.1.11
     # volumes:
     #   - ./node1:/root/.multichain
-    ports:
+    expose:
       - "1-65535:1-65535"
     entrypoint: ["bash", "-c", "tail -f /dev/null"]
