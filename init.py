@@ -31,9 +31,9 @@ def netDelete():
     return cmd
 
 # Leave swarm node
-def swarmLeave():
-    cmd=["docker", "swarm", "leave", "--force"]
-    return cmd
+# def swarmLeave():
+#     cmd=["docker", "swarm", "leave", "--force"]
+#     return cmd
 
 # Define as a swarm node
 def swarmCreate():
@@ -47,7 +47,7 @@ def netCreate():
     return cmd
 
 # Network Generation Commands
-netGen = [swarmLeave, swarmCreate, netDelete, netCreate]
+netGen = [ swarmCreate, netDelete, netCreate]
 
 #### Docker Image Setup ####
 # Delete Old Image
