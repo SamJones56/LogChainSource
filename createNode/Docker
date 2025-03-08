@@ -21,8 +21,3 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain-2.3.3 multichain && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
-
-# Expose ports
-# EXPOSE 0-65000
-
-# WORKDIR /multichain
