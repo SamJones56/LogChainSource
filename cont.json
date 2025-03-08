@@ -1,14 +1,14 @@
 {
     "genesis":[
         "docker", "run", "-dit", "--name", "multichain-genesis",
-         "--network", "Multichain-Network",
+         "--network", "Mmultichain_test",
         "-v", "./genesis:/root/.multichain",
 
         "multichain_genesis_image", "bash"
     ],
     "node1":[
         "docker", "run", "-dit", "--name", "multichain-node1",
-         "--network", "Multichain-Network",
+         "--network", "multichain_test",
         "-v", "./node1:/root/.multichain",
 
         "multichain_node_image", "bash"
