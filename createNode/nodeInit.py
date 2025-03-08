@@ -1,4 +1,5 @@
 import subprocess
+import time
 
 class bcolors:
     HEADER = '\033[95m'
@@ -12,6 +13,9 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def demChain():
+     time.sleep(60)
      print(bcolors.OKGREEN + "Init chain" + bcolors.OKGREEN)
-     cmd = ["multichaind", "logChain@192.168.1.2:6010"]
-     return cmd
+     cmd = ["multichaind", "logChain@172.18.0.2:7010"]
+     subprocess.run(cmd)
+
+demChain()

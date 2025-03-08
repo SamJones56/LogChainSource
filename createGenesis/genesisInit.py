@@ -17,7 +17,7 @@ def genChain():
      print(bcolors.OKGREEN + "Generating MultiChain" + bcolors.OKGREEN)
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"]
      subprocess.run(cmd)
-     time.sleep(15)
+     time.sleep(5)
 
 # multichain Daemon
 def demChain():
