@@ -21,11 +21,13 @@ sudo snap install --classic code
   Clone the repo:
   git clone https://github.com/SamJones56/LogChainSource.git
 
-8. Build docker
-   sudo docker compose build
-
-9. Run the docker
-   sudo docker compose up -d (add -d or you cant keep accessing terminal)
+8. Build and run
+  cd LogChainSource
+  sudo ./init.sh
 
 10. Enter docker container
   sudo docker exec -it [containerName] /bin/bash
+
+11. Prune for debugging
+  sudo docker system prune -a
+
