@@ -13,7 +13,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def demChain():
-     time.sleep(60)
+     time.sleep(20)
      print(bcolors.OKGREEN + "Init chain" + bcolors.OKGREEN)
      cmd = ["multichaind", "logChain@172.18.0.2:7010"]
      subprocess.run(cmd)
