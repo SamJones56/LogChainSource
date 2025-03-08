@@ -1,7 +1,12 @@
-echo "Removing old images"
 
+# Delete old volumes
+echo "Removing old volumes"
 rm -rf ../multichain/genesis_data/
 rm -rf ../multichain/node1_data/
+
+echo "Creating directories for volumes"
+mkdir ../multichain/genesis_data/
+mkdir ../multichain/node1_data/
 
 # Build docker
 echo "Building Docker"
@@ -17,7 +22,7 @@ node1Container="multichain_node1"
 
 echo "Pulling node1 address"
 node1addr=$(docker exec $node1Container grep "Minimal blockchain parameter set is created, default address: " /root/.multichain/logChain/debug.log | awk '{print $NF}')
-echo "address $node1addr"
+echo "Node1 address = $node1addr"
 
 # execute on genesis
 echo "executing connection on genesis"
