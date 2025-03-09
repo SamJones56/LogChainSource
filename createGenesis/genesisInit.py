@@ -17,7 +17,7 @@ class bcolors:
 def genChain():
 
      # Generate logChain with correct params
-     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.OKGREEN)
+     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"]
      subprocess.run(cmd)
 
@@ -32,7 +32,7 @@ def genChain():
      # Wait for file to be created
      for i in range(120):
           if os.path.exists(confPath):
-               print(bcolors.OKGREEN + "------------------ PATH FOUND -------------------"+ bcolors.OKGREEN) 
+               print(bcolors.OKGREEN + "------------------ PATH FOUND -------------------"+ bcolors.ENDC) 
                break
           time.sleep(1)
 
@@ -42,19 +42,20 @@ def genChain():
           for line in f:
                if line.startswith("rpcuser="):
                     lines.append(f"rpcuser={rpcuser}\n")
-               if line.startswith("rpcpassword="):
+               elif line.startswith("rpcpassword="):
                     lines.append(f"rpcpassword={rpcpassword}\n")
-               lines.append(rpcallowip)
+               else:
+                    lines.append(rpcallowip)
 
      # Write to file
      with open(confPath, "w") as f:    
-          print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}, pcpassword={rpcpassword}, {rpcallowip}" + bcolors.OKGREEN)
+          print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}, rpcpassword={rpcpassword}, {rpcallowip}" + bcolors.ENDC)
           f.writelines(lines)
 
      time.sleep(5)
 
      # Starting the daemon
-     print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.OKGREEN)
+     print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.ENDC)
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
 
@@ -62,5 +63,7 @@ def genChain():
           if os.path.exists("/root/.multichain/logChain/params.dat.bak"):
                break
           time.sleep(1)
+     else:
+          print(bcolors.FAIL + "NO FILE FOUND" + bcolors.ENDC)
 
 genChain()

@@ -15,7 +15,7 @@ class bcolors:
 def demChain():
      print("waiting 30 seconds")
      time.sleep(30)
-     print(bcolors.OKGREEN + "Connecting to chain" + bcolors.OKGREEN)
+     print(bcolors.OKGREEN + "Connecting to chain" + bcolors.ENDC)
      cmd = ["multichaind", "logChain@172.18.0.2:7010"]
      subprocess.run(cmd)
 
