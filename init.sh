@@ -11,14 +11,7 @@ mkdir ../multichain/node1_data/
 # Build docker
 echo "Building Docker"
 docker compose down 
-docker compose up --build #-d
-
-# Initialise chain
-echo "-------- Generating chain --------"
-docker exec multichain_genesis python3 gnesisInit.py
-
-echo "-------- Connecting node1 to chain --------"
-docker exec multichain_node1 python3 nodeInit.py
+docker compose up --build -d
 
 # # Wait for docker
 # echo "waiting 60s for docker to build"
