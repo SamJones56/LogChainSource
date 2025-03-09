@@ -10,6 +10,7 @@ mkdir ../multichain/node1_data/
 
 # Build docker
 echo "Building Docker"
+docker compose down 
 docker compose up --build #-d
 
 # # Wait for docker
