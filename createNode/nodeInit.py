@@ -16,7 +16,7 @@ def demChain():
     #  print(bcolors.OKGREEN + "waiting 60 seconds" + bcolors.ENDC)
     #  time.sleep(120)
      print(bcolors.OKGREEN + "Connecting to chain" + bcolors.ENDC)
-     cmd = ["multichaind", "logChain@172.18.0.2:7010"]
+     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
      subprocess.run(cmd)
 
 demChain()
