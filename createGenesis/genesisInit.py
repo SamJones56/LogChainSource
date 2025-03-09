@@ -30,7 +30,7 @@ def genChain():
      rpcallowip = "rpcallowip=172.16.0.0/16"
 
      # Wait for file to be created
-     for i in range(60):
+     for i in range(120):
           if os.path.exists(confPath):
                print(bcolors.OKGREEN + "------------------ PATH FOUND -------------------"+ bcolors.OKGREEN) 
                break
@@ -57,5 +57,10 @@ def genChain():
      print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.OKGREEN)
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
+
+     for i in range(120):
+          if os.path.exists("/root/.multichain/logChain/params.dat.bak"):
+               break
+          time.sleep(1)
 
 genChain()
