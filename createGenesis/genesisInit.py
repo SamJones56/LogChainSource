@@ -1,5 +1,6 @@
 import subprocess
 import time
+import os
 
 class bcolors:
     HEADER = '\033[95m'
@@ -18,13 +19,19 @@ def genChain():
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"]
      subprocess.run(cmd)
 
-     # Path to conf file
-     confPath = "/root/multichain/logChain/multichain.conf"
 
+     # Path to conf file
+     confPath = "/root/.multichain/logChain/multichain.conf"
      # Custom values
      rpcuser = "genesis"
      rpcpassword = "logChain"
      rpcallowip = "rpcallowip=172.16.0.0/16"
+
+     # Wait for file to be created
+     for i in range(60):
+          if os.path.exists(confPath):
+               break
+          time.sleep(1)
 
      # Edit file
      lines = []
