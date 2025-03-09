@@ -25,7 +25,8 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 # Setup correct conf file
 RUN mkdir logChain && \
     curl -o logChain/genesisConf.conf https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcConfFolder/logChain/genesisConf.conf && \
-    curl -o logChain/params.dat https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcConfFolder/logChain/params.dat
+    curl -o logChain/params.dat https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcConfFolder/logChain/params.dat 
+    # chmod -R 777 /logChain
 
 
 # WORKDIR /multichain
