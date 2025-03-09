@@ -8,12 +8,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install text editor for convenience
-RUN apt update && apt install nano -y
-RUN apt update && apt install git -y    
-RUN apt update && apt install net-tools -y
-RUN apt update && apt install python3 -y
-RUN apt update && apt install iputils-ping -y
-RUN apt update && apt install netcat-openbsd -y
+RUN apt update && apt install -y \
+    nano \
+    git \
+    net-tools \
+    python3 \
+    iputils-ping \
+    netcat-openbsd 
 
 # Download and install MultiChain
 RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
