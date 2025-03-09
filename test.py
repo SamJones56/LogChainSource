@@ -7,3 +7,11 @@ rpcuser='genesis' # see multichain.conf in blockchain directory
 rpcpassword='logChain' # see multichain.conf in blockchain directory
 
 mc=MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
+
+txmid=mc.publish('strream1', 'key1', {'json' : {'name' : 'john', 'age' : 30}})
+
+if mc.success():
+    pass
+
+else:
+    print('error')

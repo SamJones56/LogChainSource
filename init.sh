@@ -12,7 +12,7 @@ mkdir ../multichain/node1_data/
 echo "B---------- Down Docker ----------"
 docker compose down 
 echo "---------- Building Docker ----------"
-docker compose up --build #-d
+docker compose up --build -d
 
 # Wait for docker
 echo "waiting 60s for docker to build"
