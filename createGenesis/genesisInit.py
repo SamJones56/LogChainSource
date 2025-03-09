@@ -17,9 +17,9 @@ class bcolors:
 def genChain():
 
      # Generate logChain with correct params
-     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011 anyone-can-connect = true" + bcolors.ENDC)
-     cmd = ["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011", "-anyone-can-connect=true"]
-     subprocess.run(cmd)
+     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
+     cmd = "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011 -anyone-can-connect=true"
+     subprocess.run(cmd, shell=True)
 
      # Editing the logChain config file
      # Path to conf file
