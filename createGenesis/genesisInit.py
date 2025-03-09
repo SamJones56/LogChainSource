@@ -13,13 +13,15 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# multihain Generation ~ timer to wait for initialing daemon
+# multihain Generation
 def genChain():
-     print(bcolors.OKGREEN + "Generating MultiChain" + bcolors.OKGREEN)
+
+     # Generate logChain with correct params
+     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.OKGREEN)
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"]
      subprocess.run(cmd)
 
-
+     # Editing the logChain config file
      # Path to conf file
      confPath = "/root/.multichain/logChain/multichain.conf"
      # Custom values
@@ -34,7 +36,7 @@ def genChain():
                break
           time.sleep(1)
 
-     # Edit file
+     # Read and edit file
      lines = []
      with open(confPath, "r") as f:
           for line in f:
@@ -43,21 +45,17 @@ def genChain():
                if line.startswith("rpcpassword="):
                     lines.append(f"rpcpassword={rpcpassword}\n")
                lines.append(rpcallowip)
+
+     # Write to file
      with open(confPath, "w") as f:    
-          print(f"writing {confPath} : rpcuser={rpcuser}\n")
-          print(f"writing {confPath} : pcpassword={rpcpassword}\n")
-          print(f"writing {confPath} : {rpcallowip}\n")
+          print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}\n writing {confPath} : pcpassword={rpcpassword}\n writing {confPath} : {rpcallowip}\n" + bcolors.OKGREEN)
           f.writelines(lines)
 
      time.sleep(5)
 
-# multichain Daemon
-def demChain():
-     print(bcolors.OKGREEN + "Init chain" + bcolors.OKGREEN)
+     # Starting the daemon
+     print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.OKGREEN)
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
 
-genesisCmds=[genChain, demChain]
-
-for cmd in genesisCmds:
-    cmd()
+genChain()
