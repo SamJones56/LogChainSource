@@ -59,11 +59,4 @@ def genChain():
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
 
-     # for i in range(120):
-     #      if os.path.exists("/root/.multichain/logChain/params.dat.bak"):
-     #           break
-     #      time.sleep(1)
-     # else:
-     #      print(bcolors.FAIL + "NO FILE FOUND" + bcolors.ENDC)
-
 genChain()
