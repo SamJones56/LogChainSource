@@ -25,4 +25,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 
 # Download init script
 RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/nodeInit.py
-RUN chmod +x nodeInit.py    
+RUN chmod +x nodeInit.py
+
+RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/test.py
+RUN chmod +x test.py
