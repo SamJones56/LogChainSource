@@ -23,7 +23,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     rm -rf multichain-2.3.3.tar.gz
 
 # Setup correct conf file
-RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcConfFolder/genesisConf.conf
+RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcConfFolder/logChain
 
 # WORKDIR /multichain
 # Download genesisInit for MultiChain
