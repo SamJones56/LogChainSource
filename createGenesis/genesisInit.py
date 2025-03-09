@@ -36,19 +36,18 @@ def genChain():
 
      # Edit file
      lines = []
-     with open(confPath, "r+") as f:
+     with open(confPath, "r") as f:
           for line in f:
                if line.startswith("rpcuser="):
                     lines.append(f"rpcuser={rpcuser}\n")
                if line.startswith("rpcpassword="):
                     lines.append(f"rpcpassword={rpcpassword}\n")
                lines.append(rpcallowip)
+     with open(confPath, "w") as f:    
+          print(f"writing {confPath} : rpcuser={rpcuser}\n")
+          print(f"writing {confPath} : pcpassword={rpcpassword}\n")
+          print(f"writing {confPath} : {rpcallowip}\n")
           f.writelines(lines)
-
-
-     # cmd = "echo 'rpcallowip=172.16.0.0/16' >> /root/.multichain/logChain/multichain.conf"
-     # subprocess.run(cmd, shell=True)
-
 
      time.sleep(5)
 
