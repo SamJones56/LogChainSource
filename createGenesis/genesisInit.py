@@ -17,6 +17,8 @@ def genChain():
      print(bcolors.OKGREEN + "Generating MultiChain" + bcolors.OKGREEN)
      cmd = ["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"]
      subprocess.run(cmd)
+     cmd = "echo 'rpcallowip=172.16.0.0/16' >> /root/.multichain/logChain/multichain.conf"
+     subprocess.run(cmd, shell=True)
      time.sleep(5)
 
 # multichain Daemon
