@@ -30,6 +30,7 @@ def genChain():
      # Wait for file to be created
      for i in range(60):
           if os.path.exists(confPath):
+               print("------------------ PATH FOUND -------------------")
                break
           time.sleep(1)
 
