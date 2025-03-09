@@ -22,14 +22,11 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
 
+# Setup correct conf file
+RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcConfFolder/genesisConf.conf
+
 # WORKDIR /multichain
 # Download genesisInit for MultiChain
 # RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createGenesis/genesisInit.py
 # RUN chmod +x genesisInit.py
 
-
-
-
-# Set working directory to genesisMain
-# CMD ["python3", "genesisInit.py]
-# ENTRYPOINT ["sh", "-c", "python3 genesisInit.py && exec bash"]
