@@ -27,7 +27,7 @@ def genChain():
      # Custom values
      rpcuser = "genesis"
      rpcpassword = "logChain"
-     rpcallowip = "rpcallowip=172.16.0.0/16"
+     rpcallowip = "rpcallowip=172.18.0.0/16"
 
      # Wait for file to be created
      for i in range(120):
