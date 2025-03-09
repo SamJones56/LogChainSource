@@ -9,8 +9,9 @@ mkdir ../multichain/genesis_data/
 mkdir ../multichain/node1_data/
 
 # Build docker
-echo "Building Docker"
+echo "B---------- Down Docker ----------"
 docker compose down 
+echo "---------- Building Docker ----------"
 docker compose up --build #-d
 
 # # Wait for docker

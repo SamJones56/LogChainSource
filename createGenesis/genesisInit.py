@@ -44,7 +44,7 @@ def genChain():
                     lines.append(f"rpcuser={rpcuser}\n")
                if line.startswith("rpcpassword="):
                     lines.append(f"rpcpassword={rpcpassword}\n")
-               lines.append(rpcallowip)
+     lines.append(f"{rpcallowip}\n")
 
      # Write to file
      with open(confPath, "w") as f:    
