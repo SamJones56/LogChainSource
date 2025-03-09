@@ -42,5 +42,5 @@ services:
     ports:
       - 7020:7020
       - 7021:7021
-    entrypoint: ["sh", "-c", " tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 nodeInit.py && tail -f /dev/null"]
     # python3 nodeInit.py &&
