@@ -24,8 +24,16 @@ services:
     ports:
       - 7010:7010
       - 7011:7011
-    entrypoint: ["sh", "-c", "python3 genesisInit.py &&  tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 genesisInit.py && touch /root/genesis_done tail -f /dev/null"]
 # python3 genesisInit.py && 
+
+  healthcheck: 
+    test: ["CMD", "test", "-f", "/root/genesis_done"]
+    interval: 5s
+    retries: 20
+    start_period: 5s
+    timeout: 3s
+
   node1:
     build:
       context: ./createNode
@@ -34,7 +42,8 @@ services:
     networks:
       - test
     depends_on:
-      - genesis
+      genesis:
+        condition: service_healthy
     volumes:
       - ../multichain/node1_data:/root/.multichain
     # privileged: true
