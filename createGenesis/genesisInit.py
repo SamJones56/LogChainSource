@@ -48,7 +48,7 @@ def genChain():
 
      # Write to file
      with open(confPath, "w") as f:    
-          print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}\n writing {confPath} : pcpassword={rpcpassword}\n writing {confPath} : {rpcallowip}\n" + bcolors.OKGREEN)
+          print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}, pcpassword={rpcpassword}, {rpcallowip}\n" + bcolors.OKGREEN)
           f.writelines(lines)
 
      time.sleep(5)
