@@ -13,8 +13,18 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def demChain():
-     print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
-     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
-     subprocess.run(cmd)
+    print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
+    cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
+    subprocess.run(cmd)
+
+    addrPath = "/root/.multichain/logChain/debug.log"
+    walletAddr = ""
+    with open(addrPath, "r") as f:
+        for line in f:
+            if line.startswith("Minimal blockchain parameter set is created, default address:"):
+                walletAddr = line.split(":")[-1].strip()
+                print("--------- WALLET ADDR ---------")
+                print(walletAddr)
+                break
 
 demChain()
