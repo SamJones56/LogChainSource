@@ -30,4 +30,4 @@ RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichai
 
 # Download init script
 RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py
-RUN chmod +x nodeInit.py
+# RUN chmod +x nodeInit.py
