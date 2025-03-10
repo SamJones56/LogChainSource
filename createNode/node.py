@@ -22,15 +22,21 @@ def logChainInit():
     print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
     # Get the address string
-    address = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
-    address = re.search(r"multichain-cli logChain grant (\w+) connect", address.stdout)
+
+    address = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
+
+    address = address.group(1)
+    print(address)
     # Path for logChain
     confPath = "/root/.multichain/logChain/multichain.conf"
+
+
     # Wait for multichain connection
     for i in range(120):
-        if os.path.exists(confPath):
-            print(bcolors.OKGREEN + "------------------ PATH FOUND -------------------"+ bcolors.ENDC) 
+        if address:
+            print(bcolors.OKGREEN + "------------------ ADDRESS FOUND -------------------"+ bcolors.ENDC) 
             break
         time.sleep(1)
     # Gather perms on the chain
