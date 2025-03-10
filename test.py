@@ -8,6 +8,15 @@ rpcport = '7011'
 # Setup client
 client = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
-# Get blockchain info
-info = client.getinfo()
-print(info)
+# set address ~ this needs to be added dynamically
+# address = client.getaddresses()
+
+address = "1abpJEM5piGKp8bqstM3N5PqWdg3HJGCHrwDkX"
+permissions = "connect,send,receive"
+
+
+try:
+    response = client.grant(address, permissions)
+    print("Grant successful:", response)
+except Exception as e:
+    print("Error granting permissions:", str(e))
