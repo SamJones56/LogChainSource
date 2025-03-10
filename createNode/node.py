@@ -1,7 +1,7 @@
 import subprocess
 import time
 import os
-from mcJsonRpc import connectToChain
+from mcController import connectToChain
 
 class bcolors:
     HEADER = '\033[95m'
