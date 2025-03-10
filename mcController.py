@@ -15,7 +15,7 @@ def connectToChain(address):
     try:
         response = client.grant(address, permissions)
         print("Grant successful: " + response + ". Starting")
-        subprocess.run("multichaind", "logChain", "-daemon")
+        subprocess.run(["multichaind", "logChain", "-daemon"])
     except Exception as e:
         print("Error granting permissions:", str(e))
 
