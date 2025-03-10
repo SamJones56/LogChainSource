@@ -62,7 +62,8 @@ def genChain():
      subprocess.run(cmd)
 
      # Create the stream
-     createStream("test", "write")
+     print(bcolors.OKGREEN + "Create stream" + bcolors.ENDC)
+     createStream("mainStream", '{"restrict":"write"}')
 
 
 genChain()
