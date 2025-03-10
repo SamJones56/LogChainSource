@@ -14,7 +14,7 @@ def connectToChain(address):
     permissions = "connect,send,receive"
     try:
         response = client.grant(address, permissions)
-        print("Grant successful: " + response + ". Starting")
+        print("Grant status: " + response + ". Starting")
         subprocess.run(["multichaind", "logChain", "-daemon"])
     except Exception as e:
         print("Error granting permissions:", str(e))
@@ -23,5 +23,6 @@ def createStream(name, restrictions):
     type = "stream"
     try:
         response = client.create(type, name, restrictions)
+        print("Stream status: " + response)
     except Exception as e:
         print("Error granting permissions:", str(e))

@@ -13,9 +13,6 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# Get perms on chain
-def chainPerms(address):
-    connectToChain(address)
 
 def logChainInit():
     # Connect to logChain
@@ -35,7 +32,7 @@ def logChainInit():
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
 
     # Get connect,send,receive from chain
-    chainPerms(address) 
+    connectToChain(address) 
     
 
 logChainInit()
