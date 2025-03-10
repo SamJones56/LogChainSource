@@ -36,7 +36,7 @@ def genChain():
                break
           time.sleep(1)
 
-     # Read and edit file
+     # Read and edit the config file
      lines = []
      with open(confPath, "r") as f:
           for line in f:
@@ -57,5 +57,6 @@ def genChain():
      print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.ENDC)
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
+
 
 genChain()
