@@ -24,7 +24,7 @@ def connectToChain(address):
 def createStream(name, restrictions):
     type = "stream"
     # https://www.w3schools.com/python/python_json.asp
-    restrictions = json.loads(restrictions, str)
+    restrictions = json.loads(restrictions)
     try:
         response = client.create(type, name, restrictions)
         print("Stream status: ", response)
