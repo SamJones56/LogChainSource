@@ -13,12 +13,13 @@ mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 # Take wallet address as input and connect to genesis node
 def connectToChain(address):
     permissions = "connect,send,receive"
-    try:
-        response = mc.grant(address, permissions)
-        print("Grant status: " + response + ". Starting")
-        subprocess.run(["multichaind", "logChain", "-daemon"])
-    except Exception as e:
-        print("Error granting permissions:", str(e))
+    txid = mc.grant(address, permissions)
+    if mc.success():
+        print("Chain: ", address, " successful")
+        pass # operation was successful
+    else:
+        print('Error code: '+str(mc.errorcode())+'\n')
+        print('Error message: '+mc.errormessage()+'\n')
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(name, restrictions):
