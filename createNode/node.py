@@ -23,6 +23,7 @@ def logChainInit():
     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
     # Get the address string
     address = subprocess.run(cmd, capture_output=True, text=True)
+    # Extract address from output string
     address = re.search(r"multichain-cli logChain grant (\w+) connect", address.stdout)
     # Path for logChain
     confPath = "/root/.multichain/logChain/multichain.conf"
