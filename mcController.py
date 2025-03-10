@@ -1,6 +1,5 @@
 from multichain import MultiChainClient
-import subprocess
-import json
+import time
 
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
@@ -26,11 +25,10 @@ def connectToChain(address):
 def createStream(name, restrictions):
     mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
     txid=mc.create('stream', name, restrictions)
-
-    if mc.success():
-        print("Stream: ", name, " successful")
-        pass # operation was successful
-
-    else: # operation failed
+    for i in range(120):
+        if mc.success():
+            print("Stream: ", name, " successful")
+            break # operation was successful
+        time.sleep(1)
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage()+'\n')
