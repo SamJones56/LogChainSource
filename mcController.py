@@ -8,10 +8,11 @@ rpchost = '172.18.0.2'
 rpcport = '7011'         
 
 # Setup client
-mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
+# mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
 # Take wallet address as input and connect to genesis node
 def connectToChain(address):
+    mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
     permissions = "connect,send,receive"
     txid = mc.grant(address, permissions)
     if mc.success():
@@ -23,12 +24,7 @@ def connectToChain(address):
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(name, restrictions):
-    # type = "type=" + name
-    # try:
-    #     response = mc.create("type=stream", name, restrictions)
-    #     print("Stream status: ", response)
-    # except Exception as e:
-    #     print("Error granting permissions:", str(e))
+    mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
     txid=mc.create('stream', name, restrictions)
 
     if mc.success():
