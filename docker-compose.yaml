@@ -51,6 +51,13 @@ services:
       - 7021:7021
     entrypoint: ["sh", "-c", "python3 node.py && tail -f /dev/null"]
     # python3 node.py &&
+    # wait for node to finish
+    healthcheck: 
+      test: ["CMD", "test", "-f", "/root/node1_done"]
+      interval: 5s
+      retries: 20
+      start_period: 5s
+      timeout: 3s
 
   node2:
     build:
