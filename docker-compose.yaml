@@ -70,7 +70,7 @@ services:
       node1:
         condition: service_healthy
     volumes:
-      - ../multichain/node1_data:/root/.multichain
+      - ../multichain/node2_data:/root/.multichain
     ports:
     - 7030:7030
     - 7031:7031
