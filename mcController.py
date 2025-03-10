@@ -19,3 +19,9 @@ def connectToChain(address):
     except Exception as e:
         print("Error granting permissions:", str(e))
 
+def createStream(name, restrictions):
+    type = "stream"
+    try:
+        response = client.create(type, name, restrictions)
+    except Exception as e:
+        print("Error granting permissions:", str(e))
