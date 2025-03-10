@@ -1,6 +1,7 @@
 import subprocess
 import time
 import os
+from mcController import createStream
 
 class bcolors:
     HEADER = '\033[95m'
@@ -59,6 +60,9 @@ def genChain():
      print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.ENDC)
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
+
+     # Create the stream
+     createStream("test", "write")
 
 
 genChain()
