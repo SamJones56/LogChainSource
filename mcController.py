@@ -8,9 +8,7 @@ rpcport = '7011'
 # Setup client
 client = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
-def connectToChain():
-    address = client.getaddresses()
-    print(address)
+def connectToChain(address):
     permissions = "connect,send,receive"
     try:
         response = client.grant(address, permissions)

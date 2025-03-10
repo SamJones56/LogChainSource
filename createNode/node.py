@@ -1,6 +1,7 @@
 import subprocess
 import time
 import os
+import re
 from mcController import connectToChain
 
 class bcolors:
@@ -20,8 +21,9 @@ def chainPerms():
 def logChainInit():
     print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
-    subprocess.run(cmd)
-
+    # Get the address string
+    address = subprocess.run(cmd, capture_output=True, text=True)
+    address = re.search(r"multichain-cli logChain grant (\w+) connect", address.stdout)
     # Path for logChain
     confPath = "/root/.multichain/logChain/multichain.conf"
     # Wait for multichain connection
