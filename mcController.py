@@ -1,5 +1,6 @@
 from multichain import MultiChainClient
 import subprocess
+import json
 
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
@@ -19,10 +20,13 @@ def connectToChain(address):
     except Exception as e:
         print("Error granting permissions:", str(e))
 
+# Create a stream -> give name + restrictions in JSON format
 def createStream(name, restrictions):
     type = "stream"
+    # https://www.w3schools.com/python/python_json.asp
+    restrictions = json.loads(restrictions, str)
     try:
         response = client.create(type, name, restrictions)
-        print("Stream status: " + response)
+        print("Stream status: ", response)
     except Exception as e:
         print("Error granting permissions:", str(e))
