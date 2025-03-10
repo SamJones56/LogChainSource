@@ -1,6 +1,4 @@
 import subprocess
-import time
-import os
 import re
 from mcController import connectToChain
 
@@ -15,26 +13,27 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+# Get perms on chain
 def chainPerms(address):
     connectToChain(address)
 
 def logChainInit():
+    # Connect to logChain
     print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
-    # Get the address string
+    # Get the address string after connecting
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
     # https://www.w3schools.com/python/python_regex.asp
     address = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
     address = address.group(1)
-    
-    # Wait for multichain connection
-    for i in range(120):
-        if address:
-            print(bcolors.OKGREEN + "------------------ ADDRESS FOUND -------------------"+ bcolors.ENDC) 
-            break
-        time.sleep(1)
-    # Gather perms on the chain
+
+    if address:
+        print(bcolors.OKGREEN + f"ADDRESS FOUND: {address} " + bcolors.ENDC)
+    else:
+        print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
+
+    # Get connect,send,receive from chain
     chainPerms(address) 
     
 

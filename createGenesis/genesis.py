@@ -29,7 +29,7 @@ def genChain():
      rpcpassword = "logChain"
      rpcallowip = "rpcallowip=172.18.0.0/16"
 
-     # Wait for file to be created
+     # Wait for log chain to be initialised
      for i in range(120):
           if os.path.exists(confPath):
                print(bcolors.OKGREEN + "------------------ PATH FOUND -------------------"+ bcolors.ENDC) 
@@ -37,6 +37,7 @@ def genChain():
           time.sleep(1)
 
      # Read and edit the config file
+     # https://www.w3schools.com/python/python_ref_list.asp
      lines = []
      with open(confPath, "r") as f:
           for line in f:
@@ -51,7 +52,8 @@ def genChain():
           print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}, rpcpassword={rpcpassword}, {rpcallowip}" + bcolors.ENDC)
           f.writelines(lines)
 
-     time.sleep(5)
+     # Writing time
+     # time.sleep(5)
 
      # Starting the daemon
      print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.ENDC)

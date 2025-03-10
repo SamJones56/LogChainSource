@@ -24,10 +24,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
 
-# Download and install JSON RPC dependencies
+# Download JSON RPC & node scripts 
 RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
-    curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py
-
-# Download init script
-RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py
-# RUN chmod +x nodeInit.py
+    curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py

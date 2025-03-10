@@ -25,12 +25,8 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
 
-# Download and install JSON RPC dependencies
+# Download JSON RPC and genesis scripts
 RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
-    curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py
-
-# WORKDIR /multichain
-# Download genesisInit for MultiChain
-RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createGenesis/genesis.py
-# RUN chmod +x genesis.py
+    curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createGenesis/genesis.py
 

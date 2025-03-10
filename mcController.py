@@ -8,6 +8,7 @@ rpcport = '7011'
 # Setup client
 client = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
+# Take wallet address as input and connect to genesis node
 def connectToChain(address):
     permissions = "connect,send,receive"
     try:
