@@ -61,6 +61,7 @@ def genChain():
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
 
+     time.sleep(20)
      # Create the stream
      print(bcolors.OKGREEN + "Create stream" + bcolors.ENDC)
      restrictions = {"restrict":"write"}
