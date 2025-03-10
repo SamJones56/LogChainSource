@@ -14,7 +14,9 @@ RUN apt update && apt install -y \
     net-tools \
     python3 \
     iputils-ping \
-    netcat-openbsd 
+    netcat-openbsd \
+    python3-requests
+
 
 # Download and install MultiChain
 RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
@@ -22,6 +24,10 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain-2.3.3 multichain && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gz
+
+# Download and install JSON RPC dependencies
+RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
+    curl -o test.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/test.py
 
 # WORKDIR /multichain
 # Download genesisInit for MultiChain

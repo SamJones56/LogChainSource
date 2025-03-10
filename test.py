@@ -1,17 +1,13 @@
 from multichain import MultiChainClient
-import multichain
 
-rpchost='127.18.0.2' # change if multichaind is not running locally
-rpcport=7011 # usually default-rpc-port in blockchain parameters
-rpcuser='genesis' # see multichain.conf in blockchain directory
-rpcpassword='logChain' # see multichain.conf in blockchain directory
+rpcuser = 'genesis'
+rpcpassword = 'logChain'
+rpchost = '172.18.0.2' 
+rpcport = '7011'         
 
-mc=MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
+# Setup client
+client = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
-txmid=mc.publish('strream1', 'key1', {'json' : {'name' : 'john', 'age' : 30}})
-
-if mc.success():
-    pass
-
-else:
-    print('error')
+# Get blockchain info
+info = client.getinfo()
+print(info)
