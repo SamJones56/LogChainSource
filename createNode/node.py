@@ -19,7 +19,7 @@ def chainPerms(address):
 
 def logChainInit():
     # Connect to logChain
-    print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
+    print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010" + bcolors.ENDC)
     cmd = ["multichaind", "logChain@172.18.0.2:7010"]
     subprocess.run(cmd)
     # Get the address string after connecting
