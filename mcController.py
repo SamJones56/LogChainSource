@@ -1,4 +1,5 @@
 from multichain import MultiChainClient
+import subprocess
 
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
@@ -13,7 +14,8 @@ def connectToChain(address):
     permissions = "connect,send,receive"
     try:
         response = client.grant(address, permissions)
-        print("Grant successful:", response)
+        print("Grant successful: " + response + ". Starting")
+        subprocess.cun("multichaind logChain -daemon")
     except Exception as e:
         print("Error granting permissions:", str(e))
 
