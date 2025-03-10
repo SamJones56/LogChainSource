@@ -10,7 +10,6 @@ networks:
     name: multichain_test
 
 services:
-
   genesis:
     build:
       context: ./createGenesis
@@ -53,20 +52,20 @@ services:
     entrypoint: ["sh", "-c", "python3 node.py && tail -f /dev/null"]
     # python3 node.py &&
 
-    node2:
-      build:
-        context: ./createNode
-        dockerfile: Docker
-      container_name: multichain_node2
-      networks:
-        - test
-      depends_on:
-        genesis:
-          condition: service_healthy
-      volumes:
-        - ../multichain/node1_data:/root/.multichain
-      ports:
-      - 7030:7030
-      - 7031:7031
-      entrypoint: ["sh", "-c", "python3 node.py && tail -f /dev/null"]
+  node2:
+    build:
+      context: ./createNode
+      dockerfile: Docker
+    container_name: multichain_node2
+    networks:
+      - test
+    depends_on:
+      genesis:
+        condition: service_healthy
+    volumes:
+      - ../multichain/node1_data:/root/.multichain
+    ports:
+    - 7030:7030
+    - 7031:7031
+    entrypoint: ["sh", "-c", "python3 node.py && tail -f /dev/null"]
     # python3 node.py &&
