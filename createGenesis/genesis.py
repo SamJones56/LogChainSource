@@ -63,7 +63,8 @@ def genChain():
 
      # Create the stream
      print(bcolors.OKGREEN + "Create stream" + bcolors.ENDC)
-     createStream("mainStream", {"restrict":"write"})
+     perms = '{"restrict":"write"}'
+     createStream("mainStream", perms)
 
 
 genChain()
