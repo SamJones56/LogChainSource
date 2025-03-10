@@ -3,6 +3,7 @@
 volumes:
   genesis:
   node1:
+  node2:
 
 networks:
   test:
@@ -26,7 +27,6 @@ services:
       - 7011:7011
     entrypoint: ["sh", "-c", "python3 genesis.py && touch /root/genesis_done && tail -f /dev/null"]
 # python3 genesis.py && 
-
     # wait for genesis to finish
     healthcheck: 
       test: ["CMD", "test", "-f", "/root/genesis_done"]
@@ -47,10 +47,26 @@ services:
         condition: service_healthy
     volumes:
       - ../multichain/node1_data:/root/.multichain
-    # privileged: true
-    # working_dir: /root
     ports:
       - 7020:7020
       - 7021:7021
     entrypoint: ["sh", "-c", "python3 node.py && tail -f /dev/null"]
+    # python3 node.py &&
+
+    node2:
+      build:
+        context: ./createNode
+        dockerfile: Docker
+      container_name: multichain_node2
+      networks:
+        - test
+      depends_on:
+        genesis:
+          condition: service_healthy
+      volumes:
+        - ../multichain/node1_data:/root/.multichain
+      ports:
+      - 7030:7030
+      - 7031:7031
+      entrypoint: ["sh", "-c", "python3 node.py && tail -f /dev/null"]
     # python3 node.py &&
