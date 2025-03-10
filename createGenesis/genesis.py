@@ -53,7 +53,7 @@ def genChain():
           f.writelines(lines)
 
      # Writing time
-     # time.sleep(5)
+     time.sleep(5)
 
      # Starting the daemon
      print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.ENDC)

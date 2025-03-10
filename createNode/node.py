@@ -21,6 +21,7 @@ def logChainInit():
     # Connect to logChain
     print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
     cmd = ["multichaind", "logChain@172.18.0.2:7010", "-daemon"]
+    subprocess.run(cmd)
     # Get the address string after connecting
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
