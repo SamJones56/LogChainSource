@@ -67,7 +67,7 @@ services:
     networks:
       - test
     depends_on:
-      genesis:
+      node1:
         condition: service_healthy
     volumes:
       - ../multichain/node1_data:/root/.multichain
