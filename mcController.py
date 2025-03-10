@@ -23,11 +23,8 @@ def connectToChain(address):
 # Create a stream -> give name + restrictions in JSON format
 def createStream(name, restrictions):
     type = "stream"
-    # https://www.w3schools.com/python/python_json.asp
-    # restrictions = json.loads(restrictions)
-    print(restrictions)
     try:
-        response = client.create(type, name, restrictions)
+        response = client.create(name, restrictions)
         print("Stream status: ", response)
     except Exception as e:
         print("Error granting permissions:", str(e))
