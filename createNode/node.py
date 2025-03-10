@@ -24,15 +24,10 @@ def logChainInit():
     # Get the address string
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
-
+    # https://www.w3schools.com/python/python_regex.asp
     address = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
-
     address = address.group(1)
-    print(address)
-    # Path for logChain
-    confPath = "/root/.multichain/logChain/multichain.conf"
-
-
+    
     # Wait for multichain connection
     for i in range(120):
         if address:
