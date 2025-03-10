@@ -15,8 +15,8 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def chainPerms():
-    connectToChain()
+def chainPerms(address):
+    connectToChain(address)
 
 def logChainInit():
     print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010 -daemon" + bcolors.ENDC)
@@ -33,7 +33,7 @@ def logChainInit():
             break
         time.sleep(1)
     # Gather perms on the chain
-    chainPerms() 
+    chainPerms(address) 
     
 
 logChainInit()
