@@ -1,7 +1,7 @@
 import subprocess
 import re
 import time
-from mcController import connectToChain, subStream
+from mcController import connectToChain, subStream, grantStream
 
 class bcolors:
     HEADER = '\033[95m'
@@ -26,26 +26,34 @@ def logChainInit():
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
     # https://www.w3schools.com/python/python_regex.asp
-    address = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
-    address = address.group(1)
+    walletAddress = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
+    walletAddress = walletAddress.group(1)
 
     # Get wallet address
-    if address:
-        print(bcolors.OKCYAN + f"ADDRESS FOUND: {address} " + bcolors.ENDC)
+    if walletAddress:
+        print(bcolors.OKCYAN + f"ADDRESS FOUND: {walletAddress} " + bcolors.ENDC)
     else:
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
     time.sleep(2)
+
     # Connect to logChain
-    print(bcolors.OKCYAN + "Connecting to Chain" + bcolors.ENDC)
-    connectToChain(address)
+    print(bcolors.WARNING + "Connecting to Chain" + bcolors.ENDC)
+    connectToChain(walletAddress)
     time.sleep(2)
+
     # Start daemon
     print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
     subprocess.run(["multichaind", "logChain", "-daemon"])
     time.sleep(2)
+
     # Connect to mainStream
-    print(bcolors.OKCYAN + "Subscribing to mainStream" + bcolors.ENDC)
-    subStream("mainStream")
+    streamName = "mainStream"
+    print(bcolors.WARNING + "Subscribing to mainStream" + bcolors.ENDC)
+    subStream(streamName)
     time.sleep(2)
+
+    # Get permissions for mainStream
+    print(bcolors.WARNING + "Subscribing to mainStream" + bcolors.ENDC)
+    grantStream(walletAddress, streamName)
 
 logChainInit()

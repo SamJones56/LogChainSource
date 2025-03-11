@@ -1,6 +1,16 @@
 from multichain import MultiChainClient
 import time
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
@@ -11,14 +21,14 @@ rpcport = '7011'
 mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
 def connect(txid):
-    for i in range(120):
+    for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
-            print("Successful: ", txid)
+            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
             break
         time.sleep(1)
-        print('Error code: '+str(mc.errorcode())+'\n')
-        print('Error message: '+mc.errormessage()+'\n')
+        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
 # Take wallet address as input and connect to genesis node
 def connectToChain(walletAddress):
@@ -37,9 +47,9 @@ def createStream(streamName, streamRestrictions):
 def subStream(streamName):
     try:
         mc.subscribe(streamName)
-        print(f"Successfully subscribed to stream: {streamName}")
+        print(bcolors.OKGREEN + f"Successfully subscribed to stream: {streamName}" + bcolors.ENDC)
     except Exception as e:
-        print(f"Failed to subscribe stream: {streamName}")
+        print(bcolors.FAIL + f"Failed to subscribe stream: {streamName}" + bcolors.ENDC)
     
 
 # Grant stream permissions
