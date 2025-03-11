@@ -20,7 +20,21 @@ rpcport = '7011'
 # Setup client
 mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
-def connect(txid):
+# def connect(txid):
+#     for i in range(60):
+#         mc.getrawtransaction(txid)
+#         if mc.success():
+#             print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+#             break
+#         time.sleep(1)
+#         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+#         print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
+
+# Take wallet address as input and connect to genesis node
+def connectToChain(walletAddress):
+    permissions = "connect,send,receive"
+    txid = mc.grant(walletAddress, permissions)
+    # connect(txid)
     for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
@@ -30,17 +44,21 @@ def connect(txid):
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
         print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
-# Take wallet address as input and connect to genesis node
-def connectToChain(walletAddress):
-    permissions = "connect,send,receive"
-    txid = mc.grant(walletAddress, permissions)
-    connect(txid)
 
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(streamName, streamRestrictions):
     txid=mc.create('stream', streamName, streamRestrictions)
-    connect(txid)
+    # connect(txid)
+    for i in range(60):
+        mc.getrawtransaction(txid)
+        if mc.success():
+            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+            break
+        time.sleep(1)
+        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
+
 
 
 # Subscribe to existing stream
@@ -55,4 +73,34 @@ def subStream(streamName):
 # Grant stream permissions
 def grantStream(walletAddress, permissions):
     txid = mc.grant(walletAddress, permissions)
-    connect(txid)
+    # connect(txid)
+    for i in range(60):
+        mc.getrawtransaction(txid)
+        if mc.success():
+            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+            break
+        time.sleep(1)
+        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
+
+
+# Add items to stream
+# streamName = "mainStream"
+# key = "1"
+# data = {"json":{"name":"Sam"}}
+def addToStream(streamName, key, data):
+    txid = mc.publish(streamName, key, data)
+    # if mc.success():
+    #     pass
+    # else:
+    #     print('Error code: '+str(mc.errorcode())+'\n')
+    #     print('Error message: '+mc.errormessage() +'\n')
+    for i in range(60):
+        mc.getrawtransaction(txid)
+        if mc.success():
+            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+            break
+        time.sleep(1)
+        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
+
