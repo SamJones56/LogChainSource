@@ -67,7 +67,7 @@ def logChainInit():
     time.sleep(2)
 
     # Get stream items
-    verbose = "false"
+    verbose = False
     print(bcolors.WARNING + "Getting Stream Data" + bcolors.ENDC)
     getStreamData(streamName, verbose)
 
