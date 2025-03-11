@@ -1,7 +1,7 @@
 import subprocess
 import re
 import time
-from mcController import connectToChain, subStream, grantStream
+from mcController import connectToChain, subStream, grantStream, addToStream ,getStreamData
 
 class bcolors:
     HEADER = '\033[95m'
@@ -55,7 +55,17 @@ def logChainInit():
 
     # Get permissions for mainStream
     print(bcolors.WARNING + "Granting on mainStream" + bcolors.ENDC)
-    permissions = "mainStream.write,read"
+    permissions = "mainStream.write,mainStream.read"
     grantStream(walletAddress ,permissions)
+    time.sleep(2)
+
+    # Test post to stream
+    data = {"json":{"name":"baasha","city":"mumbai"}}
+    addToStream(streamName, "key1", data)
+    time.sleep(2)
+
+    # Get stream items
+    print(bcolors.WARNING + "Getting Stream Data" + bcolors.ENDC)
+    getStreamData(streamName)
 
 logChainInit()
