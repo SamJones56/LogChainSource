@@ -64,20 +64,8 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(chainName, streamName):
-    
+    print(bcolors.WARNING + "Subscribing to ", streamName + bcolors.ENDC)
     subprocess.run(["multichain-cli", chainName ,"subscribe", streamName])
-    # try:
-    #     mc.subscribe(streamName)
-    #     print(bcolors.OKGREEN + f"Successfully subscribed to stream: {streamName}" + bcolors.ENDC)
-    # except Exception as e:
-    #     print(bcolors.FAIL + f"Failed to subscribe stream: {streamName}" + bcolors.ENDC)
-    # mc.subscribe("logChain", streamName)
-    # if mc.success():
-    #     print(bcolors.OKGREEN + "Successful Connected to " + streamName, + bcolors.ENDC)
-    #     pass
-    # else:
-    #     print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
-    #     print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
 # Grant stream permissions
 def grantStream(walletAddress, permissions):
@@ -99,11 +87,6 @@ def grantStream(walletAddress, permissions):
 # data = {"json":{"name":"Sam"}}
 def addToStream(streamName, key, data):
     txid = mc.publish(streamName, key, data)
-    # if mc.success():
-    #     pass
-    # else:
-    #     print('Error code: '+str(mc.errorcode())+'\n')
-    #     print('Error message: '+mc.errormessage() +'\n')
     for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
@@ -113,3 +96,13 @@ def addToStream(streamName, key, data):
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
         print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
+def getStreamData(streamName):
+    txid = mc.liststreamitems(streamName)
+    for i in range(60):
+        mc.getrawtransaction(txid)
+        if mc.success():
+            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+            break
+        time.sleep(1)
+        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')

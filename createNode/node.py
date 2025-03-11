@@ -49,13 +49,13 @@ def logChainInit():
     # Connect to mainStream
     chainName = "logChain"
     streamName = "mainStream"
-    print(bcolors.WARNING + "Subscribing to mainStream" + bcolors.ENDC)
+    
     subStream(chainName,streamName)
     time.sleep(2)
 
     # Get permissions for mainStream
     print(bcolors.WARNING + "Granting on mainStream" + bcolors.ENDC)
-    permissions = "mainStream.write"
+    permissions = "mainStream.write,read"
     grantStream(walletAddress ,permissions)
 
 logChainInit()
