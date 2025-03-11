@@ -34,12 +34,14 @@ def logChainInit():
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
 
     print("connecting to chain****")
+    connectToChain(address)
+    subprocess.run(["multichaind", "logChain", "-daemon"])
     # Get connect,send,receive from chain
-    if(connectToChain(address)):
-        print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
-        subprocess.run(["multichaind", "logChain", "-daemon"])
-    else:
-        print(bcolors.FAIL + "FAIL Chain Connection" + bcolors.ENDC)
+    # if(connectToChain(address)):
+    #     print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
+    #     subprocess.run(["multichaind", "logChain", "-daemon"])
+    # else:
+    #     print(bcolors.FAIL + "FAIL Chain Connection" + bcolors.ENDC)
     
     print("Subbing to stream****")
     if(subStream("mainStream")):
