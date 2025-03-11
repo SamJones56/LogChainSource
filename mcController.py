@@ -76,14 +76,19 @@ def subStream(chainName, streamName):
 def grantStream(walletAddress, permissions):
     txid = mc.grant(walletAddress, permissions)
     # connect(txid)
-    for i in range(60):
-        mc.getrawtransaction(txid)
-        if mc.success():
-            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
-            break
-        time.sleep(1)
-        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
-        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
+    if mc.success():
+        print("Success: " + txid)  # Print the retrieved items
+    else:
+        print('Error code: ' + str(mc.errorcode()) + '\n')
+        print('Error message: ' + mc.errormessage() + '\n')
+    # for i in range(60):
+    #     mc.getrawtransaction(txid)
+    #     if mc.success():
+    #         print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+    #         break
+    #     time.sleep(1)
+    #     print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+    #     print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
 
 # Add items to stream
@@ -92,14 +97,19 @@ def grantStream(walletAddress, permissions):
 # data = {"json":{"name":"Sam"}}
 def addToStream(streamName, key, data):
     txid = mc.publish(streamName, key, data)
-    for i in range(60):
-        mc.getrawtransaction(txid)
-        if mc.success():
-            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
-            break
-        time.sleep(1)
-        print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
-        print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
+    if mc.success():
+        print("Success: " + txid)  # Print the retrieved items
+    else:
+        print('Error code: ' + str(mc.errorcode()) + '\n')
+        print('Error message: ' + mc.errormessage() + '\n')
+    # for i in range(60):
+    #     mc.getrawtransaction(txid)
+    #     if mc.success():
+    #         print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+    #         break
+    #     time.sleep(1)
+    #     print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
+    #     print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
 def getStreamData(streamName):
     response = mc.liststreamitems(streamName)

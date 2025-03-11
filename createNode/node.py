@@ -60,8 +60,9 @@ def logChainInit():
     time.sleep(2)
 
     # Test post to stream
-    data = {"json":{"name":"baasha","city":"mumbai"}}
-    addToStream(streamName, "key1", data)
+    key = "1"
+    data = {"json":{"name":"Sam"}}
+    addToStream(streamName, key, data)
     time.sleep(2)
 
     # Get stream items
