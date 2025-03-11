@@ -60,11 +60,11 @@ def logChainInit():
     time.sleep(2)
 
     # Test post to stream
-    key = "1"
-    data = {"json":{"name":"Sam"}}
-    print(bcolors.WARNING + "Adding test data to mainStream" + bcolors.ENDC)
-    addToStream(streamName, key, data)
-    time.sleep(2)
+    # key = "1"
+    # data = {"json":{"name":"Sam"}}
+    # print(bcolors.WARNING + "Adding test data to mainStream" + bcolors.ENDC)
+    # addToStream(streamName, key, data)
+    # time.sleep(2)
 
     # Get stream items
     verbose = False
