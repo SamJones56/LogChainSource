@@ -35,8 +35,12 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(streamName):
-    txid=mc.subscribe(streamName)
-    connect(txid)
+    try:
+        mc.subscribe(streamName)
+        print(f"Successfully subscribed to stream: {streamName}")
+    except Exception as e:
+        print(f"Failed to subscribe stream: {streamName}")
+    
 
 # Grant stream permissions
 def grantStream(walletAddress, streamName):
