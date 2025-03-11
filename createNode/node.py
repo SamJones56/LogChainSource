@@ -47,9 +47,10 @@ def logChainInit():
     time.sleep(2)
 
     # Connect to mainStream
+    chainName = "logChain"
     streamName = "mainStream"
     print(bcolors.WARNING + "Subscribing to mainStream" + bcolors.ENDC)
-    subStream(streamName)
+    subStream(chainName,streamName)
     time.sleep(2)
 
     # Get permissions for mainStream
