@@ -90,8 +90,8 @@ def addToStream(streamName, key, data):
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
 
 
-def getStreamData(streamName):
-    response = mc.liststreamitems(streamName)
+def getStreamData(streamName, verbose):
+    response = mc.liststreamitems(streamName,verbose)
     if mc.success():
         print(bcolors.OKGREEN + streamName + " Stream Items :" + bcolors.ENDC)
         print(response)
