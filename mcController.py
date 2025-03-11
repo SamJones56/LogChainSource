@@ -54,7 +54,8 @@ def subStream(streamName):
 
 # Grant stream permissions
 def grantStream(walletAddress, streamName, permissions):
-    txid = mc.grant(walletAddress, f"stream:{streamName}", permissions)
+
+    txid = mc.grant(walletAddress, permissions)
     if mc.success():
         pass # operation was successful
     else: # operation failed		

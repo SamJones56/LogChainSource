@@ -53,8 +53,8 @@ def logChainInit():
     time.sleep(2)
 
     # Get permissions for mainStream
-    print(bcolors.WARNING + "Subscribing to mainStream" + bcolors.ENDC)
-    permissions = "admin,activate,connect,send,receive,create,issue,write"
-    grantStream(walletAddress, streamName, permissions)
+    print(bcolors.WARNING + "Granting on mainStream" + bcolors.ENDC)
+    permissions = "mainStream.write"
+    grantStream(walletAddress, permissions)
 
 logChainInit()
