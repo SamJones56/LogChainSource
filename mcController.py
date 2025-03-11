@@ -15,17 +15,16 @@ def connect(txid):
         mc.getrawtransaction(txid)
         if mc.success():
             print("Successful: ", txid)
-            return True
+            break
         time.sleep(1)
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage()+'\n')
-        return False
 
 # Take wallet address as input and connect to genesis node
 def connectToChain(walletAddress):
     permissions = "connect,send,receive"
     txid = mc.grant(walletAddress, permissions)
-    return(connect(txid))
+    connect(txid)
 
 
 # Create a stream -> give name + restrictions in JSON format
@@ -37,10 +36,10 @@ def createStream(streamName, streamRestrictions):
 # Subscribe to existing stream
 def subStream(streamName):
     txid=mc.subscribe(streamName)
-    return(connect(txid))
+    connect(txid)
 
 # Grant stream permissions
 def grantStream(walletAddress, streamName, permissionType):
     streamPerms = (streamName + "." + permissionType)
     txid = mc.grant(walletAddress, streamPerms)
-    return(connect(txid))
+    connect(txid)
