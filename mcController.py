@@ -64,11 +64,8 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(chainName, streamName):
-    # print(bcolors.WARNING + "Subscribing to ", streamName + bcolors.ENDC)
-    # subprocess.run(["multichain-cli", chainName ,"subscribe", streamName])
     print("Subscribing to stream:", streamName)
     mc.subscribe(streamName)
-    # Register time
     time.sleep(5)
 
 
@@ -81,20 +78,8 @@ def grantStream(walletAddress, permissions):
     else:
         print('Error code: ' + str(mc.errorcode()) + '\n')
         print('Error message: ' + mc.errormessage() + '\n')
-    # for i in range(60):
-    #     mc.getrawtransaction(txid)
-    #     if mc.success():
-    #         print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
-    #         break
-    #     time.sleep(1)
-    #     print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
-    #     print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
-
 
 # Add items to stream
-# streamName = "mainStream"
-# key = "1"
-# data = {"json":{"name":"Sam"}}
 def addToStream(streamName, key, data):
     txid = mc.publish(streamName, key, data)
     if mc.success():
@@ -102,18 +87,10 @@ def addToStream(streamName, key, data):
     else:
         print('Error code: ' + str(mc.errorcode()) + '\n')
         print('Error message: ' + mc.errormessage() + '\n')
-    # for i in range(60):
-    #     mc.getrawtransaction(txid)
-    #     if mc.success():
-    #         print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
-    #         break
-    #     time.sleep(1)
-    #     print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
-    #     print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
-def getStreamData(streamName):
-    response = mc.liststreamitems(streamName)
 
+def getStreamData(streamName, verbose):
+    response = mc.liststreamitems(streamName, verbose)
     if mc.success():
         print(response)  # Print the retrieved items
     else:
