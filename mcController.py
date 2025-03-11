@@ -7,28 +7,41 @@ rpchost = '172.18.0.2'
 rpcport = '7011'         
 
 # Setup client
-# mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
+mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
-# Take wallet address as input and connect to genesis node
-def connectToChain(address):
-    mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
-    permissions = "connect,send,receive"
-    txid = mc.grant(address, permissions)
-    if mc.success():
-        print("Chain: ", address, " successful")
-        pass # operation was successful
-    else:
-        print('Error code: '+str(mc.errorcode())+'\n')
-        print('Error message: '+mc.errormessage()+'\n')
-
-# Create a stream -> give name + restrictions in JSON format
-def createStream(name, restrictions):
-    mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
-    txid=mc.create('stream', name, restrictions)
+def connect(mc):
     for i in range(120):
         if mc.success():
-            print("Stream: ", name, " successful")
-            break # operation was successful
+            print("Success: ", mc)
+            break
         time.sleep(1)
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage()+'\n')
+
+# Take wallet address as input and connect to genesis node
+def connectToChain(walletAddress):
+    permissions = "connect,send,receive"
+    txid = mc.grant(walletAddress, permissions)
+    # if mc.success():
+    #     print("Chain: ", walletAddress, " successful")
+    #     pass # operation was successful
+    # else:
+    #     print('Error code: '+str(mc.errorcode())+'\n')
+    #     print('Error message: '+mc.errormessage()+'\n')
+    connect(txid)
+
+# Create a stream -> give name + restrictions in JSON format
+def createStream(streamName, streamRestrictions):
+    txid=mc.create('stream', streamName, streamRestrictions)
+    # for i in range(120):
+    #     if mc.success():
+    #         print("Stream: ", streamName, " successful")
+    #         break # operation was successful
+    #     time.sleep(1)
+    #     print('Error code: '+str(mc.errorcode())+'\n')
+    #     print('Error message: '+mc.errormessage()+'\n')
+    connect(txid)
+
+# Subscribe to existing stream
+def subStream(streamName):
+    txid=mc.subscribe(streamName)
