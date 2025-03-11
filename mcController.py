@@ -89,7 +89,7 @@ def addToStream(streamName, key, data):
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
 
-
+# Get stream items
 def getStreamData(streamName, verbose):
     response = mc.liststreamitems(streamName,verbose)
     if mc.success():
@@ -98,3 +98,33 @@ def getStreamData(streamName, verbose):
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode())+ bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
+
+# Get address
+def getAddress():
+    address = mc.getaddresses()
+    if mc.success():
+        pass
+    else:
+        print('Error code: '+str(mc.errorcode())+'\n')
+        print('Error message: '+mc.errormessage() +'\n')
+    return address
+
+# Publish from
+def publishFrom(fromAddress, stream, key, data):
+    txid = mc.publishfrom(fromAddress, stream, key, data)
+    if mc.success():
+        pass
+    else:
+        print('Error code: '+str(mc.errorcode())+'\n')
+        print('Error message: '+mc.errormessage() +'\n')
+    return txid
+
+# list items
+def listPublisherItems(stream, address, verbose, count):
+    txid = mc.liststreampublisheritems(stream, address, verbose, count)
+    if mc.success():
+        pass
+    else:
+        print('Error code: '+str(mc.errorcode())+'\n')
+        print('Error message: '+mc.errormessage() +'\n')
+    return txid

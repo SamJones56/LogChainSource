@@ -1,7 +1,7 @@
 import subprocess
 import time
 import os
-from mcController import createStream
+from mcController import createStream, getAddress, subStream
 
 class bcolors:
     HEADER = '\033[95m'
@@ -68,5 +68,22 @@ def genChain():
      name = "mainStream"
      createStream(name, restrictions)
 
+     #### Setting up private chains ####
+     # Get address
+     walletAddress = getAddress()
+     # Create pubkeys(store public keys), items(store data), access stream (control access)
+     print(bcolors.OKGREEN + "Create pubkeys, items, access streams" + bcolors.ENDC)
+     restrictions = {"restrict":"write"}
+     pubkeys = "pubkeys"
+     items = "items"
+     access = "access"
+     createStream(pubkeys, restrictions)
+     createStream(items, restrictions)
+     createStream(access, restrictions)
+
+     streamName="pubkeys,items,access"
+     chainName="logChain"
+     subStream(chainName,streamName)
+     time.sleep(2)
 
 genChain()

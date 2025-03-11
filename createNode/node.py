@@ -49,7 +49,10 @@ def logChainInit():
     # Connect to mainStream
     chainName = "logChain"
     streamName = "mainStream"
-    
+    subStream(chainName,streamName)
+    time.sleep(2)
+
+    streamName="pubkeys,items,access"
     subStream(chainName,streamName)
     time.sleep(2)
 
