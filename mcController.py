@@ -39,7 +39,7 @@ def connectToChain(walletAddress):
     for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
-            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+            print(bcolors.OKGREEN + "Successfully granted: " + walletAddress + permissions + bcolors.ENDC)
             break
         time.sleep(1)
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
@@ -54,7 +54,7 @@ def createStream(streamName, streamRestrictions):
     for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
-            print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
+            print(bcolors.OKGREEN + "Successfully created stream : ", streamName + bcolors.ENDC)
             break
         time.sleep(1)
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
@@ -64,7 +64,7 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(chainName, streamName):
-    print("Subscribing to stream:", streamName)
+    print(bcolors.OKGREEN + "Subscribed to stream:", streamName + bcolors.ENDC)
     mc.subscribe(streamName)
     time.sleep(5)
 
@@ -74,25 +74,25 @@ def grantStream(walletAddress, permissions):
     txid = mc.grant(walletAddress, permissions)
     # connect(txid)
     if mc.success():
-        print("Success: " + txid)  # Print the retrieved items
+        print(bcolors.OKGREEN +"Success: " + txid + bcolors.ENDC)
     else:
-        print('Error code: ' + str(mc.errorcode()) + '\n')
-        print('Error message: ' + mc.errormessage() + '\n')
+        print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
+        print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
 
 # Add items to stream
 def addToStream(streamName, key, data):
     txid = mc.publish(streamName, key, data)
     if mc.success():
-        print("Success: " + txid)  # Print the retrieved items
+        print(bcolors.OKGREEN + "Successfully added to " + streamName + " " + data + bcolors.ENDC) 
     else:
-        print('Error code: ' + str(mc.errorcode()) + '\n')
-        print('Error message: ' + mc.errormessage() + '\n')
+        print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
+        print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
 
 
 def getStreamData(streamName, verbose):
     response = mc.liststreamitems(streamName, verbose)
     if mc.success():
-        print(response)  # Print the retrieved items
+        print(bcolors.OKGREEN + streamName + " Stream Items : " + response + bcolors.ENDC)
     else:
-        print('Error code: ' + str(mc.errorcode()) + '\n')
-        print('Error message: ' + mc.errormessage() + '\n')
+        print(bcolors.FAIL +'Error code: ' + str(mc.errorcode())+ bcolors.ENDC + '\n')
+        print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
