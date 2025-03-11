@@ -1,6 +1,6 @@
 from multichain import MultiChainClient
 import time
-import functools
+
 
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
@@ -15,7 +15,8 @@ def connect(txid):
         mc.getrawtransaction(txid)
         if mc.success():
             print("Successful")
-            break # operation was successful
+            return True
+            # break # operation was successful
         time.sleep(1)
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage()+'\n')
@@ -24,7 +25,7 @@ def connect(txid):
 def connectToChain(walletAddress):
     permissions = "connect,send,receive"
     txid = mc.grant(walletAddress, permissions)
-    connect(txid)
+    return(connect(txid))
     # print(mc.grant(walletAddress, permissions))
     # if mc.success():
     #     print("Chain: ", walletAddress, " successful")

@@ -32,7 +32,8 @@ def logChainInit():
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
 
     # Get connect,send,receive from chain
-    connectToChain(address) 
+    if(connectToChain(address)):
+        subprocess.run(["multichaind", "logChain", "-daemon"])
     
 
 logChainInit()
