@@ -16,21 +16,24 @@ class bcolors:
 
 def logChainInit():
     # Connect to logChain
-    print(bcolors.OKGREEN + "multichaind logChain@172.18.0.2:7010" + bcolors.ENDC)
+    
     cmd = ["multichaind", "logChain@172.18.0.2:7010"]
-    subprocess.run(cmd)
+    # subprocess.run(cmd)
     # Get the address string after connecting
+    print(bcolors.OKCYAN + "multichaind logChain@172.18.0.2:7010" + bcolors.ENDC)
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
     # https://www.w3schools.com/python/python_regex.asp
     address = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
     address = address.group(1)
 
+    print("getting address****")
     if address:
         print(bcolors.OKCYAN + f"ADDRESS FOUND: {address} " + bcolors.ENDC)
     else:
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
 
+    print("connecting to chain****")
     # Get connect,send,receive from chain
     if(connectToChain(address)):
         print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
@@ -38,6 +41,7 @@ def logChainInit():
     else:
         print(bcolors.FAIL + "FAIL Chain Connection" + bcolors.ENDC)
     
+    print("Subbing to stream****")
     if(subStream("mainStream")):
         print(bcolors.OKCYAN + "Subscribed to mainStream" + bcolors.ENDC)
     else:
