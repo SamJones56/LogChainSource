@@ -30,5 +30,5 @@ ARG CACHE_BUST
 RUN curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winTest.txt &&  \
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winTest.csv &&  \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winLogReader.py
