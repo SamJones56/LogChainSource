@@ -11,7 +11,7 @@ rpcport = '7011'
 mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 
 def connect(txid):
-    for i in range(60):
+    for i in range(120):
         mc.getrawtransaction(txid)
         if mc.success():
             print("Successful")
