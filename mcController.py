@@ -64,7 +64,7 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(chainName, streamName):
-    print(bcolors.OKGREEN + "Subscribed to stream:", streamName + bcolors.ENDC)
+    print(bcolors.OKGREEN + "Subscribed to stream:", streamName + " on: " + chainName +bcolors.ENDC)
     mc.subscribe(streamName)
     time.sleep(5)
 
@@ -75,6 +75,7 @@ def grantStream(walletAddress, permissions):
     # connect(txid)
     if mc.success():
         print(bcolors.OKGREEN +"Success: " + txid + bcolors.ENDC)
+        print(permissions)
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
@@ -92,7 +93,8 @@ def addToStream(streamName, key, data):
 def getStreamData(streamName):
     response = mc.liststreamitems(streamName)
     if mc.success():
-        print(bcolors.OKGREEN + streamName + " Stream Items : " + response + bcolors.ENDC)
+        print(bcolors.OKGREEN + streamName + " Stream Items :" + bcolors.ENDC)
+        print(response)
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode())+ bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
