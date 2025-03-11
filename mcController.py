@@ -53,7 +53,6 @@ def subStream(streamName):
     
 
 # Grant stream permissions
-def grantStream(walletAddress, streamName):
-    permissions="write"
+def grantStream(walletAddress, streamName, permissions):
     txid = mc.grant(walletAddress, f"stream:{streamName}", permissions)
     connect(txid)
