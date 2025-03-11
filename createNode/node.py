@@ -42,8 +42,8 @@ def logChainInit():
     subprocess.run(["multichaind", "logChain", "-daemon"])
 
     # Connect to mainStream
-    print(bcolors.OKCYAN + "Subscribing to mainStream" + bcolors.ENDC)
-    subStream("mainStream")
+    # print(bcolors.OKCYAN + "Subscribing to mainStream" + bcolors.ENDC)
+    # subStream("mainStream")
     
 
 logChainInit()
