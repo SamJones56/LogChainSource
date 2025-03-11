@@ -52,9 +52,9 @@ def logChainInit():
     subStream(chainName,streamName)
     time.sleep(2)
 
-    streamName="pubkeys,items,access"
-    subStream(chainName,streamName)
-    time.sleep(2)
+    # streamName="pubkeys,items,access"
+    # subStream(chainName,streamName)
+    # time.sleep(2)
 
     # Get permissions for mainStream
     print(bcolors.WARNING + "Granting on mainStream" + bcolors.ENDC)
