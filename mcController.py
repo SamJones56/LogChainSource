@@ -19,6 +19,7 @@ def connect(txid):
         time.sleep(1)
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage()+'\n')
+        return False
 
 # Take wallet address as input and connect to genesis node
 def connectToChain(walletAddress):
