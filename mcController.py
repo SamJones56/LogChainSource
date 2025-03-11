@@ -14,9 +14,8 @@ def connect(txid):
     for i in range(120):
         mc.getrawtransaction(txid)
         if mc.success():
-            print("Successful")
+            print("Successful: ", txid)
             return True
-            # break # operation was successful
         time.sleep(1)
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage()+'\n')
@@ -26,29 +25,15 @@ def connectToChain(walletAddress):
     permissions = "connect,send,receive"
     txid = mc.grant(walletAddress, permissions)
     return(connect(txid))
-    # print(mc.grant(walletAddress, permissions))
-    # if mc.success():
-    #     print("Chain: ", walletAddress, " successful")
-    #     pass # operation was successful
-    # else:
-    #     print('Error code: '+str(mc.errorcode())+'\n')
-    #     print('Error message: '+mc.errormessage()+'\n')
 
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(streamName, streamRestrictions):
     txid=mc.create('stream', streamName, streamRestrictions)
     connect(txid)
-    # print(mc.create('stream', streamName, streamRestrictions))
-    # for i in range(120):
-    #     if mc.success():
-    #         print("Stream: ", streamName, " successful")
-    #         break # operation was successful
-    #     time.sleep(1)
-    #     print('Error code: '+str(mc.errorcode())+'\n')
-    #     print('Error message: '+mc.errormessage()+'\n')
 
 
 # Subscribe to existing stream
 def subStream(streamName):
     txid=mc.subscribe(streamName)
+    return(connect(txid))

@@ -1,6 +1,6 @@
 import subprocess
 import re
-from mcController import connectToChain
+from mcController import connectToChain, subStream
 
 class bcolors:
     HEADER = '\033[95m'
@@ -27,13 +27,22 @@ def logChainInit():
     address = address.group(1)
 
     if address:
-        print(bcolors.OKGREEN + f"ADDRESS FOUND: {address} " + bcolors.ENDC)
+        print(bcolors.OKCYAN + f"ADDRESS FOUND: {address} " + bcolors.ENDC)
     else:
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
 
     # Get connect,send,receive from chain
     if(connectToChain(address)):
+        print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
         subprocess.run(["multichaind", "logChain", "-daemon"])
+    else:
+        print(bcolors.FAIL + "FAIL Chain Connection" + bcolors.ENDC)
+    
+    if(subStream("mainStream")):
+        print(bcolors.OKCYAN + "Subscribed to mainStream" + bcolors.ENDC)
+    else:
+        print(bcolors.FAIL + "FAIL Stream Connection" + bcolors.ENDC)
+    
     
 
 logChainInit()
