@@ -13,8 +13,7 @@ mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
 # Take wallet address as input and connect to genesis node
 def connectToChain(walletAddress):
     permissions = "connect,send,receive"
-    txid = mc.grant(walletAddress, permissions)
-    print(mc)
+    print(mc.grant(walletAddress, permissions))
     if mc.success():
         print("Chain: ", walletAddress, " successful")
         pass # operation was successful
@@ -25,8 +24,8 @@ def connectToChain(walletAddress):
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(streamName, streamRestrictions):
-    txid=mc.create('stream', streamName, streamRestrictions)
-    print(mc)
+    print(mc.create('stream', streamName, streamRestrictions))
+    
     for i in range(120):
         if mc.success():
             print("Stream: ", streamName, " successful")
