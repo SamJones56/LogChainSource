@@ -39,7 +39,6 @@ def subStream(streamName):
     connect(txid)
 
 # Grant stream permissions
-def grantStream(walletAddress, streamName, permissionType):
-    streamPerms = (streamName + "." + permissionType)
-    txid = mc.grant(walletAddress, streamPerms)
+def grantStream(walletAddress, streamName):
+    txid = mc.grant(walletAddress, streamName)
     connect(txid)
