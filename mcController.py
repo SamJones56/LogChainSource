@@ -93,8 +93,9 @@ def addToStream(streamName, key, data):
 def getStreamData(streamName, verbose):
     response = mc.liststreamitems(streamName,verbose)
     if mc.success():
-        print(bcolors.OKGREEN + streamName + " Stream Items :" + bcolors.ENDC)
-        print(response)
+        # print(bcolors.OKGREEN + streamName + " Stream Items :" + bcolors.ENDC)
+        # print(response)
+        return(response)
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode())+ bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
@@ -127,3 +128,13 @@ def listPublisherItems(stream, address, verbose, count):
         print('Error code: '+str(mc.errorcode())+'\n')
         print('Error message: '+mc.errormessage() +'\n')
     return txid
+
+# List the stream items
+def getPubKey(stream,key):
+    txid = mc.liststreamkeyitems(stream, key)
+    if mc.success():
+        pubkeyH = txid[0]["data"]
+        return bytes.fromhex(pubkeyH)
+    else:
+        print('Error code: '+str(mc.errorcode())+'\n')
+        print('Error message: '+mc.errormessage() +'\n')

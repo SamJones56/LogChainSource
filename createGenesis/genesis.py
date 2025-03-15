@@ -91,22 +91,4 @@ def genChain():
      print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
      addToStream(streamName, "genesis", kpk.hex())
 
-     # #### Setting up private chains ####
-     # # Get address
-     # walletAddress = getAddress()
-     # # Create pubkeys(store public keys), items(store data), access stream (control access)
-     # print(bcolors.OKGREEN + "Create pubkeys, items, access streams" + bcolors.ENDC)
-     # restrictions = {"restrict":"write"}
-     # pubkeys = "pubkeys"
-     # items = "items"
-     # access = "access"
-     # createStream(pubkeys, restrictions)
-     # createStream(items, restrictions)
-     # createStream(access, restrictions)
-
-     # streamName="pubkeys,items,access"
-     # chainName="logChain"
-     # subStream(chainName,streamName)
-     # time.sleep(2)
-
 genChain()

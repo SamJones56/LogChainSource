@@ -1,7 +1,7 @@
 import subprocess
 import re
 import time
-from mcController import connectToChain, subStream, grantStream, addToStream ,getStreamData
+from mcController import connectToChain, subStream, grantStream, addToStream ,getPubKey
 
 class bcolors:
     HEADER = '\033[95m'
@@ -24,17 +24,21 @@ def connectAndPerm(chainName, streamName, walletAddress):
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
     grantStream(walletAddress ,permissions)
     time.sleep(5)
-    getStreamData(streamName,verbose)
+    # getStreamData(streamName,verbose)
 
+def savePk():
+    pkFile="kPk.key"
+    data = getPubKey("pubkeys","genesis")
+    with open(pkFile,"wb") as f:
+        f.write(data)
 
 def logChainInit():
     # Connect to logChain
     print(bcolors.OKCYAN + "multichaind logChain@172.18.0.2:7010" + bcolors.ENDC)
     time.sleep(2)
     cmd = ["multichaind", "logChain@172.18.0.2:7010"]
-    # subprocess.run(cmd)
+ 
     # Get the address string after connecting
-    
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
     # https://www.w3schools.com/python/python_regex.asp
@@ -58,52 +62,11 @@ def logChainInit():
     subprocess.run(["multichaind", "logChain", "-daemon"])
     time.sleep(2)
 
-    connectAndPerm("logChain", "pubkeys",walletAddress)
-    connectAndPerm("logChain", "pubkeys",walletAddress)
-    # # Connect & perm on pubkeys
-    # chainName = "logChain"
-    # streamName = "pubkeys"
-    # verbose = False
-    # print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
-    # subStream(chainName,streamName)
-    # time.sleep(2)
-    # # Get permissions for mainStream
-    # print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
-    # permissions = streamName + ".write,read"
-    # grantStream(walletAddress ,permissions)
-    # time.sleep(5)
-    # getStreamData(streamName,verbose)
+    # Connect and grant permissions on an existing chain
+    connectAndPerm("logChain", "pubkeys", walletAddress)
+    connectAndPerm("logChain", "data", walletAddress)
 
-    # # Connect & perm on data
-    # chainName = "logChain"
-    # streamName = "data"
-    # print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
-    # subStream(chainName,streamName)
-    # time.sleep(2)
-    # # Get permissions for mainStream
-    # print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
-    # permissions = streamName + ".write,read"
-    # grantStream(walletAddress ,permissions)
-    # time.sleep(5)
-    # getStreamData(streamName,verbose)
-
-    # streamName="pubkeys,items,access"
-    # subStream(chainName,streamName)
-    # time.sleep(2)
-
-
-
-    # Test post to stream
-    # key = "1"
-    # data = {"json":{"name":"Sam"}}
-    # print(bcolors.WARNING + "Adding test data to mainStream" + bcolors.ENDC)
-    # addToStream(streamName, key, data)
-    # time.sleep(2)
-
-    # Get stream items
-    # verbose = False
-    # print(bcolors.WARNING + "Getting Stream Data" + bcolors.ENDC)
-    # getStreamData(streamName,verbose)
+    # Save genesis public key
 
 
 
