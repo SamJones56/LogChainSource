@@ -68,7 +68,6 @@ def subStream(chainName, streamName):
     mc.subscribe(streamName)
     time.sleep(5)
 
-
 # Grant stream permissions
 def grantStream(walletAddress, permissions):
     txid = mc.grant(walletAddress, permissions)
@@ -84,7 +83,8 @@ def grantStream(walletAddress, permissions):
 def addToStream(streamName, key, data):
     txid = mc.publish(streamName, key, data)
     if mc.success():
-        print(bcolors.OKGREEN + "Successfully added to " + streamName + bcolors.ENDC) 
+        print(bcolors.OKGREEN + "Successfully added to " + streamName + bcolors.ENDC)
+        return txid 
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')

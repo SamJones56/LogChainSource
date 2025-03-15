@@ -7,6 +7,8 @@ from random import randrange
 from encAES import encAes
 # LineId,Date,Time,Level,Component,Content,EventId,EventTemplate
 
+pkFile="kPk.key"
+
 # Colours for printing
 class bcolors:
     WARNING = '\033[93m'
