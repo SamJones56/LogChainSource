@@ -62,11 +62,19 @@ def genChain():
      subprocess.run(cmd)
 
      time.sleep(20)
-     # Create the stream
-     print(bcolors.OKGREEN + "Create stream" + bcolors.ENDC)
+     # Create the streams
+     # Key stream
      restrictions = {"restrict":"write"}
-     name = "mainStream"
+     name = "pubkeys"
+     print(bcolors.OKGREEN + "Create stream:" + name + bcolors.ENDC)
      createStream(name, restrictions)
+
+     # Data stream
+     restrictions = {"restrict":"write"}
+     name = "data"
+     print(bcolors.OKGREEN + "Create stream:" + name + bcolors.ENDC)
+     createStream(name, restrictions)
+
 
      # #### Setting up private chains ####
      # # Get address

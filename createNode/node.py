@@ -46,21 +46,35 @@ def logChainInit():
     subprocess.run(["multichaind", "logChain", "-daemon"])
     time.sleep(2)
 
-    # Connect to mainStream
+    # Connect & perm on pubkeys
     chainName = "logChain"
-    streamName = "mainStream"
+    streamName = "pubkeys"
+    print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     subStream(chainName,streamName)
+    time.sleep(2)
+    # Get permissions for mainStream
+    print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
+    permissions = streamName + ".write,read"
+    grantStream(walletAddress ,permissions)
+    time.sleep(2)
+
+    # Connect & perm on pubkeys
+    chainName = "logChain"
+    streamName = "data"
+    print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
+    subStream(chainName,streamName)
+    time.sleep(2)
+    # Get permissions for mainStream
+    print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
+    permissions = streamName + ".write,read"
+    grantStream(walletAddress ,permissions)
     time.sleep(2)
 
     # streamName="pubkeys,items,access"
     # subStream(chainName,streamName)
     # time.sleep(2)
 
-    # Get permissions for mainStream
-    print(bcolors.WARNING + "Granting on mainStream" + bcolors.ENDC)
-    permissions = "mainStream.write,read"
-    grantStream(walletAddress ,permissions)
-    time.sleep(2)
+
 
     # Test post to stream
     # key = "1"
@@ -70,8 +84,8 @@ def logChainInit():
     # time.sleep(2)
 
     # Get stream items
-    verbose = False
-    print(bcolors.WARNING + "Getting Stream Data" + bcolors.ENDC)
-    getStreamData(streamName,verbose)
+    # verbose = False
+    # print(bcolors.WARNING + "Getting Stream Data" + bcolors.ENDC)
+    # getStreamData(streamName,verbose)
 
 logChainInit()
