@@ -56,16 +56,16 @@ def logChainInit():
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
     permissions = streamName + ".write,read"
     grantStream(walletAddress ,permissions)
-    time.sleep(2)
+    time.sleep(5)
+    getStreamData(streamName,verbose)
 
-    # Connect & perm on pubkeys
+    # Connect & perm on data
     chainName = "logChain"
     streamName = "data"
     verbose = False
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     subStream(chainName,streamName)
-    time.sleep(5)
-    getStreamData(streamName,verbose)
+    time.sleep(2)
     # Get permissions for mainStream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
     permissions = streamName + ".write,read"
