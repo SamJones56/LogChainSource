@@ -87,8 +87,9 @@ def genChain():
      # Get the public key
      kpk = getPubKey()
      # Post the pk to the pubkeys stream
-     print(bcolors.OKGREEN + f"Public Kyber Key: {kpk}" + bcolors.ENDC)
-     addToStream(streamName, "genesis", kpk)
+     streamName = "pubkeys"
+     print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
+     addToStream(streamName, "genesis", kpk.hex())
 
      # #### Setting up private chains ####
      # # Get address
