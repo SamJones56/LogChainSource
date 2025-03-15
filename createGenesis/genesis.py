@@ -1,7 +1,8 @@
 import subprocess
 import time
 import os
-from mcController import createStream, getAddress, subStream
+from mcController import createStream, addToStream, subStream
+from kyberController import genKeys, getPubKey
 
 class bcolors:
     HEADER = '\033[95m'
@@ -65,16 +66,27 @@ def genChain():
      # Create the streams
      # Key stream
      restrictions = {"restrict":"write"}
-     name = "pubkeys"
-     print(bcolors.OKGREEN + "Create stream:" + name + bcolors.ENDC)
-     createStream(name, restrictions)
+     streamName = "pubkeys"
+     chainName = "logChain"
+     print(bcolors.OKGREEN + "Create stream:" + streamName + bcolors.ENDC)
+     createStream(streamName, restrictions)
+     time.sleep(2)
+     subStream(chainName, streamName)
 
      # Data stream
      restrictions = {"restrict":"write"}
-     name = "data"
-     print(bcolors.OKGREEN + "Create stream:" + name + bcolors.ENDC)
-     createStream(name, restrictions)
+     streamName = "data"
+     print(bcolors.OKGREEN + "Create stream:" + streamName + bcolors.ENDC)
+     createStream(streamName, restrictions)
+     time.sleep(2)
+     subStream(chainName, streamName)
 
+     # Generate kyber
+     genKeys()
+     # Get the public key
+     kpk = getPubKey()
+     # Post the pk to the pubkeys stream
+     addToStream(streamName, "genesis", kpksssssssss)
 
      # #### Setting up private chains ####
      # # Get address

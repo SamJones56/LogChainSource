@@ -3,13 +3,16 @@ import csv
 import time
 # https://stackoverflow.com/questions/3996904/generate-random-integers-between-0-and-9
 from random import randrange
+# https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
+from encAES import encAes
 # LineId,Date,Time,Level,Component,Content,EventId,EventTemplate
 
+# Colours for printing
 class bcolors:
     WARNING = '\033[93m'
     ENDC = '\033[0m'
 
-streamName = "mainStream"
+streamName = "data"
 key = "node1"
 
 # https://docs.python.org/3/library/csv.html
@@ -30,8 +33,14 @@ with open('winTest.csv', newline='') as csvfile:
                        "EventId":row['EventId'],
                        "EventTemplate":row['EventTemplate'],
                        }}
+        # Encrypt the log and return key, nonce, and ciphertext
+        key,nonce,ciphertext = encAes(log)
+
+        # Encrypt the 
+
         # Print out what we are doing
         print(bcolors.WARNING + "Ammending ", end=" ")
         print(log, end=" ")
         print(" to Chain" + bcolors.ENDC)
-        addToStream(streamName, key, log)
+        addToStream(streamName, key, ct)
+

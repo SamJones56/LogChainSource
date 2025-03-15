@@ -116,7 +116,6 @@ def publishFrom(fromAddress, stream, key, data):
         pass
     else:
         print('Error code: '+str(mc.errorcode())+'\n')
-        print('Error message: '+mc.errormessage() +'\n')
     return txid
 
 # list items
