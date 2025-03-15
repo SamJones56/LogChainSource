@@ -11,7 +11,7 @@ mkdir ../multichain/node1_data/
 mkdir ../multichain/node2_data/
 
 # Build docker
-echo "B---------- Down Docker ----------"
+echo "---------- Down Docker ----------"
 docker compose down 
 echo "---------- Building Docker ----------"
 # uncomment -d to run detached
