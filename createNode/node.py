@@ -14,6 +14,18 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+# Connect and grant permissions on an existing chain
+def connectAndPerm(chainName, streamName, walletAddress):
+    permissions = streamName + ".write,read"
+    verbose = False
+    print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
+    subStream(chainName,streamName)
+    time.sleep(2)
+    print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
+    grantStream(walletAddress ,permissions)
+    time.sleep(5)
+    getStreamData(streamName,verbose)
+
 
 def logChainInit():
     # Connect to logChain
@@ -46,32 +58,34 @@ def logChainInit():
     subprocess.run(["multichaind", "logChain", "-daemon"])
     time.sleep(2)
 
-    # Connect & perm on pubkeys
-    chainName = "logChain"
-    streamName = "pubkeys"
-    print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
-    subStream(chainName,streamName)
-    time.sleep(2)
-    # Get permissions for mainStream
-    print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
-    permissions = streamName + ".write,read"
-    grantStream(walletAddress ,permissions)
-    time.sleep(5)
-    getStreamData(streamName,verbose)
+    connectAndPerm("logChain", "pubkeys",walletAddress)
+    connectAndPerm("logChain", "pubkeys",walletAddress)
+    # # Connect & perm on pubkeys
+    # chainName = "logChain"
+    # streamName = "pubkeys"
+    # verbose = False
+    # print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
+    # subStream(chainName,streamName)
+    # time.sleep(2)
+    # # Get permissions for mainStream
+    # print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
+    # permissions = streamName + ".write,read"
+    # grantStream(walletAddress ,permissions)
+    # time.sleep(5)
+    # getStreamData(streamName,verbose)
 
-    # Connect & perm on data
-    chainName = "logChain"
-    streamName = "data"
-    verbose = False
-    print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
-    subStream(chainName,streamName)
-    time.sleep(2)
-    # Get permissions for mainStream
-    print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
-    permissions = streamName + ".write,read"
-    grantStream(walletAddress ,permissions)
-    time.sleep(5)
-    getStreamData(streamName,verbose)
+    # # Connect & perm on data
+    # chainName = "logChain"
+    # streamName = "data"
+    # print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
+    # subStream(chainName,streamName)
+    # time.sleep(2)
+    # # Get permissions for mainStream
+    # print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
+    # permissions = streamName + ".write,read"
+    # grantStream(walletAddress ,permissions)
+    # time.sleep(5)
+    # getStreamData(streamName,verbose)
 
     # streamName="pubkeys,items,access"
     # subStream(chainName,streamName)
@@ -90,5 +104,7 @@ def logChainInit():
     # verbose = False
     # print(bcolors.WARNING + "Getting Stream Data" + bcolors.ENDC)
     # getStreamData(streamName,verbose)
+
+
 
 logChainInit()
