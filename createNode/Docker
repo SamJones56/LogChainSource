@@ -17,11 +17,8 @@ RUN apt update && apt install -y \
     netcat-openbsd \
     python3-requests \
     openssl \
-    python3-pip
-
-# Install kyber post quantumn
-# RUN pip install quantcrypto pycryptodome
-
+    python3-pip \
+    python3.12-venv
 
 # Download and install MultiChain
 RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
@@ -31,10 +28,19 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     rm -rf multichain-2.3.3.tar.gz
 
 # Download JSON RPC & node scripts 
-RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py
-ARG CACHE_BUST
-RUN curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
+RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
+    curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winTest.csv &&  \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winLogReader.py
+
+
+# https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
+# Create python virtual enviroment and path
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Install kyber post quantumn & aes
+RUN pip install quantcrypt
+RUN pip install pycryptodome 
