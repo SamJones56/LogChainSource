@@ -37,18 +37,18 @@ with open('winTest.csv', newline='') as csvfile:
                        "EventTemplate":row['EventTemplate'],
                        }}
         # Encrypt the log and return key, nonce, and ciphertext
-	# json to binary for encryption
+	    # json to binary for encryption
         stringLog=json.dumps(log)
         binaryLog=stringLog.encode('utf-8')
-	# Save encrypted data
+	    # Save encrypted data
         encKey,nonce,ciphertext = encAes(binaryLog)
-	# Convert to hex for saving to chain
+	    # Convert to hex for saving to chain
         enckey = encKey.hex()
         nonce = nonce.hex()
         ciphertext = ciphertext.hex()
-	# Encrypt the aes key using the genesis pk
+	    # Encrypt the aes key using the genesis pk
 	
-	# Data for posting to data stream
+	    # Data for posting to data stream
         data = {"json":{"nonce":nonce, "data":ciphertext}}
         # Add to the data stream
         print(bcolors.WARNING + "Ammending ", end=" ")

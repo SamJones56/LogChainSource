@@ -1,5 +1,5 @@
 # This python class will be used to generate and post to stream the kyber public key
-from kyber_py.kyber import Kyber512
+from pqcrypto.kem.kyber512 import generate_keypair, encrypt, decrypt
 import os
 
 class bcolors:
@@ -15,16 +15,26 @@ def writeToFile(file, data):
     with open(file,"wb") as f:
         f.write(data)
 
+# Get pubkey
+def getPubKey():
+    with open(pkFile,"rb") as f:
+        return f.read()
+
 # Generate and save private/public keys ~ TODO make files private
 def genKeys():
     # Generate kyber keys
-    pk,sk = Kyber512.keygen()
+    pk,sk = generate_keypair()
     # Write keys to file
     writeToFile(pkFile, pk)
     writeToFile(skFile, sk)
     print(bcolors.OKGREEN + "Wrote keys to files: " + pkFile + skFile + bcolors.ENDC)
 
-# Get pubkey
-def getPubKey():
-    with open(pkFile,"rb") as f:
-        return f.read()
+
+# Encrypt data
+def encryptData(data):
+    pk = getPubKey()
+    return encrypt(pk,data)
+
+# Decrypt data
+def decryptData(data):
+    return decrypt(data)
