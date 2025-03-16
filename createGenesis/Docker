@@ -17,11 +17,9 @@ RUN apt update && apt install -y \
     netcat-openbsd \
     python3-requests \
     openssl \
-    python3-pip
-
+    python3-pip 
 # Install kyber post quantumn & aes
-RUN pip install quantcrypto --break-system-packages && \
-    pip install pycryptodome --break-system-packages
+# RUN pip install quantcrypto pycryptodome
 
 
 # Download and install MultiChain

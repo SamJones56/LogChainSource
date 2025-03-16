@@ -20,8 +20,7 @@ RUN apt update && apt install -y \
     python3-pip
 
 # Install kyber post quantumn
-RUN pip install quantcrypto --break-system-packages && \
-    pip install pycryptodome --break-system-packages
+# RUN pip install quantcrypto pycryptodome
 
 
 # Download and install MultiChain
