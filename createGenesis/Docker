@@ -19,7 +19,7 @@ RUN apt update && apt install -y \
     openssl \
     python3-pip
 
-# Install kyber post quantumn
+# Install kyber post quantumn & aes
 RUN pip install pqcrypto --break-system-packages && \
     pip install pycryptodome --break-system-packages
 
