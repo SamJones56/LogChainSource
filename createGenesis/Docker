@@ -36,7 +36,7 @@ RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichai
     # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winTest.csv &&  \
     # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winLogReader.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/encAES.py
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/aesController.py
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path

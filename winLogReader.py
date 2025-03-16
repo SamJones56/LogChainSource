@@ -41,7 +41,6 @@ with open('winTest.csv', newline='') as csvfile:
         stringLog=json.dumps(log)
         binaryLog=stringLog.encode('utf-8')
 
-        
         # Get kyber shared secret and ciphertext
         kCipherText, ksharedsecret = encapsulate(publicKey)
         # Set the key for AES as the generated shared secret from kyber ~ SHA guarantees proper length
