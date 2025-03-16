@@ -2,7 +2,7 @@ import subprocess
 import time
 import os
 from mcController import createStream, addToStream, subStream
-from kyberController import genKeys, getPubKey
+from kyberController import genKeys, readFromFile
 
 class bcolors:
     HEADER = '\033[95m'
@@ -81,14 +81,14 @@ def genChain():
      time.sleep(2)
      subStream(chainName, streamName)
 
-     # # Generate kyber
-     # print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
-     # genKeys()
-     # # Get the public key
-     # kpk = getPubKey()
-     # # Post the pk to the pubkeys stream
-     # streamName = "pubkeys"
-     # print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
-     # addToStream(streamName, "genesis", kpk.hex())
+     # Generate kyber
+     print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
+     genKeys()
+     # Get the public key
+     kpk = readFromFile()
+     # Post the pk to the pubkeys stream
+     streamName = "pubkeys"
+     print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
+     addToStream(streamName, "genesis", kpk.hex())
 
 genChain()

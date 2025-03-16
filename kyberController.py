@@ -1,14 +1,17 @@
 # This python class will be used to generate and post to stream the kyber public key
-from pqcrypto.kem.kyber512 import generate_keypair, encrypt, decrypt
+# https://github.com/aabmets/quantcrypt/wiki/Code-Examples
+from quantcrypt.kem import Kyber
 import os
+
+kyber = Kyber()
 
 class bcolors:
     OKGREEN = '\033[92m'
     ENDC = '\033[0m'
 
 # file locations
-pkFile="kPk.key"
-skFile="kSk.key"
+publicKeyFile="kPk.key"
+secretKeyFile="kSk.key"
 
 # Writing data to a file
 def writeToFile(file, data):
@@ -16,25 +19,28 @@ def writeToFile(file, data):
         f.write(data)
 
 # Get pubkey
-def getPubKey():
-    with open(pkFile,"rb") as f:
+def readFromFile(file):
+    with open(file,"rb") as f:
         return f.read()
 
-# Generate and save private/public keys ~ TODO make files private
+# # Generate and save private/public keys ~ TODO make files private
 def genKeys():
     # Generate kyber keys
-    pk,sk = generate_keypair()
+    pk,sk = kyber.keygen()
     # Write keys to file
-    writeToFile(pkFile, pk)
-    writeToFile(skFile, sk)
-    print(bcolors.OKGREEN + "Wrote keys to files: " + pkFile + skFile + bcolors.ENDC)
+    writeToFile(publicKeyFile, pk)
+    writeToFile(secretKeyFile, sk)
+    print(bcolors.OKGREEN + "Wrote keys to files: " + publicKeyFile + secretKeyFile + bcolors.ENDC)
 
 
 # Encrypt data
-def encryptData(data):
-    pk = getPubKey()
-    return encrypt(pk,data)
+def encryptData():
+    publicKey = readFromFile(publicKeyFile)
+    cipherText, sharedSecret = kyber.encaps(publicKey)
+    return cipherText,sharedSecret
 
 # Decrypt data
-def decryptData(data):
-    return decrypt(data)
+def decryptData(cipherText):
+    secretKey = readFromFile(secretKeyFile)
+    sharedSecret = kyber.decaps(secretKey, cipherText)
+    return sharedSecret
