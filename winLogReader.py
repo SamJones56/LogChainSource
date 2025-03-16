@@ -44,6 +44,7 @@ with open('winTest.csv', newline='') as csvfile:
         # Get kyber shared secret and ciphertext
         kCipherText, ksharedsecret = encapsulate(publicKey)
         # Set the key for AES as the generated shared secret from kyber ~ SHA guarantees proper length
+        # https://docs.python.org/3/library/hashlib.html
         aesKey = hashlib.sha256(ksharedsecret).digest()
 
 	    # AES encrypt the log using hashed kyber generated shared secret

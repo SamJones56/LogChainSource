@@ -1,7 +1,6 @@
 # This python class will be used to generate and post to stream the kyber public key
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 from quantcrypt.kem import Kyber
-import os
 
 kyber = Kyber()
 
