@@ -85,7 +85,7 @@ def genChain():
      print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
      genKeys()
      # Get the public key
-     kpk = readFromFile()
+     kpk = readFromFile("kPk.key")
      # Post the pk to the pubkeys stream
      streamName = "pubkeys"
      print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
