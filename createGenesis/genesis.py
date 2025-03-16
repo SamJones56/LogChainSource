@@ -2,7 +2,7 @@ import subprocess
 import time
 import os
 from mcController import createStream, addToStream, subStream
-from kyberController import genKeys, readFromFile
+# from kyberController import genKeys, readFromFile
 
 class bcolors:
     HEADER = '\033[95m'
