@@ -32,15 +32,13 @@ def genKeys():
     writeToFile(secretKeyFile, sk)
     print(bcolors.OKGREEN + "Wrote keys to files: " + publicKeyFile + secretKeyFile + bcolors.ENDC)
 
-
 # Encrypt data
-def encryptData():
-    publicKey = readFromFile(publicKeyFile)
+def encapsulate(publicKey):
     cipherText, sharedSecret = kyber.encaps(publicKey)
-    return cipherText,sharedSecret
+    return cipherText, sharedSecret
 
 # Decrypt data
-def decryptData(cipherText):
+def decapsulate(cipherText):
     secretKey = readFromFile(secretKeyFile)
     sharedSecret = kyber.decaps(secretKey, cipherText)
     return sharedSecret

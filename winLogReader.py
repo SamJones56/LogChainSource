@@ -5,16 +5,17 @@ import json
 # https://stackoverflow.com/questions/3996904/generate-random-integers-between-0-and-9
 from random import randrange
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
-from encAES import encAes
-# LineId,Date,Time,Level,Component,Content,EventId,EventTemplate
-
-pkFile="kPk.key"
+from aesController import encAes
+from kyberController import encapsulate, readFromFile
+import hashlib
 
 # Colours for printing
 class bcolors:
     WARNING = '\033[93m'
     ENDC = '\033[0m'
 
+pkFile="kPk.key"
+publicKey = readFromFile(pkFile)
 streamName = "data"
 key = "node1"
 
@@ -36,70 +37,28 @@ with open('winTest.csv', newline='') as csvfile:
                        "EventId":row['EventId'],
                        "EventTemplate":row['EventTemplate'],
                        }}
-        # Encrypt the log and return key, nonce, and ciphertext
-	    # json to binary for encryption
+        # json to binary for encryption
         stringLog=json.dumps(log)
         binaryLog=stringLog.encode('utf-8')
-	    # Save encrypted data
-        encKey,nonce,ciphertext = encAes(binaryLog)
+
+        
+        # Get kyber shared secret and ciphertext
+        kCipherText, ksharedsecret = encapsulate(publicKey)
+        # Set the key for AES as the generated shared secret from kyber ~ SHA guarantees proper length
+        aesKey = hashlib.sha256(ksharedsecret).digest()
+
+	    # AES encrypt the log using hashed kyber generated shared secret
+        nonce,cipherText = encAes(binaryLog, aesKey)
+
 	    # Convert to hex for saving to chain
-        enckey = encKey.hex()
+        kCipherText = kCipherText.hex()
         nonce = nonce.hex()
-        ciphertext = ciphertext.hex()
-	    # Encrypt the aes key using the genesis pk
-	
+        cipherText = cipherText.hex()
+        
 	    # Data for posting to data stream
-        data = {"json":{"nonce":nonce, "data":ciphertext}}
+        data = {"json":{"kyberct":kCipherText,"nonce":nonce, "data":cipherText}}
         # Add to the data stream
         print(bcolors.WARNING + "Ammending ", end=" ")
         print(log, end=" ")
         print(" to Chain" + bcolors.ENDC)
         addToStream(streamName, key, data)
-# from mcController import connectToChain, subStream, grantStream, addToStream ,getStreamData
-# import csv
-# import time
-# # https://stackoverflow.com/questions/3996904/generate-random-integers-between-0-and-9
-# from random import randrange
-# # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
-# from encAES import encAes
-# # LineId,Date,Time,Level,Component,Content,EventId,EventTemplate
-
-# pkFile="kPk.key"
-
-# # Colours for printing
-# class bcolors:
-#     WARNING = '\033[93m'
-#     ENDC = '\033[0m'
-
-# streamName = "data"
-# key = "node1"
-
-# # https://docs.python.org/3/library/csv.html
-# # Parse through the csv
-# with open('winTest.csv', newline='') as csvfile:
-#     reader = csv.DictReader(csvfile)
-#     for row in reader:
-#         # Simulate random time
-#         t = randrange(6)
-#         time.sleep(t)
-#         # Generate the json file
-#         log = {"json":{"LogId" : row['LineId'],
-#                        "Date":row['Date'],
-#                        "Time":row['Time'],
-#                        "Level":row['Level'],
-#                        "Component":row['Component'],
-#                        "Content":row['Content'],
-#                        "EventId":row['EventId'],
-#                        "EventTemplate":row['EventTemplate'],
-#                        }}
-#         # Encrypt the log and return key, nonce, and ciphertext
-#         key,nonce,ciphertext = encAes(log)
-
-#         data = {"json":{"nonce":"{nonce}", "data":"{ciphertext}"}}
-
-#         # Print out what we are doing
-#         print(bcolors.WARNING + "Ammending ", end=" ")
-#         print(log, end=" ")
-#         print(" to Chain" + bcolors.ENDC)
-#         addToStream(streamName, key, data)
-
