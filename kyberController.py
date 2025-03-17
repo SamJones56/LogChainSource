@@ -2,14 +2,11 @@
 # https://github.com/aabmets/quantcrypt
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 from quantcrypt.kem import Kyber
+from colours import bcolors
 # from quantcrypt.kem import MLKEM_1024
 
 kyber = Kyber()
 # kem =  MLKEM_1024()
-
-class bcolors:
-    OKGREEN = '\033[92m'
-    ENDC = '\033[0m'
 
 # file locations
 publicKeyFile="kPk.key"

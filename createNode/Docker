@@ -46,5 +46,5 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install kyber post quantumn
-RUN pip install uv && \
-    uv pip install quantcrypt
+RUN pip install quantcrypt && \
+    pip install pycryptodome 

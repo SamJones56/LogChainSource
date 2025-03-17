@@ -2,16 +2,13 @@ from mcController import addToStream
 import csv
 import time
 import json
+from colours import bcolors
 # https://stackoverflow.com/questions/3996904/generate-random-integers-between-0-and-9
 from random import randrange
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 from aesController import encAes
 from kyberController import encapsulate, readFromFile
 
-# Colours for printing
-class bcolors:
-    WARNING = '\033[93m'
-    ENDC = '\033[0m'
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
