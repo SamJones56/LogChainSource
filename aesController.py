@@ -19,9 +19,7 @@ def decAes(kCipherText, nonce, cipherText):
         nonce = bytes.fromhex(nonce)
         cipherText = bytes.fromhex(cipherText)
         # Get the shared secret from the kyber ciphertext
-        sharedSecret = decapsulate(kCipherText)
-        # Get the AES key ~ she to ensure correct length
-        aesKey = hashlib.sha256(sharedSecret).digest()
+        aesKey = decapsulate(kCipherText)
         # Decrypt AES
         cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
         decrypted = cipher.decrypt(cipherText)

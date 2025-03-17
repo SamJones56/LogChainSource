@@ -7,7 +7,6 @@ from random import randrange
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 from aesController import encAes
 from kyberController import encapsulate, readFromFile
-import hashlib
 
 # Colours for printing
 class bcolors:
@@ -44,9 +43,7 @@ def postToChain():
 
             # Get kyber shared secret and ciphertext
             kCipherText, ksharedsecret = encapsulate(publicKey)
-            # Set the key for AES as the generated shared secret from kyber ~ SHA guarantees proper length
-            # https://docs.python.org/3/library/hashlib.html
-            # aesKey = hashlib.sha256(ksharedsecret).digest()
+            # Set the key for AES as the generated shared secret from kyber
             aesKey = ksharedsecret
             # AES encrypt the log using hashed kyber generated shared secret
             nonce,cipherText = encAes(binaryLog, aesKey)
