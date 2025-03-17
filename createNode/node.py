@@ -16,15 +16,16 @@ class bcolors:
 
 # Connect and grant permissions on an existing chain
 def connectAndPerm(chainName, streamName, walletAddress):
+    # Set permissions
     permissions = streamName + ".write,read"
-    verbose = False
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
+    # Subscribe to stream
     subStream(chainName,streamName)
-    time.sleep(2)
+    time.sleep(5)
+    # Request permissions on stream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
     grantStream(walletAddress ,permissions)
     time.sleep(5)
-    # getStreamData(streamName,verbose)
 
 def savePk():
     print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
@@ -51,7 +52,7 @@ def logChainInit():
         print(bcolors.OKCYAN + f"ADDRESS FOUND: {walletAddress} " + bcolors.ENDC)
     else:
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
-    time.sleep(2)
+    # time.sleep(2)
 
     # Connect to logChain
     print(bcolors.WARNING + "Connecting to Chain" + bcolors.ENDC)

@@ -1,5 +1,4 @@
 from Crypto.Cipher import AES
-import hashlib
 from kyberController import decapsulate
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 def encAes(data, aesKey):
