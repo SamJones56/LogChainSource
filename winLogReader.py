@@ -22,13 +22,10 @@ def readDecryptSave(file):
         nonce = jLine["nonce"]
         cipherText = jLine["data"]
         tag = jLine["tag"]
-        #print(kyberct,nonce,cipherText,tag)
+
         # Decrypt the json
         jDecrypt = decAes(kyberct,nonce,cipherText,tag)
-        jDecrypt = bytes.fromhex(jDecrypt)
-        jDecrypt = jDecrypt.decode("utf-8")
-        # print(jDecrypt)
-        # jDecrypt = {publisher:jDecrypt}
+
         # Append to jDecrypted
         jDecrypted.append(jDecrypt)
     # Save the final list    

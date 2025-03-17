@@ -1,6 +1,7 @@
 from Crypto.Cipher import AES
 from kyberController import decapsulate
 from colours import bcolors
+import json
 
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 def encAes(data, aesKey):
@@ -25,9 +26,10 @@ def decAes(kCipherText, nonce, cipherText, tag):
         # Decrypt AES
         cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
         decrypted = cipher.decrypt(cipherText)
-        # Verify tag for authenticity
         try:
+                # Verify tag for authenticity
                 cipher.verify(tag)
-                return decrypted
+                # Convert to json
+                return json.loads(decrypted.decode("utf-8"))
         except:
                 print(bcolors.FAIL + "Invalid Tag" + bcolors.ENDC)
