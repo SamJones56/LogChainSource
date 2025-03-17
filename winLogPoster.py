@@ -46,8 +46,8 @@ def postToChain():
             kCipherText, ksharedsecret = encapsulate(publicKey)
             # Set the key for AES as the generated shared secret from kyber ~ SHA guarantees proper length
             # https://docs.python.org/3/library/hashlib.html
-            aesKey = hashlib.sha256(ksharedsecret).digest()
-
+            # aesKey = hashlib.sha256(ksharedsecret).digest()
+            aesKey = ksharedsecret
             # AES encrypt the log using hashed kyber generated shared secret
             nonce,cipherText = encAes(binaryLog, aesKey)
 
