@@ -25,7 +25,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     tar -xzf multichain-2.3.3.tar.gz && \
     mv multichain-2.3.3 multichain && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
-    rm -rf multichain-2.3.3.tar.gz
+    rm -rf multichain-2.3.3.tar.gzimport hashlib
 
 # Download JSON RPC & node scripts 
 RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
@@ -46,4 +46,3 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Install kyber post quantumn & aes
 RUN pip install quantcrypt
-RUN pip install pycryptodome 
