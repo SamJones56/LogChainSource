@@ -27,13 +27,13 @@ def connectAndPerm(chainName, streamName, walletAddress):
     grantStream(walletAddress ,permissions)
     time.sleep(5)
 
-def savePk():
-    time.sleep(5)
-    print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
-    pkFile="kPk.key"
-    data = getPubKey("pubkeys","genesis")
-    with open(pkFile,"wb") as f:
-        f.write(data)
+# def savePk():
+#     time.sleep(5)
+#     print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
+#     pkFile="kPk.key"
+#     data = getPubKey("pubkeys","genesis")
+#     with open(pkFile,"wb") as f:
+#         f.write(data)
 
 def logChainInit():
     # Connect to logChain
@@ -70,7 +70,7 @@ def logChainInit():
     connectAndPerm("logChain", "data", walletAddress)
 
     # Save genesis public key
-    savePk()
+    # savePk()
 
 
 logChainInit()
