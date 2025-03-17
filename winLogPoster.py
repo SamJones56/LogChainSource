@@ -43,7 +43,7 @@ def postToChain():
             # Set the key for AES as the generated shared secret from kyber
             aesKey = ksharedsecret
             # AES encrypt the log using hashed kyber generated shared secret
-            nonce,cipherText = encAes(binaryLog, aesKey)
+            nonce,cipherText,tag = encAes(binaryLog, aesKey)
 
             # Convert to hex for saving to chain
             kCipherText = kCipherText.hex()
@@ -51,7 +51,7 @@ def postToChain():
             cipherText = cipherText.hex()
             
             # Data for posting to data stream
-            data = {"json":{"kyberct":kCipherText,"nonce":nonce, "data":cipherText}}
+            data = {"json":{"kyberct":kCipherText,"nonce":nonce, "data":cipherText, "tag":tag}}
             # Add to the data stream
             print(bcolors.WARNING + "Ammending ", end=" ")
             print(log, end=" ")
