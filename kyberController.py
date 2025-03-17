@@ -1,8 +1,8 @@
 # This python class will be used to generate and post to stream the kyber public key
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
-from quantcrypt.kem import ML-KEM-512
+from quantcrypt.kem import MLKEM_512
 
-kyber = ML-KEM-512()
+kyber = MLKEM_512()
 
 class bcolors:
     OKGREEN = '\033[92m'
