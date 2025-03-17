@@ -28,6 +28,7 @@ def connectAndPerm(chainName, streamName, walletAddress):
     time.sleep(5)
 
 def savePk():
+    time.sleep(5)
     print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
     pkFile="kPk.key"
     data = getPubKey("pubkeys","genesis")
