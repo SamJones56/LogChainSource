@@ -1,7 +1,7 @@
 import subprocess
 import time
 import os
-import bcolors
+from bcolors import bcolors
 from mcController import createStream, addToStream, subStream
 from kyberController import genKeys, readFromFile
 
