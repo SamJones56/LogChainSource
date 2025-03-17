@@ -36,7 +36,8 @@ RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichai
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winLogPoster.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/aesController.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winLogReader.py
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winLogReader.py && \
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/colours.py
 
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
