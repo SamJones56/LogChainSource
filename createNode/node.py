@@ -1,18 +1,19 @@
 import subprocess
 import re
 import time
+import bcolors
 from mcController import connectToChain, subStream, grantStream, addToStream ,getPubKey
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+# class bcolors:
+#     HEADER = '\033[95m'
+#     OKBLUE = '\033[94m'
+#     OKCYAN = '\033[96m'
+#     OKGREEN = '\033[92m'
+#     WARNING = '\033[93m'
+#     FAIL = '\033[91m'
+#     ENDC = '\033[0m'
+#     BOLD = '\033[1m'
+#     UNDERLINE = '\033[4m'
 
 # Connect and grant permissions on an existing chain
 def connectAndPerm(chainName, streamName, walletAddress):
@@ -27,13 +28,13 @@ def connectAndPerm(chainName, streamName, walletAddress):
     grantStream(walletAddress ,permissions)
     time.sleep(5)
 
-# def savePk():
-#     time.sleep(5)
-#     print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
-#     pkFile="kPk.key"
-#     data = getPubKey("pubkeys","genesis")
-#     with open(pkFile,"wb") as f:
-#         f.write(data)
+def savePk():
+    time.sleep(5)
+    print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
+    pkFile="kPk.key"
+    data = getPubKey("pubkeys","genesis")
+    with open(pkFile,"wb") as f:
+        f.write(data)
 
 def logChainInit():
     # Connect to logChain

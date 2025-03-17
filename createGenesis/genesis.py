@@ -1,19 +1,20 @@
 import subprocess
 import time
 import os
+import bcolors
 from mcController import createStream, addToStream, subStream
 from kyberController import genKeys, readFromFile
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+# class bcolors:
+#     HEADER = '\033[95m'
+#     OKBLUE = '\033[94m'
+#     OKCYAN = '\033[96m'
+#     OKGREEN = '\033[92m'
+#     WARNING = '\033[93m'
+#     FAIL = '\033[91m'
+#     ENDC = '\033[0m'
+#     BOLD = '\033[1m'
+#     UNDERLINE = '\033[4m'
 
 # multihain Generation
 def genChain():
@@ -81,14 +82,14 @@ def genChain():
      time.sleep(2)
      subStream(chainName, streamName)
 
-     # # Generate kyber
-     # print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
-     # genKeys()
-     # # Get the public key
-     # kpk = readFromFile("kPk.key")
-     # # Post the pk to the pubkeys stream
-     # streamName = "pubkeys"
-     # print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
-     # addToStream(streamName, "genesis", kpk.hex())
+     # Generate kyber
+     print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
+     genKeys()
+     # Get the public key
+     kpk = readFromFile("kPk.key")
+     # Post the pk to the pubkeys stream
+     streamName = "pubkeys"
+     print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
+     addToStream(streamName, "genesis", kpk.hex())
 
 genChain()

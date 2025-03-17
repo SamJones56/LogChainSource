@@ -16,7 +16,7 @@ RUN apt update && apt install -y \
     iputils-ping \
     netcat-openbsd \
     python3-requests \
-    openssl \
+    # openssl \
     python3-pip \
     python3.12-venv
 
@@ -44,5 +44,6 @@ RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichai
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install kyber post quantumn & aes
-RUN pip install --upgrade quantcrypt
+# Install kyber post quantumn
+RUN pip install uv && \
+    uv pip install quantcrypt
