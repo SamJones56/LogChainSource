@@ -71,7 +71,7 @@ def logChainInit():
     connectAndPerm("logChain", "data", walletAddress)
 
     # Save genesis public key
-    # savePk()
+    savePk()
 
 
 logChainInit()
