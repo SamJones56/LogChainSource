@@ -1,7 +1,7 @@
 import subprocess
 import re
 import time
-from bcolors import bcolors
+from bcolours import bcolors
 from mcController import connectToChain, subStream, grantStream, addToStream ,getPubKey
 
 # class bcolors:
