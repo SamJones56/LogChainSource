@@ -22,9 +22,9 @@ def decAes(kCipherText, nonce, cipherText, tag):
         tag = bytes.fromhex(tag)
         # Get the shared secret from the kyber ciphertext
         aesKey = decapsulate(kCipherText)
-        decrypted = cipher.decrypt(cipherText)
         # Decrypt AES
         cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
+        decrypted = cipher.decrypt(cipherText)
         # Verify tag for authenticity
         try:
                 cipher.verify(tag)

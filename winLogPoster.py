@@ -49,6 +49,7 @@ def postToChain():
             kCipherText = kCipherText.hex()
             nonce = nonce.hex()
             cipherText = cipherText.hex()
+            tag = tag.hex()
             
             # Data for posting to data stream
             data = {"json":{"kyberct":kCipherText,"nonce":nonce, "data":cipherText, "tag":tag}}

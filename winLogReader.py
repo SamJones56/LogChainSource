@@ -1,17 +1,44 @@
 from mcController import getStreamData
-
+from aesController import decAes
+import json
+# https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
 # Writing data to a file
 def writeToFile(file, data):
-    with open(file,"wb") as f:
-        f.write(data)
+    with open(file,"w") as f:
+        json.dump(data, f)
+
+# Read and decrypt
+def readDecryptSave(file):
+    with open(file, "r") as f:
+        jsonOut = json.load(f)
+        # Store output
+    jDecrypted = []
+    # Loop through the json output
+    for x in jsonOut:
+        # Gather info from json
+        jLine = x["data"]["json"]
+        # publisher = jLine["publisher"]
+        kyberct = jLine["kyberct"]
+        nonce = jLine["nonce"]
+        cipherText = jLine["data"]
+        tag = jLine["tag"]
+        #print(kyberct,nonce,cipherText,tag)
+        # Decrypt the json
+        jDecrypt = decAes(kyberct,nonce,cipherText,tag)
+        jDecrypt = bytes.fromhex(jDecrypt)
+        jDecrypt = jDecrypt.decode("utf-8")
+        # print(jDecrypt)
+        # jDecrypt = {publisher:jDecrypt}
+        # Append to jDecrypted
+        jDecrypted.append(jDecrypt)
+    # Save the final list    
+    writeToFile("streamDataDec.json", jDecrypted)
+
 
 # Get the data from sthe stream
 streamData = getStreamData("data", False)
 
 # Write current state of chain to json
-writeToFile("streamData.json", streamData)
+writeToFile("streamDataEnc.json", streamData)
 
-# Read through the json file
-# Decrypt each JSON entry
-# Save decrypted data to file
-
+readDecryptSave("streamDataEnc.json")
