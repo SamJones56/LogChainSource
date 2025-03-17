@@ -45,4 +45,5 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Install kyber post quantumn & aes
-RUN pip install quantcrypt
+RUN pip install quantcrypt && \
+    pipx ensure path
