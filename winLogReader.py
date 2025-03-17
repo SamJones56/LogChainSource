@@ -1,6 +1,7 @@
 from mcController import getStreamData
 from aesController import decAes
 import json
+import time
 # https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
 # Writing data to a file
 def writeToFile(file, data):
@@ -37,5 +38,5 @@ streamData = getStreamData("data", False)
 
 # Write current state of chain to json
 writeToFile("streamDataEnc.json", streamData)
-
+time.sleep(20)
 readDecryptSave("streamDataEnc.json")
