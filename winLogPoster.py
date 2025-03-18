@@ -7,6 +7,7 @@ from colours import bcolors
 from random import randrange
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 from aesController import encAes
+# https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
 
 
