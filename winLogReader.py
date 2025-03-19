@@ -12,10 +12,11 @@ def writeToFile(file, data):
 def readDecryptSave(file):
     with open(file, "r") as f:
         jsonOut = json.load(f)
-        # Store output
+    # Store output
     jDecrypted = []
     # Loop through the json output
     for x in jsonOut:
+        print(x)
         # Gather info from json
         jLine = x["data"]["json"]
         # publisher = jLine["publisher"]
@@ -38,5 +39,5 @@ streamData = getStreamData("data", False)
 
 # Write current state of chain to json
 writeToFile("streamDataEnc.json", streamData)
-time.sleep(20)
+# time.sleep(20)
 readDecryptSave("streamDataEnc.json")

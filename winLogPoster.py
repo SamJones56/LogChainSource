@@ -14,11 +14,12 @@ from kyberController import encapsulate, readFromFile
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
 streamName = "data"
-key = "node1"
+key = "Windows"
 
 # https://docs.python.org/3/library/csv.html
 # Parse through the csv
 def postToChain():
+
     with open('winTest.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
@@ -54,10 +55,12 @@ def postToChain():
             
             # Data for posting to data stream
             data = {"json":{"kyberct":kCipherText,"nonce":nonce, "data":cipherText, "tag":tag}}
+
             # Add to the data stream
             print(bcolors.WARNING + "Ammending ", end=" ")
             print(log, end=" ")
             print(" to Chain" + bcolors.ENDC)
-            addToStream(streamName, key, data)
+            # addToStream(streamName, key, data)
+            addToStream(streamName, key, log)
 
 postToChain()
