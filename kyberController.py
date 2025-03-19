@@ -3,9 +3,9 @@
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 # from quantcrypt.kem import Kyber
 from colours import bcolors
-#from quantcrypt.kem import MLKEM_512
-from quantcrypt.kem import MLKEM_1024
-kem = MLKEM_1024()
+from quantcrypt.kem import MLKEM_512
+# from quantcrypt.kem import Kyber
+kem = MLKEM_512()
 #kem = MLKEM_512()
 
 # file locations

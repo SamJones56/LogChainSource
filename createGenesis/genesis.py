@@ -71,14 +71,14 @@ def genChain():
      time.sleep(2)
      subStream(chainName, streamName)
 
-     # # Generate kyber
-     # print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
-     # genKeys()
-     # # Get the public key
-     # kpk = readFromFile("kPk.key")
-     # # Post the pk to the pubkeys stream
-     # streamName = "pubkeys"
-     # print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
-     # addToStream(streamName, "genesis", kpk.hex())
+     # Generate kyber
+     print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
+     genKeys()
+     # Get the public key
+     kpk = readFromFile("kPk.key")
+     # Post the pk to the pubkeys stream
+     streamName = "pubkeys"
+     print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
+     addToStream(streamName, "genesis", kpk.hex())
 
 genChain()
