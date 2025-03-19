@@ -3,10 +3,10 @@
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 # from quantcrypt.kem import Kyber
 from colours import bcolors
-from quantcrypt.kem import MLKEM_512
-
-# kyber = Kyber()
-kyber =  MLKEM_512()
+#from quantcrypt.kem import MLKEM_512
+from quantcrypt.kem import MLKEM_1024
+kem = MLKEM_1024()
+#kem = MLKEM_512()
 
 # file locations
 publicKeyFile="kPk.key"
@@ -25,7 +25,7 @@ def readFromFile(file):
 # # Generate and save private/public keys ~ TODO make files private
 def genKeys():
     # Generate kyber keys
-    pk,sk = kyber.keygen()
+    pk,sk = kem.keygen()
     # Write keys to file
     writeToFile(publicKeyFile, pk)
     writeToFile(secretKeyFile, sk)
@@ -33,11 +33,11 @@ def genKeys():
 
 # Encrypt data
 def encapsulate(publicKey):
-    cipherText, sharedSecret = kyber.encaps(publicKey)
+    cipherText, sharedSecret = kem.encaps(publicKey)
     return cipherText, sharedSecret
 
 # Decrypt data
 def decapsulate(cipherText):
     secretKey = readFromFile(secretKeyFile)
-    sharedSecret = kyber.decaps(secretKey, cipherText)
+    sharedSecret = kem.decaps(secretKey, cipherText)
     return sharedSecret
