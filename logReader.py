@@ -17,7 +17,7 @@ def logCompare(fileName):
         # test = [{"LogID":"1"}]
         test = "LogId"
         # positive_feedback_count = sum(1 for obj in data if obj['feedback'] in ["Very satisfied", "Satisfied"])
-        count = sum(1 for obj in jsonOut if "logId" in obj["data"])
+        count = sum(1 for obj in jsonOut if "LogId" in obj["data"])
         print(count)
 
 # Read and decrypt
