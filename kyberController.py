@@ -5,7 +5,7 @@
 from colours import bcolors
 from quantcrypt.kem import MLKEM_512, PQAVariant
 # from quantcrypt.kem import Kyber
-kem = MLKEM_512(PQAVariant)
+kem = MLKEM_512(PQAVariant.REF)
 #kem = MLKEM_512()
 
 # file locations
