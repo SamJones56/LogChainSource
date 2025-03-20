@@ -47,8 +47,9 @@ def usrInput():
 
 
 # Method for building windows JSON
-def winLog(row):
+def winLog(row,key):
     return {"json":{
+        "Node": key,
         "Type": "Windows",
         "LogId" : row['LineId'],
         "Date":row['Date'],
@@ -61,8 +62,9 @@ def winLog(row):
         }}
 
 # Method for building linux JSON
-def linLog(row):
+def linLog(row,key):
     return {"json":{
+        "Node": key,
         "Type": "Linux",
         "LineId" : row['LineId'],
         "Date":row['Date'],
