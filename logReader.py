@@ -17,18 +17,25 @@ def logCompare(fileName):
         jsonOut = json.load(f)
         # Declare list of id's
         ids = []
-        # Loop through JSON lines in JSON output
-        for jLine in jsonOut:
-            # Check if windows
-            if jLine["data"]["Type"] == "Windows":
-                if jLine["data"]["LogId"] not in ids:
-                    ids.append(jLine["data"]["LogId"])
-                    print(ids)
-                    test = "1"
-                    count = sum(1 for obj in jsonOut if obj["data"]["LogId"] == test)
-                    print(count)
-            elif jLine["data"]["Type"] == "Linux":
-                break
+
+        # Get windows logs
+        winLogs = [jData for jData in jsonOut if jData["data"]["Type"]=="Windows"]
+        print(winLogs)
+
+
+
+        # # Loop through JSON lines in JSON output
+        # for jLine in jsonOut:
+        #     # Check if windows
+        #     if jLine["data"]["Type"] == "Windows":
+        #         if jLine["data"]["LogId"] not in ids:
+        #             ids.append(jLine["data"]["LogId"])
+        #             print(ids)
+        #             test = "1"
+        #             count = sum(1 for obj in jsonOut if obj["data"]["LogId"] == test)
+        #             print(count)
+        #     elif jLine["data"]["Type"] == "Linux":
+        #         break
 
 
 
