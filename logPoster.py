@@ -20,9 +20,9 @@ def usrInput():
     try:
         fileType = int(fileType)
     except:
-        print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
-        exit
-    print(bcolors.OKGREEN + fileType + bcolors.ENDC)
+        print(bcolors.FAIL + "Invalid file type: ", fileType, bcolors.ENDC)
+        exit()
+    print(bcolors.OKGREEN, fileType, bcolors.ENDC)
 
     # Defaults
     streamName = "data"
@@ -33,8 +33,8 @@ def usrInput():
         fileName = "linTest.csv"
         key = "Node2"
     else:
-        print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
-        exit
+        print(bcolors.FAIL + "Invalid file type: ", fileType, bcolors.ENDC)
+        exit()
     print(bcolors.OKGREEN, fileName, fileType, streamName, key, bcolors.ENDC)
     # fileName = input(bcolors.WARNING + f"FileName: \n Windows : winTest.csv \n Linux : linTest.csv \n Selection:" + bcolors.ENDC)
     # print(bcolors.OKGREEN + fileName + bcolors.ENDC)
@@ -87,10 +87,8 @@ def postToChain(fileName, fileType, streamName, key):
             # Generate the json file
             if fileType == 1:
                 log = winLog(row)
-            if fileType == 2:
+            elif fileType == 2:
                 log = linLog(row)
-            else:
-                print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
             # json to binary for encryption
             stringLog=json.dumps(log)
             binaryLog=stringLog.encode('utf-8')
