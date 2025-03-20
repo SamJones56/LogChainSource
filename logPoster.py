@@ -88,7 +88,7 @@ def postToChain(fileName, fileType, streamName, key):
             time.sleep(t)
             # Generate the json file
             if fileType == 1:
-                log = winLog(row)
+                log = winLog(row,key)
             elif fileType == 2:
                 log = linLog(row)
             # json to binary for encryption
