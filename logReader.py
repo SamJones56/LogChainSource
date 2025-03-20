@@ -13,10 +13,11 @@ def writeToFile(file, data):
 def logCompare(fileName):
     with open(fileName,"r") as f:
         jsonOut = json.load(f)
-    for jLine in jsonOut:
-        test = {"LogID":"1"}
+    # for jLine in jsonOut:
+        # test = [{"LogID":"1"}]
+        test = "LogId"
         # positive_feedback_count = sum(1 for obj in data if obj['feedback'] in ["Very satisfied", "Satisfied"])
-        count = sum(1 for obj in jsonOut if obj['data'] in [test])
+        count = sum(1 for obj in jsonOut if "logId" in obj["data"])
         print(count)
 
 # Read and decrypt
