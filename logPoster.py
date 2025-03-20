@@ -13,29 +13,34 @@ from kyberController import encapsulate, readFromFile
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
-streamName = "data"
-key = "Windows"
+
+# Method for building windows JSON
+def winLog(row):
+    return {"json":{
+        "Type": "Windows",
+        "LogId" : row['LineId'],
+        "Date":row['Date'],
+        "Time":row['Time'],
+        "Level":row['Level'],
+        "Component":row['Component'],
+        "Content":row['Content'],
+        "EventId":row['EventId'],
+        "EventTemplate":row['EventTemplate'],
+        }}
+
 
 # https://docs.python.org/3/library/csv.html
 # Parse through the csv
-def postToChain():
-
-    with open('winTest.csv', newline='') as csvfile:
+def postToChain(fileName, fileType, streamName, key):
+    with open(fileName, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             # Simulate random time
             t = randrange(6)
             time.sleep(t)
             # Generate the json file
-            log = {"json":{"LogId" : row['LineId'],
-                        "Date":row['Date'],
-                        "Time":row['Time'],
-                        "Level":row['Level'],
-                        "Component":row['Component'],
-                        "Content":row['Content'],
-                        "EventId":row['EventId'],
-                        "EventTemplate":row['EventTemplate'],
-                        }}
+            if fileType == "windows":
+                log = winLog(row)
             # json to binary for encryption
             stringLog=json.dumps(log)
             binaryLog=stringLog.encode('utf-8')
@@ -61,6 +66,7 @@ def postToChain():
             print(log, end=" ")
             print(" to Chain" + bcolors.ENDC)
             addToStream(streamName, key, data)
-            # addToStream(streamName, key, log)
 
-postToChain()
+
+
+postToChain("winTest.csv","windows", "data", "Node1")

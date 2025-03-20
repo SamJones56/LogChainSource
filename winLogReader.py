@@ -17,9 +17,9 @@ def readDecryptSave(file):
     # Loop through the json output
     for x in jsonOut:
         print(x)
+        key = x["keys"]
         # Gather info from json
         jLine = x["data"]["json"]
-        # publisher = jLine["publisher"]
         kyberct = jLine["kyberct"]
         nonce = jLine["nonce"]
         cipherText = jLine["data"]
@@ -27,17 +27,18 @@ def readDecryptSave(file):
 
         # Decrypt the json
         jDecrypt = decAes(kyberct,nonce,cipherText,tag)
-
+        # Tag the decrypted data with the key
+        data = key , jDecrypt
+        
         # Append to jDecrypted
-        jDecrypted.append(jDecrypt)
+        jDecrypted.append(data)
     # Save the final list    
     writeToFile("streamDataDec.json", jDecrypted)
-
 
 # Get the data from sthe stream
 streamData = getStreamData("data", False)
 
 # Write current state of chain to json
 writeToFile("streamDataEnc.json", streamData)
-time.sleep(10)
+#time.sleep(10)
 readDecryptSave("streamDataEnc.json")

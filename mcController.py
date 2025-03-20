@@ -80,10 +80,7 @@ def addToStream(streamName, key, data):
 
 # Get stream items
 def getStreamData(streamName, verbose):
-    # if verbose:
-    response = mc.liststreamitems(streamName,verbose)
-    # else:
-    #     response = mc.liststreamitems(streamName,verbose, "9999")
+    response = mc.liststreamitems(streamName,verbose, 9999)
     if mc.success():
         return(response)
     else:
