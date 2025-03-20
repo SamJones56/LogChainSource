@@ -1,5 +1,6 @@
 from mcController import getStreamData
 from aesController import decAes
+from colours import bcolors
 import json
 import time
 # https://www.geeksforgeeks.org/reading-and-writing-json-to-a-file-in-python/
@@ -9,21 +10,20 @@ def writeToFile(file, data):
         json.dump(data, f)
 
 # Read and decrypt
-def readDecryptSave(file):
-    with open(file, "r") as f:
-        jsonOut = json.load(f)
+def readDecryptSave(jsonOut):
+    # with open(file, "r") as f:
+    #     jsonOut = json.load(f)
     # Store output
     jDecrypted = []
     # Loop through the json output
-    for x in jsonOut:
-        print(x)
-        key = x["keys"]
+    for jLine in jsonOut:
+        key = jLine["keys"]
         # Gather info from json
-        jLine = x["data"]["json"]
-        kyberct = jLine["kyberct"]
-        nonce = jLine["nonce"]
-        cipherText = jLine["data"]
-        tag = jLine["tag"]
+        jData = jLine["data"]["json"]
+        kyberct = jData["kyberct"]
+        nonce = jData["nonce"]
+        cipherText = jData["data"]
+        tag = jData["tag"]
 
         # Decrypt the json
         jDecrypt = decAes(kyberct,nonce,cipherText,tag)
@@ -37,8 +37,9 @@ def readDecryptSave(file):
 
 # Get the data from sthe stream
 streamData = getStreamData("data", False)
-
+readDecryptSave(streamData)
 # Write current state of chain to json
-writeToFile("streamDataEnc.json", streamData)
-#time.sleep(10)
-readDecryptSave("streamDataEnc.json")
+# writeToFile("streamDataEnc.json", streamData)
+# time.sleep(10)
+# Decrypt json state
+# readDecryptSave("streamDataEnc.json")

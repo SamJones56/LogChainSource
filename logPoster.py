@@ -41,6 +41,8 @@ def postToChain(fileName, fileType, streamName, key):
             # Generate the json file
             if fileType == "windows":
                 log = winLog(row)
+            else:
+                print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
             # json to binary for encryption
             stringLog=json.dumps(log)
             binaryLog=stringLog.encode('utf-8')
@@ -52,14 +54,12 @@ def postToChain(fileName, fileType, streamName, key):
             # AES encrypt the log using hashed kyber generated shared secret
             nonce,cipherText,tag = encAes(binaryLog, aesKey)
 
-            # Convert to hex for saving to chain
-            kCipherText = kCipherText.hex()
-            nonce = nonce.hex()
-            cipherText = cipherText.hex()
-            tag = tag.hex()
-            
             # Data for posting to data stream
-            data = {"json":{"kyberct":kCipherText,"nonce":nonce, "data":cipherText, "tag":tag}}
+            data = {"json":{
+                "kyberct":kCipherText.hex(),
+                "nonce":nonce.hex(),
+                "data":cipherText.hex(),
+                "tag":tag.hex()}}
 
             # Add to the data stream
             print(bcolors.WARNING + "Ammending ", end=" ")
