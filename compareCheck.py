@@ -1,5 +1,5 @@
 import json
-from collections import counter
+from collections import Counter
 
 
 def filterLog(jsonOut, dataName):
