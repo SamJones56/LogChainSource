@@ -1,13 +1,16 @@
 import json
 
 
-def filterLog(jsonOut, name):
-    return [jData for jData in jsonOut if jData["data"]["Type"]==name]
+def filterLog(jsonOut, dataName):
+    return [jData for jData in jsonOut if jData["data"]["Type"]==dataName]
 
-def addId(log, dataName, id):
+def addId(log, dataName):
+    id = []
     for jLine in log:
             if jLine["data"][dataName] not in id:
-                return jLine["data"]["LogId"]
+                return id.append(jLine["data"]["LogId"])
+            
+#def contOccurance
 
 # https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
 # https://www.w3schools.com/python/python_lists_comprehension.asp
@@ -22,11 +25,11 @@ def logCompare(fileName):
         linLogs = filterLog("Linux")
 
         # Declare list of id's ~ This can be used to check for deletion of data
-        wId = []
-        lId = []
-        # Add unique id's to the lists
-        wId.append(addId(winLogs, "LogId", wId))
-        wId.append(addId(linLogs, "LogId", lId))
+        wId = addId(winLogs, "LogId")
+        lId = addId(linLogs, "LineId")
+
+        print(wId)
+        print(lId)
 
 
         # # Loop through JSON lines in JSON output
