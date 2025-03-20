@@ -1,4 +1,5 @@
 import json
+from collections import counter
 
 
 def filterLog(jsonOut, dataName):
@@ -14,6 +15,7 @@ def addId(log, dataName):
 
 # https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
 # https://www.w3schools.com/python/python_lists_comprehension.asp
+# https://flexiple.com/python/calculate-number-occurrences-list
 def logCompare(fileName):
     # Valid for Windows
     with open(fileName,"r") as f:
@@ -24,7 +26,7 @@ def logCompare(fileName):
         winLogs = filterLog("Windows")
         linLogs = filterLog("Linux")
 
-        # Declare list of id's ~ This can be used to check for deletion of data
+        # Declare list of id's ~ This can be used to check for what should be there
         wId = addId(winLogs, "LogId")
         lId = addId(linLogs, "LineId")
 
