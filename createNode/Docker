@@ -32,7 +32,8 @@ RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichai
     curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/winTest.csv &&  \
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/csv/winTest.csv &&  \
+    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/csv/linTest.csv &&  \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/logPoster.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/aesController.py && \

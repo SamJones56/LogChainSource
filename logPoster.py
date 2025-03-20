@@ -10,9 +10,22 @@ from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
 
-
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
+
+# Get user input
+def usrInput():
+    fileName = input(bcolors.WARNING + f"FileName: \n Windows : winTest.csv \n Linux : linTest.csv \n Selection:" + bcolors.ENDC)
+    print(bcolors.OKGREEN + fileName + bcolors.ENDC)
+    fileType = input(bcolors.WARNING + f"Log Types: \n Windows : [1] \n Linux : [2] \n Selection:" + bcolors.ENDC)
+    print(bcolors.OKGREEN + fileType + bcolors.ENDC)
+    streamName = input(bcolors.WARNING + f"StreamName: \n data \n Selection:" + bcolors.ENDC)
+    print(bcolors.OKGREEN + streamName + bcolors.ENDC)
+    key = input(bcolors.WARNING + f"Node: \n [1] \n [2] \n Selection:" + bcolors.ENDC)
+    print(bcolors.OKGREEN + key + bcolors.ENDC)
+
+    return fileName, fileType, streamName,key
+
 
 # Method for building windows JSON
 def winLog(row):
@@ -28,6 +41,20 @@ def winLog(row):
         "EventTemplate":row['EventTemplate'],
         }}
 
+# Method for building linux JSON
+def linLog(row):
+    return {"json":{
+        "Type": "Linux",
+        "LineId" : row['LineId'],
+        "Date":row['Date'],
+        "Time":row['Time'],
+        "Level":row['Level'],
+        "Component":row['Component'],
+        "PID":row['PID'],
+        "Content":row['Content'],
+        "EventId":row['EventId'],
+        "EventTemplate":row['EventTemplate'],
+        }}
 
 # https://docs.python.org/3/library/csv.html
 # Parse through the csv
@@ -39,8 +66,10 @@ def postToChain(fileName, fileType, streamName, key):
             t = randrange(6)
             time.sleep(t)
             # Generate the json file
-            if fileType == "windows":
+            if fileType == 1:
                 log = winLog(row)
+            if fileType == 2:
+                log = linLog(row)
             else:
                 print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
             # json to binary for encryption
@@ -68,5 +97,6 @@ def postToChain(fileName, fileType, streamName, key):
             addToStream(streamName, key, data)
 
 
+fileName,fileType,streamName,key = usrInput()
 
-postToChain("winTest.csv","windows", "data", "Node1")
+postToChain(fileName,fileType,streamName,key)

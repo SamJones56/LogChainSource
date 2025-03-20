@@ -50,7 +50,6 @@ def createStream(streamName, streamRestrictions):
         print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
 
-
 # Subscribe to existing stream
 def subStream(chainName, streamName):
     print(bcolors.OKGREEN + "Subscribed to stream:", streamName + " on: " + chainName +bcolors.ENDC)
