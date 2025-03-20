@@ -39,5 +39,5 @@ streamData = getStreamData("data", False)
 
 # Write current state of chain to json
 writeToFile("streamDataEnc.json", streamData)
-# time.sleep(20)
+time.sleep(10)
 readDecryptSave("streamDataEnc.json")
