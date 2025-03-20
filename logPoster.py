@@ -84,8 +84,8 @@ def postToChain(fileName, fileType, streamName, key):
         reader = csv.DictReader(csvfile)
         for row in reader:
             # Simulate random time
-            t = randrange(6)
-            time.sleep(t)
+            # t = randrange(6)
+            # time.sleep(t)
             # Generate the json file
             if fileType == 1:
                 log = winLog(row,key)
