@@ -90,7 +90,7 @@ def postToChain(fileName, fileType, streamName, key):
             if fileType == 1:
                 log = winLog(row,key)
             elif fileType == 2:
-                log = linLog(row)
+                log = linLog(row,key)
             # json to binary for encryption
             stringLog=json.dumps(log)
             binaryLog=stringLog.encode('utf-8')
