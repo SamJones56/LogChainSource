@@ -60,7 +60,7 @@ def postToChain():
             print(bcolors.WARNING + "Ammending ", end=" ")
             print(log, end=" ")
             print(" to Chain" + bcolors.ENDC)
-            # addToStream(streamName, key, data)
-            addToStream(streamName, key, log)
+            addToStream(streamName, key, data)
+            # addToStream(streamName, key, log)
 
 postToChain()
