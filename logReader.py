@@ -9,6 +9,16 @@ def writeToFile(file, data):
     with open(file,"w") as f:
         json.dump(data, f)
 
+# https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20are%20represented%20in%20Python.
+def logCompare(fileName):
+    with open(fileName,"r") as f:
+        jsonOut = json.load(f)
+    for jLine in jsonOut:
+        test = {"LogID":"1"}
+        # positive_feedback_count = sum(1 for obj in data if obj['feedback'] in ["Very satisfied", "Satisfied"])
+        count = sum(1 for obj in jLine if obj[test])
+        print(count)
+
 # Read and decrypt
 def readDecryptSave(jsonOut):
     # with open(file, "r") as f:
@@ -52,3 +62,4 @@ readDecryptSave(streamData)
 # time.sleep(10)
 # Decrypt json state
 # readDecryptSave("streamDataEnc.json")
+logCompare("streamDataDec.json")
