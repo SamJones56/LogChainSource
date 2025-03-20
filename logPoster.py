@@ -15,14 +15,23 @@ publicKey = readFromFile(pkFile)
 
 # Get user input
 def usrInput():
-    fileName = input(bcolors.WARNING + f"FileName: \n Windows : winTest.csv \n Linux : linTest.csv \n Selection:" + bcolors.ENDC)
-    print(bcolors.OKGREEN + fileName + bcolors.ENDC)
     fileType = input(bcolors.WARNING + f"Log Types: \n Windows : [1] \n Linux : [2] \n Selection:" + bcolors.ENDC)
     print(bcolors.OKGREEN + fileType + bcolors.ENDC)
-    streamName = input(bcolors.WARNING + f"StreamName: \n data \n Selection:" + bcolors.ENDC)
-    print(bcolors.OKGREEN + streamName + bcolors.ENDC)
-    key = input(bcolors.WARNING + f"Node: \n [1] \n [2] \n Selection:" + bcolors.ENDC)
-    print(bcolors.OKGREEN + key + bcolors.ENDC)
+    # Defaults
+    streamName = "data"
+    if fileType == 1:
+        fileName = "winTest.csv"
+        key = "Node1"
+    if fileType == 2:
+        fileName = "linTest.csv"
+        key = "Node2"
+    print(bcolors.OKGREEN, fileName, fileType, streamName, key, bcolors.ENDC)
+    # fileName = input(bcolors.WARNING + f"FileName: \n Windows : winTest.csv \n Linux : linTest.csv \n Selection:" + bcolors.ENDC)
+    # print(bcolors.OKGREEN + fileName + bcolors.ENDC)
+    # streamName = input(bcolors.WARNING + f"StreamName: \n data \n Selection:" + bcolors.ENDC)
+    # print(bcolors.OKGREEN + streamName + bcolors.ENDC)
+    # key = input(bcolors.WARNING + f"Node: \n [1] \n [2] \n Selection:" + bcolors.ENDC)
+    # print(bcolors.OKGREEN + key + bcolors.ENDC)
 
     return fileName, fileType, streamName,key
 
