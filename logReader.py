@@ -17,7 +17,9 @@ def readDecryptSave(jsonOut):
     jDecrypted = []
     # Loop through the json output
     for jLine in jsonOut:
-        # key = jLine["keys"]
+        # Get the publishers and keys
+        publishers = jLine['publishers']
+        key = jLine["keys"]
         # Gather info from json
         jData = jLine["data"]["json"]
         kyberct = jData["kyberct"]
@@ -27,9 +29,15 @@ def readDecryptSave(jsonOut):
 
         # Decrypt the json
         jDecrypt = decAes(kyberct,nonce,cipherText,tag)
-        # Tag the decrypted data with the key
-        # data = key , jDecrypt
-        data = jDecrypt
+        # Remove nested
+        if "json" in jDecrypt:
+            jDecrypt=jDecrypt["json"]
+        
+        data = {
+            "walletAddress":publishers,
+            "nodeKey":key,
+            "data":jDecrypt
+        }
         
         # Append to jDecrypted
         jDecrypted.append(data)
