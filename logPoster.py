@@ -16,15 +16,25 @@ publicKey = readFromFile(pkFile)
 # Get user input
 def usrInput():
     fileType = input(bcolors.WARNING + f"Log Types: \n Windows : [1] \n Linux : [2] \n Selection:" + bcolors.ENDC)
+    # Try convert to int
+    try:
+        fileType = int(fileType)
+    except:
+        print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
+        exit
     print(bcolors.OKGREEN + fileType + bcolors.ENDC)
+
     # Defaults
     streamName = "data"
     if fileType == 1:
         fileName = "winTest.csv"
         key = "Node1"
-    if fileType == 2:
+    elif fileType == 2:
         fileName = "linTest.csv"
         key = "Node2"
+    else:
+        print(bcolors.FAIL + "Invalid file type: " + fileType + bcolors.ENDC)
+        exit
     print(bcolors.OKGREEN, fileName, fileType, streamName, key, bcolors.ENDC)
     # fileName = input(bcolors.WARNING + f"FileName: \n Windows : winTest.csv \n Linux : linTest.csv \n Selection:" + bcolors.ENDC)
     # print(bcolors.OKGREEN + fileName + bcolors.ENDC)
