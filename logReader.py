@@ -13,13 +13,19 @@ def writeToFile(file, data):
 # https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
 def logCompare(fileName):
     with open(fileName,"r") as f:
+        # Declare list of id's
+        ids = []
         jsonOut = json.load(f)
-    # for jLine in jsonOut:
+        for jLine in jsonOut:
+            #print(jLine)
+            if jLine["data"]["LogId"] not in ids:
+                ids.append(jLine["data"]["LogId"])
+        # if jsonOut[][]
+        print(ids)
         test = "1"
-        #test = "LogId"
-        # positive_feedback_count = sum(1 for obj in data if obj['feedback'] in ["Very satisfied", "Satisfied"])
         count = sum(1 for obj in jsonOut if obj["data"]["LogId"] == test)
         print(count)
+
 
 
 # Read and decrypt
