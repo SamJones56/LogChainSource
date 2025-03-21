@@ -33,7 +33,7 @@ def recursiveCheck(entries):
     # Previous entry
     prevEntry = None
     # Loop through entries
-    for entry in enumerate(entries):
+    for index, entry in enumerate(entries):
         if prevEntry != None:
             # COmpare entries
             if entry == prevEntry:
