@@ -19,7 +19,6 @@ def addId(log, dataName):
     return counter.items()
 
 # CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
-# ADD FLAG FOR UNHAPPY IN RECURSION OR COLOUR CHANGE
 
 # Check data against previous entry
 def recursiveCheck(entries):
