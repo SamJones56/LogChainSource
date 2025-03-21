@@ -27,9 +27,6 @@ def recursiveCheck(entries):
     # Check for 0 length
     if len(entries) < 2:
         return
-    
-    # Counter
-    counter = 0
     # Previous entry
     prevEntry = None
     # Loop through entries
@@ -38,10 +35,12 @@ def recursiveCheck(entries):
             # COmpare entries
             if entry == prevEntry:
                 print(bcolors.OKGREEN + "Entries Match" + bcolors.ENDC)
+                print(bcolors.OKCYAN + f"Checking: {entry} \nAgainst: {prevEntry}" + bcolors.ENDC)
+                # print(bcolors.OKCYAN + f"{prevEntry}" + bcolors.ENDC)
             else:
                 print(bcolors.FAIL + "MISSMATCH DETECTED" + bcolors.ENDC)
-                print(bcolors.WARNING + f"{entry}" + bcolors.ENDC)
-                print(bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
+                print(bcolors.WARNING + f"Checking: {entry} \nAgainst: {prevEntry}" + bcolors.ENDC)
+                # print(bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
         prevEntry = entry
 
 
