@@ -48,7 +48,7 @@ def recursiveCheck(entries):
                 bcolors.FAIL + f"Checked against entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
             if sadIndex > 0:
-                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED: {index} LOGS AGO" + bcolors.ENDC)
+                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {sadIndex}." + bcolors.ENDC)
         prevEntry = entry
 
 
