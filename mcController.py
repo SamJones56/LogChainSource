@@ -2,6 +2,8 @@ from multichain import MultiChainClient
 import time
 from colours import bcolors
 
+# https://www.multichain.com/developers/json-rpc-api/
+
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
 rpchost = '172.18.0.2' 

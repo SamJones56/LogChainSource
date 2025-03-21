@@ -47,3 +47,8 @@ def readDecryptSave(jsonOut):
 streamData = getStreamData("data", False)
 readDecryptSave(streamData)
 logCompare("streamDataDec.json")
+
+# "reload button" clicked -> 
+# 1. Call -> streamData = getStreamData("data", False)  :: Gets current data stream data 
+# 2. readDecryptSave(streamData)                        :: Decryptes the data stream and saves it to "streamDataDec.json"
+# Extra. logCompare("streamDataDec.json")               :: Is how we compare the decoded json file
