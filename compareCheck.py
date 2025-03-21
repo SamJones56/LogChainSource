@@ -10,8 +10,6 @@ def addId(log, dataName):
     ids = [jLine["data"][dataName] for jLine in log]
     return Counter(ids)
 
-#def contOccurance
-
 # https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
 # https://www.w3schools.com/python/python_lists_comprehension.asp
 # https://flexiple.com/python/calculate-number-occurrences-list
