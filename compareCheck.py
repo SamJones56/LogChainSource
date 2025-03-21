@@ -8,8 +8,12 @@ def filterLog(jsonOut, dataName):
 def addId(log, dataName):
     id = []
     for jLine in log:
-            if jLine["data"][dataName] not in id:
-                return id.append(jLine["data"]["LogId"])
+            if dataName == "LogId":
+                if jLine["data"][dataName] not in id:
+                    return(jLine["data"][dataName])
+            elif dataName == "LineId":
+                if jLine["data"][dataName] not in id:
+                    return(jLine["data"][dataName])
             
 #def contOccurance
 
@@ -21,17 +25,15 @@ def logCompare(fileName):
     with open(fileName,"r") as f:
         # Read from json
         jsonOut = json.load(f)
+        wId = []
+        lId = []
 
         # Filter logs
-        winLogs = filterLog("Windows")
-        linLogs = filterLog("Linux")
+        winLogs = filterLog(jsonOut,"Windows")
+        linLogs = filterLog(jsonOut,"Linux")
+
 
         # Declare list of id's ~ This can be used to check for what should be there
-        wId = addId(winLogs, "LogId")
-        lId = addId(linLogs, "LineId")
-
-        print(wId)
-        print(lId)
 
 
         # # Loop through JSON lines in JSON output
