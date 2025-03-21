@@ -23,11 +23,17 @@ def addId(log, dataName):
     return counter.items()
 
 # Sequencly check data against previous
-def recursiveCheck(maxCount, entry,prevEntry=''):
+def recursiveCheck(entry):
+    # Check for 0 length
+    if len(entry) < 2:
+        return
+    
     # Counter
     counter = 0
+    # Previous entry
+    prevEntry = None
     # Break case
-    if counter == maxCount:
+    if counter == freq:
         print(bcolors.OKCYAN + f"Check Completed" + bcolors.ENDC)
         return
     elif counter != 0:
@@ -44,12 +50,8 @@ def compEntry(log, count, idType, prevEntry=''):
     for logId, freq in count:
         # Loop through entries in log and check if they have correct data type
         entries = [jLine for jLine in log if jLine["data"][idType] == logId]
-        print(f"Id {logId} occurs {freq} times: ")
-        # Loop through entries ~ hash then comp
-        for entry in entries:
-            # Compare
-            print(f"\n", json.dumps(entry))
-            recursiveCheck(freq, entry)
+        # Check each entry against previous
+        recursiveCheck(entries)
 
 
 def logCompare(fileName):
@@ -70,4 +72,4 @@ def logCompare(fileName):
 
         # Compare log files that are present
         test = compEntry(winLogs, winLogCount, "LogId")
-        test = compEntry(linLogs, winLogCount, "LineId")
+        test = compEntry(linLogs, linLogCount, "LineId")
