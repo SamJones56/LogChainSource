@@ -8,22 +8,43 @@ def filterLog(jsonOut, dataName):
 # Get count of log id's
 def addId(log, dataName):
     ids = [jLine["data"][dataName] for jLine in log]
-    return Counter(ids)
+    counter =  Counter(ids)
+    return counter.items()
+
+# Compare log files that are present
+# def compEntry(count):
+    # Split count
+
+    # entries = [jLine["data"] for jLine in log]
+    # print(entries)
+    
+
 
 # https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
 # https://www.w3schools.com/python/python_lists_comprehension.asp
 # https://flexiple.com/python/calculate-number-occurrences-list
+
+# Split logs
+# Get count of what id's are present
+# Compare present id's
+# Look for missing id's?
+
+
 def logCompare(fileName):
     # Valid for Windows
     with open(fileName,"r") as f:
         # Read from json
         jsonOut = json.load(f)
 
-        # Filter logs
+        # Filter & split logs
         winLogs = filterLog(jsonOut,"Windows")
         linLogs = filterLog(jsonOut,"Linux")
+
         # Gather count of Id's
-        winLogIds = addId(winLogs, "LogId")
-        linLogIds = addId(linLogs, "LineId")
-        print("Win Id's", winLogIds)
-        print("Linux Id's", linLogIds)
+        winLogCount = addId(winLogs, "LogId")
+        linLogCount = addId(linLogs, "LineId")
+        print("Win Id's", winLogCount)
+        print("Linux Id's", linLogCount)  
+
+        # Compare log files that are present
+        test = compEntry(winLogs)
