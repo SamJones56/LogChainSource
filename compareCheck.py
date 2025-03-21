@@ -30,6 +30,7 @@ def recursiveCheck(entries):
     prevEntry = None
     # Loop through entries
     sadIndex = 0
+    
     for index, entry in enumerate(entries):
         if prevEntry != None:
             # Compare entries
@@ -47,7 +48,7 @@ def recursiveCheck(entries):
                 bcolors.FAIL + f"Checked against entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
             if sadIndex > 0:
-                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED IN LOG" + bcolors.ENDC)
+                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED: {index} LOGS AGO" + bcolors.ENDC)
         prevEntry = entry
 
 
