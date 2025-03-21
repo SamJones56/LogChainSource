@@ -12,10 +12,11 @@ def addId(log, dataName):
     return counter.items()
 
 # Compare log files that are present
-# def compEntry(count):
+def compEntry(log, count):
     # Split count
-
-    # entries = [jLine["data"] for jLine in log]
+    for x, y in count:
+        print(f"ID {x} occurs {y} times")
+    entries = [jLine["data"] for jLine in log]
     # print(entries)
     
 
@@ -47,4 +48,5 @@ def logCompare(fileName):
         print("Linux Id's", linLogCount)  
 
         # Compare log files that are present
-        test = compEntry(winLogs)
+        test = compEntry(winLogs, winLogCount)
+        test = compEntry(linLogs, winLogCount)
