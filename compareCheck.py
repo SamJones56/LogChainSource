@@ -23,26 +23,34 @@ def addId(log, dataName):
     return counter.items()
 
 # Sequencly check data against previous
-def recursiveCheck(entry):
+def recursiveCheck(entries):
     # Check for 0 length
-    if len(entry) < 2:
+    if len(entries) < 2:
         return
     
     # Counter
     counter = 0
     # Previous entry
     prevEntry = None
+
+    for entry in enumerate(entries):
+        if prevEntry != None:
+            if entry == prevEntry:
+                print(bcolors.OKGREEN + "Entries Match" + bcolors.ENDC)
+            else:
+                print(bcolors.FAIL + "MISSMATCH DETECTED" + bcolors.ENDC)
+        prevEntry = entry
     # Break case
-    if counter == freq:
-        print(bcolors.OKCYAN + f"Check Completed" + bcolors.ENDC)
-        return
-    elif counter != 0:
-        if entry == prevEntry:
-            print(bcolors.OKGREEN + f"Entries Matched" + bcolors.ENDC)
-            prevHash = entry
-            entry = nextEntry
-            counter 
-            recursiveCheck(maxCount, entry, prevEntry)
+    # if counter == freq:
+    #     print(bcolors.OKCYAN + f"Check Completed" + bcolors.ENDC)
+    #     return
+    # elif counter != 0:
+    #     if entry == prevEntry:
+    #         print(bcolors.OKGREEN + f"Entries Matched" + bcolors.ENDC)
+    #         prevHash = entry
+    #         entry = nextEntry
+    #         counter 
+    #         recursiveCheck(maxCount, entry, prevEntry)
 
 # Compare log files that are present
 def compEntry(log, count, idType, prevEntry=''):
