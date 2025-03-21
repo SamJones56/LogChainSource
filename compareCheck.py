@@ -34,13 +34,17 @@ def recursiveCheck(entries):
         if prevEntry != None:
             # COmpare entries
             if entry == prevEntry:
-                print(bcolors.OKGREEN + "Entries Match" + bcolors.ENDC)
-                print(bcolors.OKCYAN + f"Checking: {entry} \nAgainst: {prevEntry}" + bcolors.ENDC)
-                # print(bcolors.OKCYAN + f"{prevEntry}" + bcolors.ENDC)
+                print(bcolors.OKGREEN + f"Entries Match \n" + 
+                bcolors.OKBLUE + f"Checking entry: {index}\n" +
+                bcolors.OKCYAN + f"{entry}\n" +
+                bcolors.OKBLUE + f"Against entry: {index-1}\n" +
+                bcolors.OKCYAN + f"{prevEntry}" + bcolors.ENDC)
             else:
-                print(bcolors.FAIL + "MISSMATCH DETECTED" + bcolors.ENDC)
-                print(bcolors.WARNING + f"Checking: {entry} \nAgainst: {prevEntry}" + bcolors.ENDC)
-                # print(bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
+                print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
+                bcolors.FAIL + f"Error Located: {index}\n" +
+                bcolors.WARNING + f"{entry}\n" +
+                bcolors.FAIL + f"Against entry: {index-1}\n" +
+                bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
         prevEntry = entry
 
 
