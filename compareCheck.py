@@ -32,25 +32,18 @@ def recursiveCheck(entries):
     counter = 0
     # Previous entry
     prevEntry = None
-
+    # Loop through entries
     for entry in enumerate(entries):
         if prevEntry != None:
+            # COmpare entries
             if entry == prevEntry:
                 print(bcolors.OKGREEN + "Entries Match" + bcolors.ENDC)
             else:
                 print(bcolors.FAIL + "MISSMATCH DETECTED" + bcolors.ENDC)
+                print(bcolors.WARNING + f"{entry}" + bcolors.ENDC)
+                print(bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
         prevEntry = entry
-    # Break case
-    # if counter == freq:
-    #     print(bcolors.OKCYAN + f"Check Completed" + bcolors.ENDC)
-    #     return
-    # elif counter != 0:
-    #     if entry == prevEntry:
-    #         print(bcolors.OKGREEN + f"Entries Matched" + bcolors.ENDC)
-    #         prevHash = entry
-    #         entry = nextEntry
-    #         counter 
-    #         recursiveCheck(maxCount, entry, prevEntry)
+
 
 # Compare log files that are present
 def compEntry(log, count, idType, prevEntry=''):
