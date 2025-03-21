@@ -12,17 +12,13 @@ def addId(log, dataName):
     return counter.items()
 
 # Compare log files that are present
-def compEntry(log, count):
+def compEntry(log, count, idType):
     # Split count
-    for logIds, freqs in count:
-        # Loop through each log id and validate
-        for freq in freqs:
-            for logId in logIds:
-                # Compare instances of log files at ids if they match
-                temp = []
-                
-        # entries = [jLine["data"] for jLine in log]
-    # print(entries)
+    for logId, freq in count:
+        entries = [jLine for jLine in log if jLine["data"][idType] == logId]
+        print(f"Id {logId} occurs {freq} times: ")
+        for entry in entries:
+            print(json.dumps(entry))
     
 
 
@@ -53,5 +49,5 @@ def logCompare(fileName):
         print("Linux Id's", linLogCount)  
 
         # Compare log files that are present
-        test = compEntry(winLogs, winLogCount)
-        test = compEntry(linLogs, winLogCount)
+        test = compEntry(winLogs, winLogCount, "LogId")
+        test = compEntry(linLogs, winLogCount, "LineId")
