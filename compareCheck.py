@@ -14,9 +14,14 @@ def addId(log, dataName):
 # Compare log files that are present
 def compEntry(log, count):
     # Split count
-    for x, y in count:
-        print(f"ID {x} occurs {y} times")
-    entries = [jLine["data"] for jLine in log]
+    for logIds, freqs in count:
+        # Loop through each log id and validate
+        for freq in freqs:
+            for logId in logIds:
+                # Compare instances of log files at ids if they match
+                temp = []
+                
+        # entries = [jLine["data"] for jLine in log]
     # print(entries)
     
 
