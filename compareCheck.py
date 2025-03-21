@@ -7,11 +7,6 @@ from colours import bcolors
 # https://www.w3schools.com/python/python_lists_comprehension.asp
 # https://flexiple.com/python/calculate-number-occurrences-list
 
-# Split logs
-# Get count of what id's are present
-# Compare present id's
-# Look for missing id's?
-
 # Filter the logs
 def filterLog(jsonOut, dataName):
     return [jData for jData in jsonOut if jData["data"]["Type"]==dataName]
@@ -22,7 +17,7 @@ def addId(log, dataName):
     counter =  Counter(ids)
     return counter.items()
 
-# Sequencly check data against previous
+# Check data against previous entry
 def recursiveCheck(entries):
     # Check for 0 length
     if len(entries) < 2:
@@ -41,15 +36,15 @@ def recursiveCheck(entries):
                 bcolors.OKCYAN + f"{prevEntry}" + bcolors.ENDC)
             else:
                 print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
-                bcolors.FAIL + f"Error Located: {index}\n" +
+                bcolors.FAIL + f"Error located at entry: {index}\n" +
                 bcolors.WARNING + f"{entry}\n" +
-                bcolors.FAIL + f"Against entry: {index-1}\n" +
+                bcolors.FAIL + f"Checked against entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
         prevEntry = entry
 
 
 # Compare log files that are present
-def compEntry(log, count, idType, prevEntry=''):
+def compEntry(log, count, idType):
     # Split count
     for logId, freq in count:
         # Loop through entries in log and check if they have correct data type
@@ -71,9 +66,7 @@ def logCompare(fileName):
         # Gather count of Id's
         winLogCount = addId(winLogs, "LogId")
         linLogCount = addId(linLogs, "LineId")
-        print("Win Id's", winLogCount)
-        print("Linux Id's", linLogCount)  
 
         # Compare log files that are present
-        test = compEntry(winLogs, winLogCount, "LogId")
-        test = compEntry(linLogs, linLogCount, "LineId")
+        compEntry(winLogs, winLogCount, "LogId")
+        compEntry(linLogs, linLogCount, "LineId")
