@@ -6,7 +6,6 @@ from quantcrypt.kem import MLKEM_512, PQAVariant
 
 kem = MLKEM_512(PQAVariant.REF)
 
-
 # file locations
 publicKeyFile="kPk.key"
 secretKeyFile="kSk.key"

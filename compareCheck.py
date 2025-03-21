@@ -1,5 +1,16 @@
 import json
 from collections import Counter
+import hashlib
+from colours import bcolors
+
+# https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
+# https://www.w3schools.com/python/python_lists_comprehension.asp
+# https://flexiple.com/python/calculate-number-occurrences-list
+
+# Split logs
+# Get count of what id's are present
+# Compare present id's
+# Look for missing id's?
 
 # Filter the logs
 def filterLog(jsonOut, dataName):
@@ -11,25 +22,34 @@ def addId(log, dataName):
     counter =  Counter(ids)
     return counter.items()
 
+# Sequencly check data against previous
+def recursiveCheck(maxCount, entry,prevEntry=''):
+    # Counter
+    counter = 0
+    # Break case
+    if counter == maxCount:
+        print(bcolors.OKCYAN + f"Check Completed" + bcolors.ENDC)
+        return
+    elif counter != 0:
+        if entry == prevEntry:
+            print(bcolors.OKGREEN + f"Entries Matched" + bcolors.ENDC)
+            prevHash = entry
+            entry = nextEntry
+            counter 
+            recursiveCheck(maxCount, entry, prevEntry)
+
 # Compare log files that are present
-def compEntry(log, count, idType):
+def compEntry(log, count, idType, prevEntry=''):
     # Split count
     for logId, freq in count:
+        # Loop through entries in log and check if they have correct data type
         entries = [jLine for jLine in log if jLine["data"][idType] == logId]
         print(f"Id {logId} occurs {freq} times: ")
+        # Loop through entries ~ hash then comp
         for entry in entries:
-            print(json.dumps(entry))
-    
-
-
-# https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
-# https://www.w3schools.com/python/python_lists_comprehension.asp
-# https://flexiple.com/python/calculate-number-occurrences-list
-
-# Split logs
-# Get count of what id's are present
-# Compare present id's
-# Look for missing id's?
+            # Compare
+            print(f"\n", json.dumps(entry))
+            recursiveCheck(freq, entry)
 
 
 def logCompare(fileName):
