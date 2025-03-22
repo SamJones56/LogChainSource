@@ -24,10 +24,10 @@ def addId(log, dataName):
 
 # CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
 
-# Find errors
+# Find errors https://stackoverflow.com/questions/1388818/how-can-i-compare-two-lists-in-python-and-return-matches
 def errorLocator(currentEntry, prevEntry):
-    # return[i for i, j in zip(currentEntry, prevEntry) if i != j]
-    return(set(currentEntry) & set(prevEntry))
+    return set(currentEntry.items()) ^ set(prevEntry.items())
+        
 
 # Check data against previous entry
 def recursiveCheck(entries):
@@ -62,8 +62,6 @@ def recursiveCheck(entries):
             if errorIndex > 0:
                 print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}." + bcolors.ENDC)
                 print(bcolors.FAIL + '^' * term_size.columns + bcolors.ENDC)
-            # else:
-            #     print(bcolors.OKGREEN + f"Entries Match \n")
         prevEntry = entry
 
 
