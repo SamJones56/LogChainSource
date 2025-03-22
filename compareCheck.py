@@ -52,10 +52,10 @@ def recursiveCheck(entries):
             else:
                 errorIndex = index
                 if errorSet:
-                    errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}\n")
+                    errorSet.append(f"\nError Between INDEX {index-1} & INDEX {index}\n\t")
                     errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
                 else:
-                    errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}")
+                    errorSet.append(f"\nError Between INDEX {index-1} & INDEX {index}:\n\t")
                     errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
                 print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
                 bcolors.FAIL + f"Entry: {index-1}\n" +
@@ -63,7 +63,7 @@ def recursiveCheck(entries):
                 bcolors.FAIL + f"Does Not Match Entry: {index}\n" +
                 bcolors.WARNING + f"{entry}" + bcolors.ENDC)
             if errorIndex > 0:
-                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}.\n")
+                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}.")
                 for item in errorSet:
                     print(item, end=" ")
                 print()
