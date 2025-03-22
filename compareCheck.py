@@ -27,7 +27,7 @@ def addId(log, dataName):
 # Find errors
 def errorLocator(currentEntry, prevEntry):
     # return[i for i, j in zip(currentEntry, prevEntry) if i != j]
-    return (set(currentEntry) ^ set(prevEntry))
+    return(set(currentEntry) & set(prevEntry))
 
 # Check data against previous entry
 def recursiveCheck(entries):
@@ -51,7 +51,7 @@ def recursiveCheck(entries):
                 bcolors.OKCYAN + f"{entry}" + bcolors.ENDC)
             else:
                 errorIndex = index
-                error = errorLocator(entry, prevEntry)
+                error = errorLocator(entry["data"], prevEntry["data"])
                 
                 print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
                 bcolors.FAIL + f"Entry: {index-1}\n" +
