@@ -28,8 +28,8 @@ def recursiveCheck(entries):
     # Previous entry
     prevEntry = None
     # Loop through entries
-    sadIndex = 0
-    
+    errorIndex = 0
+    # Loop through entries 
     for index, entry in enumerate(entries):
         if prevEntry != None:
             # Compare entries
@@ -40,20 +40,21 @@ def recursiveCheck(entries):
                 bcolors.OKBLUE + f"Against entry: {index-1}\n" +
                 bcolors.OKCYAN + f"{prevEntry}" + bcolors.ENDC)
             else:
-                sadIndex = index
+                errorIndex = index
                 print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
                 bcolors.FAIL + f"Error located at entry: {index}\n" +
                 bcolors.WARNING + f"{entry}\n" +
                 bcolors.FAIL + f"Checked against entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
-            if sadIndex > 0:
-                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {sadIndex}." + bcolors.ENDC)
+            if errorIndex > 0:
+                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}." + bcolors.ENDC)
         prevEntry = entry
 
 
 # Compare log files that are present
 def compEntry(log, count, idType):
     # Split count
+    
     for logId, freq in count:
         # Loop through entries in log and check if they have correct data type
         entries = [jLine for jLine in log if jLine["data"][idType] == logId]
