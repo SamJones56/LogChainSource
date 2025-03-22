@@ -40,7 +40,6 @@ def recursiveCheck(entries):
     errorIndex = 0
     errorSet = []
     # Loop through entries
-    
     for index, entry in enumerate(entries):
         if prevEntry != None:
             # Compare entries
