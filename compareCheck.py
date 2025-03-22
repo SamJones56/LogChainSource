@@ -29,7 +29,7 @@ def countCheck(logCount):
     for logId,count in logCount:
         if prevCount != None:
             if count < prevCount:
-                print(f"Deletion Detected {count}")
+                print(f"Deletion Detected at {logId}")
         prevCount = count
              
 
