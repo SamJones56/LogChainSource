@@ -32,7 +32,7 @@ def countCheck(logCount):
     for logId,count in logCount:
         if prevCount != None:
             if count < prevCount:
-                print(bcolors.WARNING + f"Deletion Detected at {logId}" + bcolors.ENDC)
+                print(bcolors.WARNING + f"Deletion Detected for LogId: {logId}" + bcolors.ENDC)
         prevCount = count
              
 
@@ -57,19 +57,20 @@ def recursiveCheck(entries):
         if prevEntry != None:
             # Compare entries
             if entry == prevEntry:
-                #print(bcolors.OKGREEN + f"Entries Match \n" + 
                 print(bcolors.OKGREEN + f"Entry: {index-1}\n" +
                 bcolors.OKCYAN + f"{prevEntry}\n" +
                 bcolors.OKGREEN + f"Matches Entry: {index}\n" +
                 bcolors.OKCYAN + f"{entry}" + bcolors.ENDC)
             else:
                 errorIndex = index
+                # Adding to the error set list for memory saving
                 if errorSet:
                     errorSet.append(f"\nError Between INDEX {index-1} & INDEX {index}\n\t")
                     errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
                 else:
                     errorSet.append(f"\nError Between INDEX {index-1} & INDEX {index}:\n\t")
                     errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
+                # Printing fail condition
                 print(bcolors.FAIL + f"\/ \/ \/ \/ \/ MISSMATCH DETECTED \/ \/ \/ \/ \/\n" + 
                 bcolors.FAIL + f"Entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}\n" +
