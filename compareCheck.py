@@ -23,16 +23,14 @@ def addId(log, dataName):
     return counter.items()
 
 # CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
-def countCheck(count):
-    print(count)
-    prevCount = 0
-    for x,t in count:
-        if t > prevCount:
-            prevCount = t
-        else:
-            print(f"Count of logId {t} is less than that of logId {prevCount}")
-            prevCount = t
-
+def countCheck(logCount):
+    # print(logCount)
+    prevCount = None
+    for logId,count in logCount:
+        if prevCount != None:
+            if count < prevCount:
+                print(f"Deletion Detected {count}")
+        prevCount = count
              
 
 
