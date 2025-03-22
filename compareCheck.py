@@ -33,7 +33,6 @@ def countCheck(logCount):
         if prevCount != None:
             if count < prevCount:
                 print(bcolors.WARNING + f"Deletion Detected at {logId}" + bcolors.ENDC)
-                return logId, count
         prevCount = count
              
 
