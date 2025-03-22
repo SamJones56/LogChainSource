@@ -25,9 +25,9 @@ def addId(log, dataName):
 # CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
 
 # Find errors https://stackoverflow.com/questions/1388818/how-can-i-compare-two-lists-in-python-and-return-matches
-def errorLocator(currentEntry, prevEntry):
-    return set(currentEntry.items()) ^ set(prevEntry.items())
-        
+def errorLocator(prevEntry, currentEntry):
+    return set(prevEntry.items()) ^ set(currentEntry.items())
+
 
 # Check data against previous entry
 def recursiveCheck(entries):
@@ -38,6 +38,7 @@ def recursiveCheck(entries):
     prevEntry = None
     # Loop through entries
     errorIndex = 0
+    errorSet = []
     # Loop through entries
     
     for index, entry in enumerate(entries):
@@ -51,17 +52,23 @@ def recursiveCheck(entries):
                 bcolors.OKCYAN + f"{entry}" + bcolors.ENDC)
             else:
                 errorIndex = index
-                error = errorLocator(entry["data"], prevEntry["data"])
-                
+                if errorSet:
+                    errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}")
+                    errorSet = errorLocator(entry["data"], prevEntry["data"])
+                else:
+                    errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}")
+                    errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
                 print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
                 bcolors.FAIL + f"Entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}\n" +
                 bcolors.FAIL + f"Does Not Match Entry: {index}\n" +
                 bcolors.WARNING + f"{entry}" + bcolors.ENDC)
-                print(error)
             if errorIndex > 0:
-                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}." + bcolors.ENDC)
-                print(bcolors.FAIL + '^' * term_size.columns + bcolors.ENDC)
+                print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}.\n")
+                for item in errorSet:
+                    print(item, end=" ")
+                print()
+                print('^' * term_size.columns + bcolors.ENDC)
         prevEntry = entry
 
 
