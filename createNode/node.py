@@ -61,6 +61,7 @@ def logChainInit():
 
     # Save genesis public key
     savePk()
+    print(bcolors.OKGREEN + "----- NODE DONE ----- " + bcolors.ENDC)
 
 
 logChainInit()

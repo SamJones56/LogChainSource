@@ -81,4 +81,6 @@ def genChain():
      print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
      addToStream(streamName, "genesis", kpk.hex())
 
+     print(bcolors.OKGREEN + "----- GENESIS DONE ----- " + bcolors.ENDC)
+
 genChain()
