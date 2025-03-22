@@ -14,28 +14,32 @@ term_size = os.get_terminal_size()
 
 # Filter the logs
 def filterLog(jsonOut, key, value):
+    # get the data portion of the json
     return [jData for jData in jsonOut if jData["data"][key]==value]
 
 # Get count of log id's
 def addId(log, dataName):
+    # Get the ids
     ids = [jLine["data"][dataName] for jLine in log]
+    # Count the id's
     counter = Counter(ids)
     return counter.items()
 
-# CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
+# Check count of current log against previous, detect deletion
 def countCheck(logCount):
-    # print(logCount)
     prevCount = None
+    # Loop through the logid's and counts and print if current is less than previous
     for logId,count in logCount:
         if prevCount != None:
             if count < prevCount:
-                print(f"Deletion Detected at {logId}")
+                print(bcolors.WARNING + f"Deletion Detected at {logId}" + bcolors.ENDC)
+                return logId, count
         prevCount = count
              
 
-
 # Find errors https://stackoverflow.com/questions/1388818/how-can-i-compare-two-lists-in-python-and-return-matches
 def errorLocator(prevEntry, currentEntry):
+    # Return difference between the sets
     return set(prevEntry.items()) ^ set(currentEntry.items())
 
 
@@ -110,6 +114,6 @@ def logCompare(fileName):
         compEntry(winLogs, winLogCount, "LogId")
         compEntry(linLogs, linLogCount, "LineId")
 
-        # Compare counts
+        # Compare counts for deletions
         countCheck(winLogCount)
         countCheck(linLogCount)
