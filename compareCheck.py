@@ -2,14 +2,18 @@ import json
 from collections import Counter
 import hashlib
 from colours import bcolors
+# https://stackoverflow.com/questions/65561243/print-a-horizontal-line-in-python
+import os
+
+# Get terminal size for hr
+term_size = os.get_terminal_size()
 
 # https://likegeeks.com/count-json-array-elements-python/#:~:text=7%20Benchmark%20Test-,Using%20len()%20Function,arrays%20>
 # https://www.w3schools.com/python/python_lists_comprehension.asp
 # https://flexiple.com/python/calculate-number-occurrences-list
 
 # Filter the logs
-def filterLog(jsonOut, key,value):
-    #if ["data"] in jsonOut:
+def filterLog(jsonOut, key, value):
     return [jData for jData in jsonOut if jData["data"][key]==value]
 
 # Get count of log id's
@@ -20,6 +24,11 @@ def addId(log, dataName):
 
 # CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
 
+# Find errors
+def errorLocator(currentEntry, prevEntry):
+    # return[i for i, j in zip(currentEntry, prevEntry) if i != j]
+    return (set(currentEntry) ^ set(prevEntry))
+
 # Check data against previous entry
 def recursiveCheck(entries):
     # Check for 0 length
@@ -29,37 +38,46 @@ def recursiveCheck(entries):
     prevEntry = None
     # Loop through entries
     errorIndex = 0
-    # Loop through entries 
+    # Loop through entries
+    
     for index, entry in enumerate(entries):
         if prevEntry != None:
             # Compare entries
             if entry == prevEntry:
-                print(bcolors.OKGREEN + f"Entries Match \n" + 
-                bcolors.OKBLUE + f"Checking entry: {index}\n" +
-                bcolors.OKCYAN + f"{entry}\n" +
-                bcolors.OKBLUE + f"Against entry: {index-1}\n" +
-                bcolors.OKCYAN + f"{prevEntry}" + bcolors.ENDC)
+                #print(bcolors.OKGREEN + f"Entries Match \n" + 
+                print(bcolors.OKGREEN + f"Entry: {index-1}\n" +
+                bcolors.OKCYAN + f"{prevEntry}\n" +
+                bcolors.OKGREEN + f"Matches Entry: {index}\n" +
+                bcolors.OKCYAN + f"{entry}" + bcolors.ENDC)
             else:
                 errorIndex = index
+                error = errorLocator(entry, prevEntry)
+                
                 print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
-                bcolors.FAIL + f"Error located at entry: {index}\n" +
-                bcolors.WARNING + f"{entry}\n" +
-                bcolors.FAIL + f"Checked against entry: {index-1}\n" +
-                bcolors.WARNING + f"{prevEntry}" + bcolors.ENDC)
+                bcolors.FAIL + f"Entry: {index-1}\n" +
+                bcolors.WARNING + f"{prevEntry}\n" +
+                bcolors.FAIL + f"Does Not Match Entry: {index}\n" +
+                bcolors.WARNING + f"{entry}" + bcolors.ENDC)
+                print(error)
             if errorIndex > 0:
                 print(bcolors.FAIL + f"PREVIOUS MISSMATCH DETECTED AT LOG ENTRY {errorIndex}." + bcolors.ENDC)
+                print(bcolors.FAIL + '^' * term_size.columns + bcolors.ENDC)
+            # else:
+            #     print(bcolors.OKGREEN + f"Entries Match \n")
         prevEntry = entry
 
 
 # Compare log files that are present
 def compEntry(log, count, idType):
     # Split count
-    
     for logId, freq in count:
         # Loop through entries in log and check if they have correct data type
         entries = [jLine for jLine in log if jLine["data"][idType] == logId]
-        # Check each entry against previous
+        # Printing for entries
+        # print(bcolors.OKGREEN + '=' * term_size.columns, bcolors.ENDC) 
+        # Check entries
         recursiveCheck(entries)
+        print(bcolors.OKGREEN + '=' * term_size.columns, bcolors.ENDC)
 
 
 def logCompare(fileName):
