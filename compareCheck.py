@@ -23,6 +23,18 @@ def addId(log, dataName):
     return counter.items()
 
 # CANT HAVE MORE 6'S THAN FIVES - CHECK HERE FOR THAT BUT US X'S AND Y'S
+def countCheck(count):
+    print(count)
+    prevCount = 0
+    for x,t in count:
+        if t > prevCount:
+            prevCount = t
+        else:
+            print(f"Count of logId {t} is less than that of logId {prevCount}")
+            prevCount = t
+
+             
+
 
 # Find errors https://stackoverflow.com/questions/1388818/how-can-i-compare-two-lists-in-python-and-return-matches
 def errorLocator(prevEntry, currentEntry):
@@ -57,7 +69,7 @@ def recursiveCheck(entries):
                 else:
                     errorSet.append(f"\nError Between INDEX {index-1} & INDEX {index}:\n\t")
                     errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
-                print(bcolors.FAIL + f"MISSMATCH DETECTED \n" + 
+                print(bcolors.FAIL + f"\/ \/ \/ \/ \/ MISSMATCH DETECTED \/ \/ \/ \/ \/\n" + 
                 bcolors.FAIL + f"Entry: {index-1}\n" +
                 bcolors.WARNING + f"{prevEntry}\n" +
                 bcolors.FAIL + f"Does Not Match Entry: {index}\n" +
@@ -77,11 +89,9 @@ def compEntry(log, count, idType):
     for logId, freq in count:
         # Loop through entries in log and check if they have correct data type
         entries = [jLine for jLine in log if jLine["data"][idType] == logId]
-        # Printing for entries
-        # print(bcolors.OKGREEN + '=' * term_size.columns, bcolors.ENDC) 
-        # Check entries
         recursiveCheck(entries)
         print(bcolors.OKGREEN + '=' * term_size.columns, bcolors.ENDC)
+    
 
 
 def logCompare(fileName):
@@ -101,3 +111,7 @@ def logCompare(fileName):
         # Compare log files that are present
         compEntry(winLogs, winLogCount, "LogId")
         compEntry(linLogs, linLogCount, "LineId")
+
+        # Compare counts
+        countCheck(winLogCount)
+        countCheck(linLogCount)
