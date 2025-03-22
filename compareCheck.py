@@ -53,8 +53,8 @@ def recursiveCheck(entries):
             else:
                 errorIndex = index
                 if errorSet:
-                    errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}")
-                    errorSet = errorLocator(entry["data"], prevEntry["data"])
+                    errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}\n")
+                    errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
                 else:
                     errorSet.append(f"Error Between INDEX {index-1} & INDEX {index}")
                     errorSet.append(errorLocator(entry["data"], prevEntry["data"]))
