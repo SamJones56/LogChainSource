@@ -72,8 +72,8 @@ def linLog(row,key):
 
 def logJ(row,key,type):
     entry = {
-        "Node":key
-        
+        "Node":key,
+        "Type":type
     }
     # https://www.w3schools.com/python/ref_dictionary_items.asp
     for item, data in row.items():
@@ -93,7 +93,7 @@ def postToChain(fileName, fileType, streamName, key):
             # Generate the json file
             if fileType == 1:
                 # log = winLog(row,key)
-                log = logJ(row,key)
+                log = logJ(row,key,"Windows")
                 print(row,key)
             elif fileType == 2:
                 log = linLog(row,key)
