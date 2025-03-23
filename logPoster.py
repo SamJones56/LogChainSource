@@ -70,16 +70,15 @@ def linLog(row,key):
         "EventTemplate":row['EventTemplate'],
         }}
 
-def logJ(row,key):
-    data = {"json":{
-        "Node":key,
-    }}
-    for i in row:
-        if row[i]:
-            data.append(row[i])
-        else:
-            data.append(i)
-    return data
+def logJ(row,key,type):
+    entry = {
+        "Node":key
+        
+    }
+    # https://www.w3schools.com/python/ref_dictionary_items.asp
+    for item, data in row.items():
+        entry[item] = data
+    return{"json": entry}
     
 
 # https://docs.python.org/3/library/csv.html
