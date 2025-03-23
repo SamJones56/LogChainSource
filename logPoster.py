@@ -70,6 +70,18 @@ def linLog(row,key):
         "EventTemplate":row['EventTemplate'],
         }}
 
+def logJ(row,key):
+    data = {"json":{
+        "Node":key,
+    }}
+    for i in row:
+        if row[i]:
+            data.append(row[i])
+        else:
+            data.append(i)
+    return data
+    
+
 # https://docs.python.org/3/library/csv.html
 # Parse through the csv
 def postToChain(fileName, fileType, streamName, key):
@@ -81,7 +93,9 @@ def postToChain(fileName, fileType, streamName, key):
             # time.sleep(t)
             # Generate the json file
             if fileType == 1:
-                log = winLog(row,key)
+                # log = winLog(row,key)
+                log = logJ(row,key)
+                print(row,key)
             elif fileType == 2:
                 log = linLog(row,key)
             # json to binary for encryption
