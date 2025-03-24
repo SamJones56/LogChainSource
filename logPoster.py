@@ -2,6 +2,7 @@ from mcController import addToStream
 import hashlib
 # https://docs.python.org/3/library/pathlib.html
 from userInterface import dataConfig
+from colours import bcolors
 import csv
 import time
 import json
@@ -15,8 +16,6 @@ from kyberController import encapsulate, readFromFile
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
-
-####################################################################################
 
 # https://docs.python.org/3/library/hashlib.html
 # Get the hash of the log file
@@ -63,18 +62,19 @@ def postToChain(log,streamName,hashDigest, key):
     addToStream(streamName, key, data)
 
 # Initial upload of file to blockchain
-def initialUpload(fileName):
-    # Get user input on data types
+def initialUpload():
+    # Get user input
+    filePath, fileType, streamName, key = dataConfig()
+    # Get file hash
+    hashDigest = getFileHash(filePath)
+    # Get the log
 
-    with open(fileName) as logFile:
-        for logLine in logFile:
-            log = dataConfig()
+
+    postToChain(log,streamName,hashDigest, key)
+
 
 # This should be its own python file
 # def liveReader():
-
-
-
 
 # fileName,fileType,streamName,key = usrInput()
 
