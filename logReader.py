@@ -9,16 +9,13 @@ import time
 def readDecryptSave(fileName, streamName):
     # Get stream data
     streamData = getStreamData(streamName, False)
-    # init output
-    # output = []
-    # Get json data
     for line in streamData:
-        
+        encrypted = line["data"]["json"]
         # Decrypt
-        decrypted = decAes(line["data"]["json"]["kyberct"],
-                           line["data"]["json"]["nonce"],
-                           line["data"]["json"]["log"],
-                           line["data"]["json"]["tag"])
+        decrypted = decAes(encrypted["kyberct"],
+                           encrypted["nonce"],
+                           encrypted["log"],
+                           encrypted["tag"])
         data = {
             "WalletAddress":line["publishers"],
             "Node":line["Keys"],
@@ -26,7 +23,7 @@ def readDecryptSave(fileName, streamName):
             "json":decrypted
         }
         with open(fileName, "a") as f:
-            f.write(f"{data}\n")
+            f.write(json.dumps(data))
         # output.append(data)
         
 
