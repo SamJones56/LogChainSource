@@ -69,8 +69,18 @@ def grantStream(walletAddress, permissions):
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
 
+# Add items to stream w/ option
+def addToStream(streamName, key, data):
+    txid = mc.publish(streamName, key, data)
+    if mc.success():
+        print(bcolors.OKGREEN + "Successfully added to " + streamName + bcolors.ENDC)
+        return txid 
+    else:
+        print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
+        print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
+
 # Add items to stream
-def addToStream(streamName, key, data, options=""):
+def addToStreamOptions(streamName, key, data, options=""):
     txid = mc.publish(streamName, key, data, options)
     if mc.success():
         print(bcolors.OKGREEN + "Successfully added to " + streamName + bcolors.ENDC)

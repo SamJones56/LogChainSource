@@ -1,4 +1,4 @@
-from mcController import addToStream
+from mcController import addToStreamOptions
 import hashlib
 # https://docs.python.org/3/library/pathlib.html
 from userInterface import dataConfig
@@ -51,7 +51,7 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(key,fileType,hashDigest,log)
     # Add to the data stream
     data = {"json":data}
-    addToStream(streamName, key, data, "offchain")
+    addToStreamOptions(streamName, key, data, "offchain")
 
 # Initial upload of file to blockchain
 def initialUpload():
