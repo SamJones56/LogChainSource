@@ -1,7 +1,7 @@
 from mcController import addToStream
 import hashlib
 # https://docs.python.org/3/library/pathlib.html
-from userInterface import dataSelector
+from userInterface import dataConfig
 import csv
 import time
 import json
@@ -12,16 +12,6 @@ from random import randrange
 from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
-
-# Supported file types
-# mColour = [bcolors.WARNING, bcolors.ENDC, bcolors.FAIL]
-# messageSteps = ["Log Types:{i}\nSelection:", 
-#                 "Select Stream:{i}\nSelection:",
-#                 "Select Node{i}\nSelection:"]
-# fileTypes = ["WindowsLog","LinuxLog","LinuxAuth"]
-# streams = ["data"]
-# fileNames = [""]
-# nodes = ["Node1", "Node2"]
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
@@ -78,7 +68,7 @@ def initialUpload(fileName):
 
     with open(fileName) as logFile:
         for logLine in logFile:
-            log = usrInput()
+            log = dataConfig()
 
 # This should be its own python file
 # def liveReader():
@@ -86,6 +76,6 @@ def initialUpload(fileName):
 
 
 
-fileName,fileType,streamName,key = usrInput()
+# fileName,fileType,streamName,key = usrInput()
 
-postToChain(fileName,fileType,streamName,key)
+# postToChain(fileName,fileType,streamName,key)

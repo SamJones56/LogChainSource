@@ -1,5 +1,6 @@
 from colours import bcolors
 from pathlib import Path
+import socket
 
 
 def fileValidator(supportedFileTypes, filePath):
@@ -14,38 +15,32 @@ def fileValidator(supportedFileTypes, filePath):
         exit()
     return path
 
+def streamValidator(supportedStreams, streamName):
+    if streamName not in supportedStreams:
+        print(bcolors.FAIL + f"Invalid Stream: {streamName}" + bcolors.ENDC)
+        exit()
+    else:
+        return streamName
 
-# Get user input
+
+# Get user input for blockchain config
 # https://www.w3schools.com/python/ref_string_format.asp
 # https://docs.python.org/3/library/pathlib.html
-def dataSelector():
+# https://dev.to/itsmycode/how-to-get-hostname-in-python-1981#:~:text=Syntax%20%E2%80%93%20socket.gethostname(),the%20machine%20in%20string%20format.
+
+def dataConfig():
     # declare supported filetypes
     supportedFileTypes = [".log",".csv"]
+    supportedStreams = ["data"]
     # Get the FilePath and fileName
-    filePath =  input(bcolors.WARNING + f"Enter Path to Log File:\n")
-    fileValidator(supportedFileTypes, filePath)
-
+    filePath = input(bcolors.WARNING + f"Enter Path to Log File:\n")
+    filePath = fileValidator(supportedFileTypes, filePath)
+    # Get the name of the file
+    fileType = filePath.name
+    streamName = input(bcolors.WARNING + f"Select Stream: {supportedStreams}\nSelection:")
+    streamName = streamValidator(supportedStreams, streamName)
+    # Get the current system
+    key = socket.gethostname
+    print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
+    return filePath, fileType, streamName, key
    
-
-
-    # # Get fileType
-    # fileType = input(bcolors.WARNING + f"Log Types: {fileTypes} \n Selection:" + bcolors.ENDC)
-    # # Check if valid
-    # if fileType not in fileTypes:
-    #     print(bcolors.FAIL + f"Invalid file type: {fileType}" + bcolors.ENDC)
-    #     exit()
-    # print(bcolors.OKGREEN, fileType, bcolors.ENDC)
-    # # Defaults
-    # streamName = "data"
-
-    # if fileType == 1:
-    #     filePath = "winTest.csv"
-    #     key = "Node1"
-    # elif fileType == 2:
-    #     filePath = "linTest.csv"
-    #     key = "Node2"
-    # else:
-    #     print(bcolors.FAIL + "Invalid file type: ", fileType, bcolors.ENDC)
-    #     exit()
-    # print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
-    # return filePath, fileType, streamName,key
