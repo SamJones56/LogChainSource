@@ -23,6 +23,7 @@ def readDecryptSave(fileName, streamName):
                 "WalletAddress":line["publishers"],
                 "Node":line["keys"],
                 "TransactionID":line["txid"],
+                "FileHash":encrypted["FileHash"],
                 "json":decrypted
             }
             print(data)
@@ -32,4 +33,4 @@ def readDecryptSave(fileName, streamName):
             print(f"{e}")
         
 
-readDecryptSave("streamDataEnc.json", "data")
+readDecryptSave("streamDataDec.json", "data")
