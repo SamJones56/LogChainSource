@@ -1,5 +1,7 @@
 from mcController import addToStream
 import hashlib
+# https://docs.python.org/3/library/pathlib.html
+from pathlib import Path
 import csv
 import time
 import json
@@ -12,21 +14,34 @@ from aesController import encAes
 from kyberController import encapsulate, readFromFile
 
 # Supported file types
-messageSteps = ["Log Types:{i}\nSelection:", 
-                "Select Stream:{i}\nSelection:",
-                "Select Node{i}\nSelection:"]
-fileTypes = ["WindowsLog","LinuxLog","LinuxAuth"]
-streams = ["data"]
-nodes = ["Node1", "Node2"]
+# mColour = [bcolors.WARNING, bcolors.ENDC, bcolors.FAIL]
+# messageSteps = ["Log Types:{i}\nSelection:", 
+#                 "Select Stream:{i}\nSelection:",
+#                 "Select Node{i}\nSelection:"]
+# fileTypes = ["WindowsLog","LinuxLog","LinuxAuth"]
+# streams = ["data"]
+# fileNames = [""]
+# nodes = ["Node1", "Node2"]
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
 
 # Get user input
+# https://www.w3schools.com/python/ref_string_format.asp
+# https://docs.python.org/3/library/pathlib.html
 def usrInput():
-    
-    fileType = input(bcolors.WARNING + messageSteps[0])
+    # declare supported filetypes
+    supportedFileTypes = [".log",".csv"]
+    # Get the filepath
+    filePath =  input(bcolors.WARNING + f"Enter Path to Log File:\n")
+    path = Path(filePath)
+    fileName = path.name
+    # Check for validity
+    if path.exists() and path.is_file():
+        if path.suffix not in supportedFileTypes:
+            print(bcolors.FAIL + f"Unsupported file type: {path.suffix}" + bcolors.ENDC)
 
+    
 
 
 
@@ -42,16 +57,16 @@ def usrInput():
     streamName = "data"
 
     if fileType == 1:
-        fileName = "winTest.csv"
+        filePath = "winTest.csv"
         key = "Node1"
     elif fileType == 2:
-        fileName = "linTest.csv"
+        filePath = "linTest.csv"
         key = "Node2"
     else:
         print(bcolors.FAIL + "Invalid file type: ", fileType, bcolors.ENDC)
         exit()
-    print(bcolors.OKGREEN, fileName, fileType, streamName, key, bcolors.ENDC)
-    return fileName, fileType, streamName,key
+    print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
+    return filePath, fileType, streamName,key
 ####################################################################################
 
 # https://docs.python.org/3/library/hashlib.html
