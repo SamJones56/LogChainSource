@@ -12,13 +12,18 @@ def readDecryptSave(fileName, streamName):
     for line in streamData:
         encrypted = line["data"]["json"]
         # Decrypt
+        print(encrypted["kyberct"])
+        print(encrypted["nonce"])
+        print(encrypted["log"],)
+        print(encrypted["tag"])
+        print()
         decrypted = decAes(encrypted["kyberct"],
                            encrypted["nonce"],
                            encrypted["log"],
                            encrypted["tag"])
         data = {
             "WalletAddress":line["publishers"],
-            "Node":line["Keys"],
+            "Node":line["keys"],
             "TransactionID":line["txid"],
             "json":decrypted
         }
