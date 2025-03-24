@@ -51,7 +51,7 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(key,fileType,hashDigest,log)
     # Add to the data stream
     data = {"json":data}
-    addToStream(streamName, key, data)
+    addToStream(streamName, key, data, "offchain")
 
 # Initial upload of file to blockchain
 def initialUpload():
