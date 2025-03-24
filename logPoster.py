@@ -25,11 +25,11 @@ def getFileHash(fileName):
     return digest.hexdigest()
 
 # data -> JSON for blockchain
-def blockConverter(log,key,hashDigest,type):
+def blockConverter(key,fileType,hashDigest,log):
     # Data for identification
     entry = {
         "Node":key,
-        "Type":type,
+        "Type":fileType,
         "Hash":hashDigest,
         "log":log
     }
@@ -52,10 +52,10 @@ def logEncryptor(log):
     return data
 
 # Get encrypted data and upload to chain
-def postToChain(log,streamName,hashDigest, key):
-    data = blockConverter(log,streamName,hashDigest,key)
+def postToChain(key, fileType, hashDigest, log, streamName):
+    data = blockConverter(key,fileType,hashDigest,log)
     # Add to the data stream
-    print(bcolors.WARNING + f"Ammending: {log}" + f"\n\tto Chain: {streamName}")
+    print(bcolors.WARNING + f"Ammending: {data}" + f"\n\tto Chain: {streamName}" + bcolors.ENDC)
     addToStream(streamName, key, data)
 
 # Initial upload of file to blockchain
@@ -65,11 +65,12 @@ def initialUpload():
     # Get file hash
     hashDigest = getFileHash(filePath)
     # Read log file line by line posting each to stream
-    with open(filePath, "r") as r:
-        for logLine in filePath:
+    with filePath.open("r") as logFile:
+        for logLine in logFile:
             # Post to stream
-            postToChain(logLine,streamName,hashDigest, key)
+            postToChain(key, fileType, hashDigest, logLine, streamName)
 
+initialUpload()
 
 # This should be its own python file
 # def liveReader():
