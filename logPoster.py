@@ -30,7 +30,7 @@ def blockConverter(key,fileType,hashDigest,log):
     entry = {
         "Node":key,
         "Type":fileType,
-        "Hash":hashDigest,
+        "FileHash":hashDigest,
         "log":log
     }
     return{"json": entry}
@@ -55,7 +55,7 @@ def logEncryptor(log):
 def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(key,fileType,hashDigest,log)
     # Add to the data stream
-    print(bcolors.WARNING + f"Ammending: {data}" + f"\n\tto Chain: {streamName}" + bcolors.ENDC)
+    print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{data}" + bcolors.ENDC)
     addToStream(streamName, key, data)
 
 # Initial upload of file to blockchain
