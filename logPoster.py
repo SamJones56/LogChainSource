@@ -56,10 +56,11 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     addToStreamOptions(streamName, key, data, "offchain")
 
 def listener(key, fileType, hashDigest, log, streamName):
-    print("test")
-    time.sleep(5)
-
-t = threading.Thread(target=listener)    
+    x = 0
+    while x < 0:
+        print("test")
+        time.sleep(5)
+        x += 1 
 
 # Initial upload of file to blockchain
 def initialUpload():
@@ -77,8 +78,9 @@ def initialUpload():
             postToChain(key, fileType, hashDigest, log, streamName)
     # Check for selection
     if selection:
+        t = threading.Thread(target=listener, args=(key, fileType, hashDigest, log, streamName))  
         # https://www.instructables.com/How-to-Communicate-and-Share-Data-Between-Running-/
-        t.start(listener, args=(key, fileType, hashDigest, log, streamName))
+        t.start(listener)
 
 initialUpload()
 
