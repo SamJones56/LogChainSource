@@ -28,12 +28,15 @@ def getFileHash(fileName):
 def blockConverter(key,fileType,hashDigest,log):
     # Data for identification
     entry = {
-        "Node":key,
+        # "Node":key,
         "Type":fileType,
         "FileHash":hashDigest,
-        "log":log
     }
-    return{"json": entry}
+    print(log)
+    for data in log:
+        print(data)
+        entry.update(data)
+    return entry
 
 # Convert log to binary, encrypt with AES, return JSON data for upload
 def logEncryptor(log):
@@ -44,18 +47,17 @@ def logEncryptor(log):
     # AES encrypt the log using hashed kyber generated shared secret
     nonce,cipherText,tag = encAes(binaryLog, ksharedsecret)
     # Data for posting to data stream
-    data = {"json":{
+    data = {
         "kyberct":kCipherText.hex(),
         "nonce":nonce.hex(),
         "log":cipherText.hex(),
-        "tag":tag.hex()}}
+        "tag":tag.hex()}
     return data
 
 # Get encrypted data and upload to chain
 def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(key,fileType,hashDigest,log)
     # Add to the data stream
-    print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{data}" + bcolors.ENDC)
     addToStream(streamName, key, data)
 
 # Initial upload of file to blockchain
@@ -67,8 +69,12 @@ def initialUpload():
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
         for logLine in logFile:
+            # Encrypt
+            log = logEncryptor(logLine)
+            # print(log)
             # Post to stream
-            postToChain(key, fileType, hashDigest, logLine, streamName)
+            print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
+            postToChain(key, fileType, hashDigest, log, streamName)
 
 initialUpload()
 
