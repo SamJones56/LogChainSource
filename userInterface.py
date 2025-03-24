@@ -2,7 +2,17 @@ from colours import bcolors
 from pathlib import Path
 
 
-
+def fileValidator(supportedFileTypes, filePath):
+    path = Path(filePath)
+    # Check for validity
+    if path.exists() and path.is_file():
+        if path.suffix not in supportedFileTypes:
+            print(bcolors.FAIL + f"Unsupported file type: {path.suffix}" + bcolors.ENDC)
+            exit()
+    else:
+        print(bcolors.FAIL + f"Invalid file path: {path}" + bcolors.ENDC)
+        exit()
+    return path
 
 
 # Get user input
@@ -13,16 +23,9 @@ def dataSelector():
     supportedFileTypes = [".log",".csv"]
     # Get the FilePath and fileName
     filePath =  input(bcolors.WARNING + f"Enter Path to Log File:\n")
-    path = Path(filePath)
-    fileName = path.name
-    # Check for validity
-    if path.exists() and path.is_file():
-        if path.suffix not in supportedFileTypes:
-            print(bcolors.FAIL + f"Unsupported file type: {path.suffix}" + bcolors.ENDC)
-            exit()
-    else:
-        print(bcolors.FAIL + f"Invalid file path: {path}" + bcolors.ENDC)
-        exit()
+    fileValidator(supportedFileTypes, filePath)
+
+   
 
 
     # # Get fileType
