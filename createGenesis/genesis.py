@@ -79,7 +79,7 @@ def genChain():
      # Post the pk to the pubkeys stream
      streamName = "pubkeys"
      print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
-     addToStream(streamName, "genesis", kpk.hex())
+     addToStream(streamName, "genesis", kpk.hex(),"onchain")
 
      print(bcolors.OKGREEN + "----- GENESIS DONE ----- " + bcolors.ENDC)
 
