@@ -28,13 +28,10 @@ def getFileHash(fileName):
 def blockConverter(key,fileType,hashDigest,log):
     # Data for identification
     entry = {
-        # "Node":key,
         "Type":fileType,
         "FileHash":hashDigest,
     }
-
-    for key,value in log.items():
-        entry.update(log)
+    entry.update(log)
     return entry
 
 # Convert log to binary, encrypt with AES, return JSON data for upload
