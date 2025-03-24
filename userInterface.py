@@ -23,6 +23,15 @@ def streamValidator(supportedStreams, streamName):
     else:
         return streamName
 
+# Validate selection
+def selectionValidator(selection):
+    selection = str.upper(selection)
+    allowed = ["Y","YES","N","NO"]
+    if selection not in allowed:
+        print(bcolors.FAIL + f"Invalid Selection: {selection}" + bcolors.ENDC)
+        exit()
+    else:
+        return True
 
 # Get user input for blockchain config
 # https://www.w3schools.com/python/ref_string_format.asp
@@ -42,6 +51,8 @@ def dataConfig():
     streamName = streamValidator(supportedStreams, streamName)
     # Get the current system
     key = socket.gethostname()
+    # Selector for listener
+    # https://www.stratascratch.com/blog/python-threading-like-a-pro/#:~:text=We%20start%20the%20thread%20by,thread%20will%20actually%20start%20running.
+    selection = input(bcolors.WARNING + f"Start File Listener: y/n" + bcolors.ENDC)
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
-    return filePath, fileType, streamName, key
-   
+    return filePath, fileType, streamName, key, selection

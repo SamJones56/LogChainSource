@@ -1,15 +1,15 @@
 from mcController import getStreamData
 from aesController import decAes
 from colours import bcolors
-from compareCheck import logCompare
+# from compareCheck import logCompare
 import json
-import time
 
 
 def readDecryptSave(fileName, streamName):
     # Get stream data
     streamData = getStreamData(streamName, False)
     for line in streamData:
+        # Decrypt
         try:
             encrypted = line["data"]["json"]
             decrypted = decAes(encrypted["kyberct"],
@@ -25,6 +25,7 @@ def readDecryptSave(fileName, streamName):
                 "TransactionID":line["txid"],
                 "json":decrypted
             }
+            print(data)
             with open(fileName, "a") as f:
                 f.write(json.dumps(data))
         except Exception as e:

@@ -9,6 +9,8 @@ from random import randrange
 from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
+import threading
+import time
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
@@ -21,7 +23,7 @@ def getFileHash(fileName):
     return digest.hexdigest()
 
 # data -> JSON for blockchain
-def blockConverter(key,fileType,hashDigest,log):
+def blockConverter(fileType,hashDigest,log):
     # Data for identification
     entry = {
         "Type":fileType,
@@ -48,15 +50,21 @@ def logEncryptor(log):
 
 # Get encrypted data and upload to chain
 def postToChain(key, fileType, hashDigest, log, streamName):
-    data = blockConverter(key,fileType,hashDigest,log)
+    data = blockConverter(fileType,hashDigest,log)
     # Add to the data stream
     data = {"json":data}
     addToStreamOptions(streamName, key, data, "offchain")
 
+def listener(key, fileType, hashDigest, log, streamName):
+    print("test")
+    time.sleep(5)
+
+t = threading.Thread(target=listener)    
+
 # Initial upload of file to blockchain
 def initialUpload():
     # Get user input
-    filePath, fileType, streamName, key = dataConfig()
+    filePath, fileType, streamName, key, selection = dataConfig()
     # Get file hash
     hashDigest = getFileHash(filePath)
     # Read log file line by line posting each to stream
@@ -67,6 +75,10 @@ def initialUpload():
             # Post to stream
             print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
             postToChain(key, fileType, hashDigest, log, streamName)
+    # Check for selection
+    if selection:
+        # https://www.instructables.com/How-to-Communicate-and-Share-Data-Between-Running-/
+        t.start(listener, args=(key, fileType, hashDigest, log, streamName))
 
 initialUpload()
 
