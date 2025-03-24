@@ -24,8 +24,6 @@ def getFileHash(fileName):
         digest = hashlib.file_digest(f,"sha256")
     return digest.hexdigest()
 
-
-
 # data -> JSON for blockchain
 def blockConverter(log,key,hashDigest,type):
     # Data for identification
