@@ -1,11 +1,11 @@
 from mcController import addToStream
 import hashlib
 # https://docs.python.org/3/library/pathlib.html
-from pathlib import Path
+from userInterface import dataSelector
 import csv
 import time
 import json
-from colours import bcolors
+
 # https://stackoverflow.com/questions/3996904/generate-random-integers-between-0-and-9
 from random import randrange
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
@@ -26,47 +26,6 @@ from kyberController import encapsulate, readFromFile
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
 
-# Get user input
-# https://www.w3schools.com/python/ref_string_format.asp
-# https://docs.python.org/3/library/pathlib.html
-def usrInput():
-    # declare supported filetypes
-    supportedFileTypes = [".log",".csv"]
-    # Get the filepath
-    filePath =  input(bcolors.WARNING + f"Enter Path to Log File:\n")
-    path = Path(filePath)
-    fileName = path.name
-    # Check for validity
-    if path.exists() and path.is_file():
-        if path.suffix not in supportedFileTypes:
-            print(bcolors.FAIL + f"Unsupported file type: {path.suffix}" + bcolors.ENDC)
-
-    
-
-
-
-
-    # Get fileType
-    fileType = input(bcolors.WARNING + f"Log Types: {fileTypes} \n Selection:" + bcolors.ENDC)
-    # Check if valid
-    if fileType not in fileTypes:
-        print(bcolors.FAIL + f"Invalid file type: {fileType}" + bcolors.ENDC)
-        exit()
-    print(bcolors.OKGREEN, fileType, bcolors.ENDC)
-    # Defaults
-    streamName = "data"
-
-    if fileType == 1:
-        filePath = "winTest.csv"
-        key = "Node1"
-    elif fileType == 2:
-        filePath = "linTest.csv"
-        key = "Node2"
-    else:
-        print(bcolors.FAIL + "Invalid file type: ", fileType, bcolors.ENDC)
-        exit()
-    print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
-    return filePath, fileType, streamName,key
 ####################################################################################
 
 # https://docs.python.org/3/library/hashlib.html
