@@ -1,4 +1,5 @@
 from mcController import addToStream
+import hashlib
 import csv
 import time
 import json
@@ -10,22 +11,36 @@ from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
 
+# Supported file types
+messageSteps = ["Log Types:{i}\nSelection:", 
+                "Select Stream:{i}\nSelection:",
+                "Select Node{i}\nSelection:"]
+fileTypes = ["WindowsLog","LinuxLog","LinuxAuth"]
+streams = ["data"]
+nodes = ["Node1", "Node2"]
+
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
 
 # Get user input
 def usrInput():
-    fileType = input(bcolors.WARNING + f"Log Types: \n Windows : [1] \n Linux : [2] \n Selection:" + bcolors.ENDC)
-    # Try convert to int
-    try:
-        fileType = int(fileType)
-    except:
-        print(bcolors.FAIL + "Invalid file type: ", fileType, bcolors.ENDC)
+    
+    fileType = input(bcolors.WARNING + messageSteps[0])
+
+
+
+
+
+    # Get fileType
+    fileType = input(bcolors.WARNING + f"Log Types: {fileTypes} \n Selection:" + bcolors.ENDC)
+    # Check if valid
+    if fileType not in fileTypes:
+        print(bcolors.FAIL + f"Invalid file type: {fileType}" + bcolors.ENDC)
         exit()
     print(bcolors.OKGREEN, fileType, bcolors.ENDC)
-
     # Defaults
     streamName = "data"
+
     if fileType == 1:
         fileName = "winTest.csv"
         key = "Node1"
@@ -37,44 +52,22 @@ def usrInput():
         exit()
     print(bcolors.OKGREEN, fileName, fileType, streamName, key, bcolors.ENDC)
     return fileName, fileType, streamName,key
+####################################################################################
 
+# https://docs.python.org/3/library/hashlib.html
+# Get the hash of the log file
+def getFileHash(fileName):
+    with open(fileName, "rb") as f:
+        digest = hashlib.file_digest(f,"sha256")
+    return digest.hexdigest()
 
-# Method for building windows JSON
-# def winLog(row,key):
-#     return {"json":{
-#         "Node": key,
-#         "Type": "Windows",
-#         "LogId" : row['LineId'],
-#         "Date":row['Date'],
-#         "Time":row['Time'],
-#         "Level":row['Level'],
-#         "Component":row['Component'],
-#         "Content":row['Content'],
-#         "EventId":row['EventId'],
-#         "EventTemplate":row['EventTemplate'],
-#         }}
-
-# Method for building linux JSON
-# def linLog(row,key):
-#     return {"json":{
-#         "Node": key,
-#         "Type": "Linux",
-#         "LineId" : row['LineId'],
-#         "Date":row['Date'],
-#         "Time":row['Time'],
-#         "Level":row['Level'],
-#         "Component":row['Component'],
-#         "PID":row['PID'],
-#         "Content":row['Content'],
-#         "EventId":row['EventId'],
-#         "EventTemplate":row['EventTemplate'],
-#         }}
-
-# Convert logs to blockchain JSON
-def logConverter(row,key,type):
+# data -> JSON for blockchain
+def blockConverter(row,key,hashDigest,type):
+    # Data for identification
     entry = {
         "Node":key,
-        "Type":type
+        "Type":type,
+        "Hash":hashDigest
     }
     # https://www.w3schools.com/python/ref_dictionary_items.asp
     for item, data in row.items():
@@ -83,7 +76,7 @@ def logConverter(row,key,type):
     return{"json": entry}
 
 # Convert log to binary, encrypt with AES, return JSON data for upload
-def logEncryptor(log,streamName,key):
+def logEncryptor(log):
     # Convert log to binary
     binaryLog = log.encode('utf-8')
     # Get kyber shared secret and ciphertext
@@ -96,64 +89,27 @@ def logEncryptor(log,streamName,key):
         "nonce":nonce.hex(),
         "log":cipherText.hex(),
         "tag":tag.hex()}}
-    return streamName, key, data
-
-def getFileHash(fileName):
-    
+    return data
 
 # Get encrypted data and upload to chain
-def postToChain(log,streamName,key):
-    streamName, key, data = logConverter(log,streamName,key)
+def postToChain(log,streamName,hashDigest, key):
+    data = blockConverter(log,streamName,hashDigest,key)
     # Add to the data stream
     print(bcolors.WARNING + f"Ammending: {log}" + f"\n\tto Chain: {streamName}")
     addToStream(streamName, key, data)
 
 # Initial upload of file to blockchain
 def initialUpload(fileName):
-    with open(fileName, newline=''):
+    # Get user input on data types
+
+    with open(fileName) as logFile:
+        for logLine in logFile:
+            log = usrInput()
+
+# This should be its own python file
+# def liveReader():
 
 
-
-def liveReader():
-
-
-# https://docs.python.org/3/library/csv.html
-# Parse through the csv
-# def postToChain(fileName, fileType, streamName, key):
-#     with open(fileName, newline='') as csvfile:
-#         reader = csv.DictReader(csvfile)
-#         for row in reader:
-#             # if fileType == 1:
-#             #     # log = winLog(row,key)
-#             #     log = logJ(row,key,"Windows")
-#             #     # print(row,key)
-#             # elif fileType == 2:
-#             #     # log = linLog(row,key)
-#             #     log = logJ(row,key,"Linux")
-#             # json to binary for encryption
-#             # stringLog=json.dumps(log)
-
-#             binaryLog=stringLog.encode('utf-8')
-
-#             # Get kyber shared secret and ciphertext
-#             kCipherText, ksharedsecret = encapsulate(publicKey)
-#             # Set the key for AES as the generated shared secret from kyber
-#             aesKey = ksharedsecret
-#             # AES encrypt the log using hashed kyber generated shared secret
-#             nonce,cipherText,tag = encAes(binaryLog, aesKey)
-
-#             # Data for posting to data stream
-#             data = {"json":{
-#                 "kyberct":kCipherText.hex(),
-#                 "nonce":nonce.hex(),
-#                 "data":cipherText.hex(),
-#                 "tag":tag.hex()}}
-
-#             # Add to the data stream
-#             print(bcolors.WARNING + "Ammending ", end=" ")
-#             print(log, end=" ")
-#             print(" to Chain" + bcolors.ENDC)
-#             addToStream(streamName, key, data)
 
 
 fileName,fileType,streamName,key = usrInput()
