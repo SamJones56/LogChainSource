@@ -32,10 +32,9 @@ def blockConverter(key,fileType,hashDigest,log):
         "Type":fileType,
         "FileHash":hashDigest,
     }
-    print(log)
-    for data in log:
-        print(data)
-        entry.update(data)
+
+    for key,value in log.items():
+        entry.update(log)
     return entry
 
 # Convert log to binary, encrypt with AES, return JSON data for upload
