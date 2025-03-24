@@ -10,22 +10,25 @@ def readDecryptSave(fileName, streamName):
     # Get stream data
     streamData = getStreamData(streamName, False)
     # init output
-    output = []
+    # output = []
     # Get json data
     for line in streamData:
-        kyberct = line["data"]["kyberct"]
-        nonce = line["data"]["nonce"]
-        cipherText = line["data"]["log"]
-        tag = line["data"]["tag"]
-        txid = line["txid"]
+        
         # Decrypt
-        decrypted = decAes(kyberct,nonce,cipherText,tag)
-
-        transactionData = {
+        decrypted = decAes(line["data"]["json"]["kyberct"],
+                           line["data"]["json"]["nonce"],
+                           line["data"]["json"]["log"],
+                           line["data"]["json"]["tag"])
+        data = {
             "WalletAddress":line["publishers"],
             "Node":line["Keys"],
-            "TransactionID":line["txid"]
+            "TransactionID":line["txid"],
+            "json":decrypted
         }
+        with open(fileName, "a") as f:
+            f.write(f"{data}\n")
+        # output.append(data)
+        
 
 
 
