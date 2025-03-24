@@ -13,14 +13,20 @@ def readDecryptSave(fileName, streamName):
         try:
             encrypted = line["data"]["json"]
             # Decrypt
+            # print(
+            #     encrypted["kyberct"],
+            #     encrypted["nonce"],
+            #     encrypted["log"],
+            #     encrypted["tag"]
+            # )
             decrypted = decAes(encrypted["kyberct"],
                                 encrypted["nonce"],
-                                encrypted["data"],
+                                encrypted["log"],
                                 encrypted["tag"]
             )
+            print(decrypted)
             if decrypted is None:
-                print(bcolors.FAIL + f"[FAIL] TXID: {line['txid']}" + bcolors.ENDC)
-
+                print(bcolors.FAIL + f"FAIL TXID: {line['txid']}" + bcolors.ENDC)
             data = {
                 "WalletAddress":line["publishers"],
                 "Node":line["keys"],
@@ -32,10 +38,5 @@ def readDecryptSave(fileName, streamName):
         except Exception as e:
             print(f"{e}")
         
-
-# Run it
-readDecryptSave("streamDataEnc.json", "data")
-
-
 
 readDecryptSave("streamDataEnc.json", "data")

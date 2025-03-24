@@ -30,6 +30,6 @@ def decAes(kCipherText, nonce, cipherText, tag):
                 # Verify tag for authenticity
                 cipher.verify(tag)
                 # Convert to json
-                return json.loads(decrypted.decode("utf-8"))
+                return decrypted.decode("utf-8")
         except:
                 print(bcolors.FAIL + "Invalid Tag" + bcolors.ENDC)

@@ -42,7 +42,7 @@ def logEncryptor(log):
     data = {
         "kyberct":kCipherText.hex(),
         "nonce":nonce.hex(),
-        "data":cipherText.hex(),
+        "log":cipherText.hex(),
         "tag":tag.hex()}
     return data
 
