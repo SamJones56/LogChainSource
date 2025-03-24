@@ -9,8 +9,6 @@ from random import randrange
 from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
-import threading
-import time
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
@@ -54,13 +52,7 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     # Add to the data stream
     data = {"json":data}
     addToStreamOptions(streamName, key, data, "offchain")
-
-def listener(key, fileType, hashDigest, log, streamName):
-    x = 0
-    while x < 0:
-        print("test")
-        time.sleep(5)
-        x += 1 
+    
 
 # Initial upload of file to blockchain
 def initialUpload():
@@ -78,9 +70,10 @@ def initialUpload():
             postToChain(key, fileType, hashDigest, log, streamName)
     # Check for selection
     if selection:
-        t = threading.Thread(target=listener, args=(key, fileType, hashDigest, log, streamName))  
-        # https://www.instructables.com/How-to-Communicate-and-Share-Data-Between-Running-/
-        t.start(listener)
+        print("WHO LET THE DOGS OUT")
+    # HERE CAN START WATCHDOG LISTENER
+    # filePath is the full path to file to listen to
+    # selection is a True/False boolean
 
 initialUpload()
 
