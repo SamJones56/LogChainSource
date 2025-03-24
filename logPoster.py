@@ -40,37 +40,38 @@ def usrInput():
 
 
 # Method for building windows JSON
-def winLog(row,key):
-    return {"json":{
-        "Node": key,
-        "Type": "Windows",
-        "LogId" : row['LineId'],
-        "Date":row['Date'],
-        "Time":row['Time'],
-        "Level":row['Level'],
-        "Component":row['Component'],
-        "Content":row['Content'],
-        "EventId":row['EventId'],
-        "EventTemplate":row['EventTemplate'],
-        }}
+# def winLog(row,key):
+#     return {"json":{
+#         "Node": key,
+#         "Type": "Windows",
+#         "LogId" : row['LineId'],
+#         "Date":row['Date'],
+#         "Time":row['Time'],
+#         "Level":row['Level'],
+#         "Component":row['Component'],
+#         "Content":row['Content'],
+#         "EventId":row['EventId'],
+#         "EventTemplate":row['EventTemplate'],
+#         }}
 
 # Method for building linux JSON
-def linLog(row,key):
-    return {"json":{
-        "Node": key,
-        "Type": "Linux",
-        "LineId" : row['LineId'],
-        "Date":row['Date'],
-        "Time":row['Time'],
-        "Level":row['Level'],
-        "Component":row['Component'],
-        "PID":row['PID'],
-        "Content":row['Content'],
-        "EventId":row['EventId'],
-        "EventTemplate":row['EventTemplate'],
-        }}
+# def linLog(row,key):
+#     return {"json":{
+#         "Node": key,
+#         "Type": "Linux",
+#         "LineId" : row['LineId'],
+#         "Date":row['Date'],
+#         "Time":row['Time'],
+#         "Level":row['Level'],
+#         "Component":row['Component'],
+#         "PID":row['PID'],
+#         "Content":row['Content'],
+#         "EventId":row['EventId'],
+#         "EventTemplate":row['EventTemplate'],
+#         }}
 
-def logJ(row,key,type):
+# Convert logs to blockchain JSON
+def logConverter(row,key,type):
     entry = {
         "Node":key,
         "Type":type
@@ -81,30 +82,40 @@ def logJ(row,key,type):
     print({"json":entry})
     return{"json": entry}
 
-
-# Initial upload of file to blockchain
-#def initialUpload():
-
-def postToChain(log,streamName,poster):
+# Convert log to binary, encrypt with AES, return JSON data for upload
+def logEncryptor(log,streamName,key):
     # Convert log to binary
     binaryLog = log.encode('utf-8')
     # Get kyber shared secret and ciphertext
     kCipherText, ksharedsecret = encapsulate(publicKey)
-    # Set the key for AES as the generated shared secret from kyber
-    aesKey = ksharedsecret
     # AES encrypt the log using hashed kyber generated shared secret
-    nonce,cipherText,tag = encAes(binaryLog, aesKey)
-
+    nonce,cipherText,tag = encAes(binaryLog, ksharedsecret)
     # Data for posting to data stream
     data = {"json":{
         "kyberct":kCipherText.hex(),
         "nonce":nonce.hex(),
-        "data":cipherText.hex(),
+        "log":cipherText.hex(),
         "tag":tag.hex()}}
+    return streamName, key, data
 
+def getFileHash(fileName):
+    
+
+# Get encrypted data and upload to chain
+def postToChain(log,streamName,key):
+    streamName, key, data = logConverter(log,streamName,key)
     # Add to the data stream
     print(bcolors.WARNING + f"Ammending: {log}" + f"\n\tto Chain: {streamName}")
     addToStream(streamName, key, data)
+
+# Initial upload of file to blockchain
+def initialUpload(fileName):
+    with open(fileName, newline=''):
+
+
+
+def liveReader():
+
 
 # https://docs.python.org/3/library/csv.html
 # Parse through the csv
