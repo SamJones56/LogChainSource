@@ -10,28 +10,73 @@ def readDecryptSave(fileName, streamName):
     # Get stream data
     streamData = getStreamData(streamName, False)
     for line in streamData:
-        encrypted = line["data"]["json"]
-        # Decrypt
-        print(encrypted["kyberct"])
-        print(encrypted["nonce"])
-        print(encrypted["log"],)
-        print(encrypted["tag"])
-        print()
-        decrypted = decAes(encrypted["kyberct"],
-                           encrypted["nonce"],
-                           encrypted["log"],
-                           encrypted["tag"])
-        data = {
-            "WalletAddress":line["publishers"],
-            "Node":line["keys"],
-            "TransactionID":line["txid"],
-            "json":decrypted
-        }
-        with open(fileName, "a") as f:
-            f.write(json.dumps(data))
-        # output.append(data)
+        try:
+            encrypted = line["data"]["json"]
+            # Decrypt
+            decrypted = decAes(encrypted["kyberct"],
+                                encrypted["nonce"],
+                                encrypted["data"],
+                                encrypted["tag"]
+            )
+            if decrypted is None:
+                print(bcolors.FAIL + f"[FAIL] TXID: {line['txid']}" + bcolors.ENDC)
+
+            data = {
+                "WalletAddress":line["publishers"],
+                "Node":line["keys"],
+                "TransactionID":line["txid"],
+                "json":decrypted
+            }
+            with open(fileName, "a") as f:
+                f.write(json.dumps(data))
+        except Exception as e:
+            print(f"{e}")
         
 
+def readDecryptSave(fileName, streamName):
+    # Get stream data
+    streamData = getStreamData(streamName, False)
+
+    for line in streamData:
+        try:
+            encrypted = line["data"]["json"]
+
+            # Debug output
+            print(bcolors.OKCYAN + f"[TXID] {line['txid']}" + bcolors.ENDC)
+            print("KyberCT:", encrypted["kyberct"])
+            print("Nonce:  ", encrypted["nonce"])
+            print("Log:    ", encrypted["log"])
+            print("Tag:    ", encrypted["tag"])
+            print()
+
+            decrypted = decAes(
+                encrypted["kyberct"],
+                encrypted["nonce"],
+                encrypted["log"],
+                encrypted["tag"]
+            )
+
+            if decrypted is None:
+                print(bcolors.FAIL + f"[FAIL] Decryption failed for TXID: {line['txid']}" + bcolors.ENDC)
+                continue
+
+            data = {
+                "WalletAddress": line["publishers"],
+                "Node": line["keys"],
+                "TransactionID": line["txid"],
+                "json": decrypted
+            }
+
+            with open(fileName, "a") as f:
+                f.write(json.dumps(data) + "\n")  # Add newline!
+
+            print(bcolors.OKGREEN + f"[OK] Decrypted TXID: {line['txid']}\n" + bcolors.ENDC)
+
+        except Exception as e:
+            print(bcolors.FAIL + f"[ERROR] Unexpected error: {e}" + bcolors.ENDC)
+
+# Run it
+readDecryptSave("streamDataEnc.json", "data")
 
 
 
