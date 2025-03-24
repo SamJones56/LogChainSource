@@ -3,10 +3,6 @@ import hashlib
 # https://docs.python.org/3/library/pathlib.html
 from userInterface import dataConfig
 from colours import bcolors
-import csv
-import time
-import json
-
 # https://stackoverflow.com/questions/3996904/generate-random-integers-between-0-and-9
 from random import randrange
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
@@ -66,9 +62,8 @@ def initialUpload():
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
         for logLine in logFile:
-            # Encrypt
+            # Encrypt log
             log = logEncryptor(logLine)
-            # print(log)
             # Post to stream
             print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
             postToChain(key, fileType, hashDigest, log, streamName)
