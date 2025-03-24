@@ -78,8 +78,33 @@ def logJ(row,key,type):
     # https://www.w3schools.com/python/ref_dictionary_items.asp
     for item, data in row.items():
         entry[item] = data
+    print({"json":entry})
     return{"json": entry}
-    
+
+
+# Initial upload of file to blockchain
+#def initialUpload():
+
+def postToChain(log,streamName,poster):
+    # Convert log to binary
+    binaryLog = log.encode('utf-8')
+    # Get kyber shared secret and ciphertext
+    kCipherText, ksharedsecret = encapsulate(publicKey)
+    # Set the key for AES as the generated shared secret from kyber
+    aesKey = ksharedsecret
+    # AES encrypt the log using hashed kyber generated shared secret
+    nonce,cipherText,tag = encAes(binaryLog, aesKey)
+
+    # Data for posting to data stream
+    data = {"json":{
+        "kyberct":kCipherText.hex(),
+        "nonce":nonce.hex(),
+        "data":cipherText.hex(),
+        "tag":tag.hex()}}
+
+    # Add to the data stream
+    print(bcolors.WARNING + f"Ammending: {log}" + f"\n\tto Chain: {streamName}")
+    addToStream(streamName, key, data)
 
 # https://docs.python.org/3/library/csv.html
 # Parse through the csv
@@ -87,19 +112,16 @@ def postToChain(fileName, fileType, streamName, key):
     with open(fileName, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            # Simulate random time
-            # t = randrange(6)
-            # time.sleep(t)
-            # Generate the json file
-            if fileType == 1:
-                # log = winLog(row,key)
-                log = logJ(row,key,"Windows")
-                # print(row,key)
-            elif fileType == 2:
-                # log = linLog(row,key)
-                log = logJ(row,key,"Linux")
+            # if fileType == 1:
+            #     # log = winLog(row,key)
+            #     log = logJ(row,key,"Windows")
+            #     # print(row,key)
+            # elif fileType == 2:
+            #     # log = linLog(row,key)
+            #     log = logJ(row,key,"Linux")
             # json to binary for encryption
-            stringLog=json.dumps(log)
+            # stringLog=json.dumps(log)
+
             binaryLog=stringLog.encode('utf-8')
 
             # Get kyber shared secret and ciphertext
