@@ -2,7 +2,7 @@ from colours import bcolors
 from pathlib import Path
 import socket
 
-
+# Validate file
 def fileValidator(supportedFileTypes, filePath):
     path = Path(filePath)
     # Check for validity
@@ -15,6 +15,7 @@ def fileValidator(supportedFileTypes, filePath):
         exit()
     return path
 
+# Validate stream
 def streamValidator(supportedStreams, streamName):
     if streamName not in supportedStreams:
         print(bcolors.FAIL + f"Invalid Stream: {streamName}" + bcolors.ENDC)
@@ -33,14 +34,14 @@ def dataConfig():
     supportedFileTypes = [".log",".csv"]
     supportedStreams = ["data"]
     # Get the FilePath and fileName
-    filePath = input(bcolors.WARNING + f"Enter Path to Log File:\n")
+    filePath = input(bcolors.WARNING + f"Enter Path to Log File:"+bcolors.OKBLUE+ f"\n:")
     filePath = fileValidator(supportedFileTypes, filePath)
     # Get the name of the file
     fileType = filePath.name
-    streamName = input(bcolors.WARNING + f"Select Stream: {supportedStreams}\nSelection:")
+    streamName = input(bcolors.WARNING + f"Select Stream: {supportedStreams}"+bcolors.OKBLUE+ f"\n:")
     streamName = streamValidator(supportedStreams, streamName)
     # Get the current system
-    key = socket.gethostname
+    key = socket.gethostname()
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
     return filePath, fileType, streamName, key
    

@@ -10,10 +10,10 @@ import hashlib
 
 # print(decrypted)
 
-with open("csv/linTest.csv", "rb") as f:
-    digest = hashlib.file_digest(f, "sha256")
+# with open("csv/linTest.csv", "rb") as f:
+#     digest = hashlib.file_digest(f, "sha256")
 
-print(digest.hexdigest())
+# print(digest.hexdigest())
 
 
 # Initial data read from file -> go through file and for each entry: fileHash, data encryption, coversion, posting
@@ -93,3 +93,6 @@ print(digest.hexdigest())
 #             addToStream(streamName, key, data)
 
 
+from userInterface import dataConfig
+
+dataConfig()

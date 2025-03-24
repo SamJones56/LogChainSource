@@ -11,6 +11,7 @@ networks:
 
 services:
   genesis:
+    hostname: genesis
     build:
       context: ./createGenesis
       dockerfile: Docker
@@ -35,6 +36,7 @@ services:
       timeout: 3s
 
   node1:
+    hostname: node1
     build:
       context: ./createNode
       dockerfile: Docker
@@ -60,6 +62,7 @@ services:
       timeout: 3s
 
   node2:
+    hostname: node2
     build:
       context: ./createNode
       dockerfile: Docker
