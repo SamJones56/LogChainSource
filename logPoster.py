@@ -24,18 +24,17 @@ def getFileHash(fileName):
         digest = hashlib.file_digest(f,"sha256")
     return digest.hexdigest()
 
+
+
 # data -> JSON for blockchain
-def blockConverter(row,key,hashDigest,type):
+def blockConverter(log,key,hashDigest,type):
     # Data for identification
     entry = {
         "Node":key,
         "Type":type,
-        "Hash":hashDigest
+        "Hash":hashDigest,
+        "log":log
     }
-    # https://www.w3schools.com/python/ref_dictionary_items.asp
-    for item, data in row.items():
-        entry[item] = data
-    print({"json":entry})
     return{"json": entry}
 
 # Convert log to binary, encrypt with AES, return JSON data for upload
@@ -67,10 +66,11 @@ def initialUpload():
     filePath, fileType, streamName, key = dataConfig()
     # Get file hash
     hashDigest = getFileHash(filePath)
-    # Get the log
-
-
-    postToChain(log,streamName,hashDigest, key)
+    # Read log file line by line posting each to stream
+    with open(filePath, "r") as r:
+        for logLine in filePath:
+            # Post to stream
+            postToChain(logLine,streamName,hashDigest, key)
 
 
 # This should be its own python file
