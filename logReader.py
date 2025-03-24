@@ -12,19 +12,11 @@ def readDecryptSave(fileName, streamName):
     for line in streamData:
         try:
             encrypted = line["data"]["json"]
-            # Decrypt
-            # print(
-            #     encrypted["kyberct"],
-            #     encrypted["nonce"],
-            #     encrypted["log"],
-            #     encrypted["tag"]
-            # )
             decrypted = decAes(encrypted["kyberct"],
                                 encrypted["nonce"],
                                 encrypted["log"],
                                 encrypted["tag"]
             )
-            print(decrypted)
             if decrypted is None:
                 print(bcolors.FAIL + f"FAIL TXID: {line['txid']}" + bcolors.ENDC)
             data = {
