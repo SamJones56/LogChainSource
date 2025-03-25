@@ -25,8 +25,7 @@ services:
     ports:
       - 7010:7010
       - 7011:7011
-    entrypoint: ["sh", "-c", "PYTHONPATH=/opt/quantcrypt python3 genesis.py && touch /root/done && tail -f /dev/null"]
-# python3 genesis.py && 
+    entrypoint: ["sh", "-c", "PYTHONPATH=/opt/logchain python3 /opt/logchain/genesis.py && touch /root/done && tail -f /dev/null"] # python3 genesis.py && 
     # wait for genesis to finish
     healthcheck: 
       test: ["CMD", "test", "-f", "/root/done"]
