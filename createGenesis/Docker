@@ -38,7 +38,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
     curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py 
 
-WORKDIR /opt/quantcrypt
+WORKDIR /opt/logchain
 RUN curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createGenesis/genesis.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
     curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
@@ -62,5 +62,7 @@ WORKDIR /opt
 RUN git clone https://github.com/aabmets/quantcrypt.git
 WORKDIR /opt/quantcrypt
 RUN pip install .
+
+ENV PYTHONPATH="${PYTHONPATH}:/opt/logchain"
 
 
