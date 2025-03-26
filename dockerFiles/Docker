@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install text editor for convenience
+# Add linux tools
 RUN apt update && apt install -y \
     nano \
     git \
@@ -42,7 +42,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONPATH="/logChain/app:$PYTHONPATH"
 
 
-# Install kyber post quantumn & aes
+# Add python tools
 RUN pip install quantcrypt && \
     pip install pycryptodome && \
     pip install Flask

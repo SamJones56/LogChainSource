@@ -15,6 +15,7 @@
     <h1>Logs</h1>
     <table class="table">
         <tr>
+            <!-- https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed -->
             {% for key in keys %}
                 <th>{{ key }}</th>
             {% endfor %}
@@ -22,7 +23,7 @@
         {% for log in logs %}
             <tr>
                 {% for key in keys %}
-                    <td> {{ log[key ]}}</td>
+                    <td> {{ log[key]}}</td>
                 {% endfor %}
             </tr>
         {% endfor %}
