@@ -1,22 +1,29 @@
 # https://flask.palletsprojects.com/en/stable/quickstart/
-from flask import Flask
-from app.logReader import readDecryptSave
+# https://www.geeksforgeeks.org/use-jsonify-instead-of-json-dumps-in-flask/
+from flask import Flask, jsonify
+import json
+from logReader import readDecryptSave
+
+# USAGE
+# python3 ../flask/app.py
 
 
 decryptedFilepath = "streamDataDec.txt"
-# Start webpage
-# flask --app ../flask/app.py run --host=0.0.0.0 --port=8000
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
     # Run readDecryptSave to get the current status of the file
-    readDecryptSave("streamDataDec.txt", "data")
+    readDecryptSave("../flask/streamDataDec.txt", "data")
 
-    with decryptedFilepath.open("r") as logFile:
+    logs = []
+    with open(decryptedFilepath,"r") as logFile:
         for logLine in logFile:
-            return f"{logLine}"
+            # jsonData = json.dumps(logLine)
+            jsonData = jsonify({logLine:"data"})
+            return f"{jsonData}\n<hr>"
+
 
 
     # return "<p>Hello, World!</p>"
