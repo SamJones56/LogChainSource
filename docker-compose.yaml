@@ -15,7 +15,7 @@ services:
     build:
       context: ./createFiles
       dockerfile: Docker
-    container_name: lc_genesis
+    container_name: LC_genesis
     networks:
       - mcNet
     volumes:
@@ -25,7 +25,7 @@ services:
     ports:
       - 7010:7010
       - 7011:7011
-    entrypoint: ["sh", "-c", "python3 ./createFiles/genesis.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 -m createFiles.genesis && touch /root/done && tail -f /dev/null"]
 # python3 genesis.py && 
     # wait for genesis to finish
     healthcheck: 
@@ -40,7 +40,7 @@ services:
     build:
       context: ./createFiles
       dockerfile: Docker
-    container_name: multichain_node1
+    container_name: LC_node1
     networks:
       - mcNet
     depends_on:
@@ -51,7 +51,7 @@ services:
     ports:
       - 7020:7020
       - 7021:7021
-    entrypoint: ["sh", "-c", "python3 node.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 -m createFiles.node && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&
     # wait for node to finish
     healthcheck: 
@@ -66,7 +66,7 @@ services:
     build:
       context: ./createFiles
       dockerfile: Docker
-    container_name: multichain_node2
+    container_name: LC_node2
     networks:
       - mcNet
     depends_on:
@@ -77,5 +77,5 @@ services:
     ports:
     - 7030:7030
     - 7031:7031
-    entrypoint: ["sh", "-c", "python3 ./createFiles/node.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 -m createFiles.node && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&

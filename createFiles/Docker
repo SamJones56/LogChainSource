@@ -30,19 +30,11 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 # Download Multichain.py and LogChain 
 RUN mkdir -p /src/ && \
     curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
-    git clone https://github.com/SamJones56/LogChainSource.git
-    # curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createGenesis/genesis.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/aesController.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/logReader.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/colours.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/compareCheck.py && \
-    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/userInterface.py
+    git clone https://github.com/SamJones56/LogChainSource.git /src/LogChainSource
 
 # Set working directory
-WORKDIR /src/LogChainSource/
+WORKDIR /src/LogChainSource
+
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path
 RUN python3 -m venv /opt/venv
