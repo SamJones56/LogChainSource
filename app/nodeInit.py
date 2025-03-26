@@ -11,11 +11,11 @@ def connectAndPerm(chainName, streamName, walletAddress):
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     # Subscribe to stream
     subStream(chainName,streamName)
-    # time.sleep(5)
+    time.sleep(5)
     # Request permissions on stream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
     grantStream(walletAddress ,permissions)
-    # time.sleep(5)
+    time.sleep(5)
 
 def savePk():
     time.sleep(5)
@@ -35,24 +35,20 @@ def logChainInit():
     # https://www.w3schools.com/python/python_regex.asp
     walletAddress = re.search(r"multichain-cli logChain grant (\w+) connect", result.stdout)
     walletAddress = walletAddress.group(1)
-
     # Get wallet address
     if walletAddress:
         print(bcolors.OKCYAN + f"ADDRESS FOUND: {walletAddress} " + bcolors.ENDC)
     else:
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
-    # time.sleep(2)
-    # Set params
-    
     # Connect to logChain
     print(bcolors.WARNING + "Connecting to Chain" + bcolors.ENDC)
     connectToChain(walletAddress)
-    time.sleep(2)
 
     # Start daemon
     print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
     subprocess.run(["multichaind", "logChain", "-daemon"])
     
+    # time.sleep(10)
     # Connect and grant permissions on an existing chain
     connectAndPerm("logChain", "pubkeys", walletAddress)
     connectAndPerm("logChain", "data", walletAddress)
