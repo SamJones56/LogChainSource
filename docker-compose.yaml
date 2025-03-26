@@ -1,9 +1,10 @@
-# version: '3.8'
+version: '3.8'
 
 volumes:
   genesis:
   node1:
   node2:
+  bridge_data:
 
 networks:
   test:
@@ -20,15 +21,11 @@ services:
       - test
     volumes:
       - ../multichain/genesis_data:/root/.multichain
-    # privileged: true
-    # working_dir: /root
     ports:
       - 7010:7010
       - 7011:7011
     entrypoint: ["sh", "-c", "python3 genesis.py && touch /root/done && tail -f /dev/null"]
-# python3 genesis.py && 
-    # wait for genesis to finish
-    healthcheck: 
+    healthcheck:
       test: ["CMD", "test", "-f", "/root/done"]
       interval: 5s
       retries: 20
@@ -52,9 +49,7 @@ services:
       - 7020:7020
       - 7021:7021
     entrypoint: ["sh", "-c", "python3 node.py && touch /root/done && tail -f /dev/null"]
-    # python3 node.py &&
-    # wait for node to finish
-    healthcheck: 
+    healthcheck:
       test: ["CMD", "test", "-f", "/root/done"]
       interval: 5s
       retries: 20
@@ -75,18 +70,49 @@ services:
     volumes:
       - ../multichain/node2_data:/root/.multichain
     ports:
-    - 7030:7030
-    - 7031:7031
+      - 7030:7030
+      - 7031:7031
     entrypoint: ["sh", "-c", "python3 node.py && touch /root/done && tail -f /dev/null"]
-    # python3 node.py &&
+    healthcheck:
+      test: ["CMD", "test", "-f", "/root/done"]
+      interval: 5s
+      retries: 20
+      start_period: 5s
+      timeout: 3s
 
+  # NEW BRIDGE NODE:
+  bridge_node:
+    hostname: bridge_node
+    build:
+      context: ./createBridge
+      dockerfile: Docker
+    container_name: multichain_bridge
+    networks:
+      - test
+    depends_on:
+      node2:
+        condition: service_healthy
+    volumes:
+      - ../multichain/bridge_data:/root/.multichain
+    ports:
+      - 7040:7040  # P2P (if needed)
+      - 7041:7041  # JSON-RPC port
+    entrypoint: ["sh", "-c", "python3 node.py && touch /root/done && tail -f /dev/null"]
+    healthcheck:
+      test: ["CMD", "test", "-f", "/root/done"]
+      interval: 5s
+      retries: 20
+      start_period: 5s
+      timeout: 3s
+
+  # NEW UI CONTAINER:
   ui_node:
     build: ./interface
     container_name: ui_node
     networks:
       - test
+    depends_on:
+      bridge_node:
+        condition: service_healthy
     ports:
       - "5000:5000"
-    depends_on:
-      node2:
-        condition: service_healthy
