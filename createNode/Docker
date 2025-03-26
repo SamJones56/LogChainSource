@@ -16,7 +16,6 @@ RUN apt update && apt install -y \
     iputils-ping \
     netcat-openbsd \
     python3-requests \
-    # openssl \
     python3-pip \
     python3.12-venv
 
@@ -27,20 +26,22 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
     mv multichain/multichaind multichain/multichain-cli multichain/multichain-util /usr/local/bin/ && \
     rm -rf multichain-2.3.3.tar.gzimport hashlib
 
-# Download JSON RPC & node scripts 
-RUN curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
-    curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/csv/winTest.csv &&  \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/csv/linTest.csv &&  \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/logPoster.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/aesController.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/logReader.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/colours.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/compareCheck.py && \
-    curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/userInterface.py
+# Download Multichain.py and LogChain 
+RUN mkdir -p /src/ && \
+    curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
+    git clone https://github.com/SamJones56/LogChainSource.git
+    # curl -o mcController.py https://raw.githubusercontent.com/SamJones56/LogChainSource/main/mcController.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/createNode/node.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/jsonTester.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/csv/winTest.csv &&  \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/csv/linTest.csv &&  \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/logPoster.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/kyberController.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/aesController.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/logReader.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/colours.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/compareCheck.py && \
+    # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/userInterface.py
 
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
