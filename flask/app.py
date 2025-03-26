@@ -17,28 +17,27 @@ def hello_world():
     readDecryptSave("/logChain/app/streamDataDec.json", "data")
 
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
-
+    # init logs and listkeys
     logs = []
     listKeys = []
-
+    # Open decrypted file from blockchain
     with open(decryptedFilepath,"r") as logFile:
-        # Save the log entry
+        # read through the open file
         for logLine in logFile:
             try:
+                # save each of the lines as a json log entry
                 logEntry = json.loads(logLine)
+                # add logs to the logs variable
                 logs.append(logEntry)
-                if not listKeys:
-                    listKeys = list(logEntry.keys())
-                # logs.append(data)
-                
+                # Set the list keys - used in table header
+                listKeys = list(logEntry.keys())
+            
+            # throw error
             except Exception as e:
                 print(f"e")
+    # Render index.html with the data
     return render_template('index.html', logs=logs, keys=listKeys)
 
-
-        # return jsonify(logs)
-
-    # return "<p>Hello, World!</p>"
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="8000")
