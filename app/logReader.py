@@ -27,9 +27,11 @@ def readDecryptSave(fileName, streamName):
                 "json":decrypted
             }
             with open(fileName, "a") as f:
-                f.write(json.dumps(data))
+                
+                json.dump(data,f)
+   
         except Exception as e:
             print(f"{e}")
         
 
-readDecryptSave("streamDataDec.txt", "data")
+# readDecryptSave("streamDataDec.txt", "data")
