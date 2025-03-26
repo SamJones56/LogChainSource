@@ -38,7 +38,7 @@ services:
   node1:
     hostname: node1
     build:
-      context: ./createNode
+      context: ./createFiles
       dockerfile: Docker
     container_name: multichain_node1
     networks:
@@ -64,7 +64,7 @@ services:
   node2:
     hostname: node2
     build:
-      context: ./createNode
+      context: ./createFiles
       dockerfile: Docker
     container_name: multichain_node2
     networks:
