@@ -11,7 +11,6 @@ def connectAndPerm(chainName, streamName, walletAddress):
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     # Subscribe to stream
     subprocess.run(["multichain-cli","logChain","subscribe", f"{streamName}"])
-    # subprocess.run(["multichain-cli","logChain","subscribe", "pubkeys"])
     
     # Request permissions on stream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
