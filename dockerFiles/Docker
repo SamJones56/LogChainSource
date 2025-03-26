@@ -45,4 +45,5 @@ ENV PYTHONPATH="/logChain/app:$PYTHONPATH"
 # Add python tools
 RUN pip install quantcrypt && \
     pip install pycryptodome && \
-    pip install Flask
+    pip install Flask && \
+		pip install watchdog
