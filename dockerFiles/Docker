@@ -28,12 +28,13 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 
 
 # Download Multichain.py and LogChain 
-RUN mkdir -p /src/ && \
-    curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
-    git clone https://github.com/SamJones56/LogChainSource.git /src/LogChainSource
+# RUN mkdir -p /src/ && \
+#     curl -o multichain.py https://raw.githubusercontent.com/MultiChain/multichain-api-libraries/main/python/multichain.py && \
+#     git clone https://github.com/SamJones56/LogChainSource.git /src/LogChainSource
 
 # Set working directory
-WORKDIR /src/LogChainSource
+WORKDIR /app
+COPY . .
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path
