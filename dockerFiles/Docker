@@ -33,8 +33,10 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 #     git clone https://github.com/SamJones56/LogChainSource.git /src/LogChainSource
 
 # Set working directory
-WORKDIR /app
-COPY ./app ./csv ./flask ./
+WORKDIR /logChain
+COPY ./app ./app
+COPY ./logs ./logs 
+COPY ./flask ./flaks
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path

@@ -26,7 +26,7 @@ services:
       - 7010:7010
       - 7011:7011
       - 8000:8000
-    entrypoint: ["sh", "-c", "python3 genesisInit.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 app/genesisInit.py && touch /root/done && tail -f /dev/null"]
 # python3 genesis.py && 
     # wait for genesis to finish
     healthcheck: 
@@ -52,7 +52,7 @@ services:
     ports:
       - 7020:7020
       - 7021:7021
-    entrypoint: ["sh", "-c", "python3 nodeInit.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 app/nodeInit.py && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&
     # wait for node to finish
     healthcheck: 
@@ -78,5 +78,5 @@ services:
     ports:
     - 7030:7030
     - 7031:7031
-    entrypoint: ["sh", "-c", "python3 nodeInit.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 app/nodeInit.py && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&
