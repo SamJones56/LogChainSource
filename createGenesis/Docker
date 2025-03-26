@@ -41,6 +41,8 @@ RUN mkdir -p /src/ && \
     # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/compareCheck.py && \
     # curl -O https://raw.githubusercontent.com/SamJones56/LogChainSource/main/userInterface.py
 
+# Set working directory
+WORKDIR /src/LogChainSource/
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path
 RUN python3 -m venv /opt/venv
