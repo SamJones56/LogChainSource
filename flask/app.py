@@ -19,15 +19,22 @@ def hello_world():
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
 
     logs = []
-    list_key = []
+    listKeys = []
 
     with open(decryptedFilepath,"r") as logFile:
         # Save the log entry
         for logLine in logFile:
-            result = json.loads(logLine)
-            list_key = list_key.append(list(result.keys()))
-            # logs.append(data)
-        return render_template('index.html', data = data_input, result = result, keys = list_key )
+            try:
+                logEntry = json.loads(logLine)
+                logs.append(logEntry)
+                if not listKeys:
+                    listKeys = list(logEntry.keys())
+                # logs.append(data)
+                
+            except Exception as e:
+                print(f"e")
+    return render_template('index.html', logs=logs, keys=listKeys)
+
 
         # return jsonify(logs)
 
