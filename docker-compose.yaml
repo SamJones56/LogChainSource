@@ -13,9 +13,9 @@ services:
   genesis:
     hostname: genesis
     build:
-      context: ./createFiles
+      context: ./dockerFiles
       dockerfile: Docker
-    container_name: LC_genesis
+    container_name: genesis
     networks:
       - mcNet
     volumes:
@@ -38,9 +38,9 @@ services:
   node1:
     hostname: node1
     build:
-      context: ./createFiles
+      context: ./dockerFiles
       dockerfile: Docker
-    container_name: LC_node1
+    container_name: node1
     networks:
       - mcNet
     depends_on:
@@ -64,9 +64,9 @@ services:
   node2:
     hostname: node2
     build:
-      context: ./createFiles
+      context: ./dockerFiles
       dockerfile: Docker
-    container_name: LC_node2
+    container_name: node2
     networks:
       - mcNet
     depends_on:
