@@ -5,7 +5,7 @@ from colours import bcolors
 from mcController import connectToChain, subStream, grantStream ,getPubKey
 
 # Connect and grant permissions on an existing chain
-def connectAndPerm(chainName, streamName, walletAddress):
+def connectAndPerm(streamName, walletAddress):
     time.sleep(5)
     # Set permissions
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
@@ -53,8 +53,8 @@ def logChainInit():
     
     # time.sleep(10)
     # Connect and grant permissions on an existing chain
-    connectAndPerm("logChain", "pubkeys", walletAddress)
-    connectAndPerm("logChain", "data", walletAddress)
+    connectAndPerm("pubkeys", walletAddress)
+    connectAndPerm("data", walletAddress)
 
     # Save genesis public key
     savePk()
