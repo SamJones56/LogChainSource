@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<html>
+<head>
+    <title>LogChain</title>
+</head>
+<body>
+    <h1>Logs</h1>
+    <table class="table">
+        <tr>
+            {% for key in keys %}
+                <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for log in logs %}
+            <tr>
+                {% for key in keys %}
+                    <td> {{ log[key ]}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
