@@ -25,6 +25,7 @@ services:
     ports:
       - 7010:7010
       - 7011:7011
+      - 8000:8000
     entrypoint: ["sh", "-c", "python3 -m createFiles.genesis && touch /root/done && tail -f /dev/null"]
 # python3 genesis.py && 
     # wait for genesis to finish
