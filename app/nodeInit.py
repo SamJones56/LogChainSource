@@ -6,16 +6,20 @@ from mcController import connectToChain, subStream, grantStream ,getPubKey
 
 # Connect and grant permissions on an existing chain
 def connectAndPerm(chainName, streamName, walletAddress):
+    time.sleep(5)
     # Set permissions
-    permissions = streamName + ".write,read"
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     # Subscribe to stream
-    subStream(chainName,streamName)
-    time.sleep(5)
+    subprocess.run(["multichain-cli","logChain","subscribe", f"{streamName}"])
+    # subprocess.run(["multichain-cli","logChain","subscribe", "pubkeys"])
+    
     # Request permissions on stream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
+    permissions = streamName + ".write,read"
     grantStream(walletAddress ,permissions)
     time.sleep(5)
+    
+    
 
 def savePk():
     time.sleep(5)
@@ -28,7 +32,7 @@ def savePk():
 def logChainInit():
     # Connect to logChain
     print(bcolors.OKCYAN + "multichaind logChain@172.18.0.2:7010" + bcolors.ENDC)
-    cmd = ["multichaind", "logChain@172.18.0.2:7010", "-subscribe=pubkeys,data"]
+    cmd = ["multichaind", "logChain@172.18.0.2:7010"]
     # Get the address string after connecting
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string

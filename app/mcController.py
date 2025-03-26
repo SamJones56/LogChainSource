@@ -54,9 +54,8 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(chainName, streamName):
-    print(bcolors.OKGREEN + "Subscribed to stream:", streamName + " on: " + chainName +bcolors.ENDC)
+    print(bcolors.OKGREEN + "Subscribed to stream:" + streamName + " on: " + chainName +bcolors.ENDC)
     mc.subscribe(streamName)
-    time.sleep(5)
 
 # Grant stream permissions
 def grantStream(walletAddress, permissions):
