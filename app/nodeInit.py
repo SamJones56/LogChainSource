@@ -11,11 +11,11 @@ def connectAndPerm(chainName, streamName, walletAddress):
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     # Subscribe to stream
     subStream(chainName,streamName)
-    time.sleep(5)
+    # time.sleep(5)
     # Request permissions on stream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
     grantStream(walletAddress ,permissions)
-    time.sleep(5)
+    # time.sleep(5)
 
 def savePk():
     time.sleep(5)
@@ -28,9 +28,7 @@ def savePk():
 def logChainInit():
     # Connect to logChain
     print(bcolors.OKCYAN + "multichaind logChain@172.18.0.2:7010" + bcolors.ENDC)
-    time.sleep(2)
-    cmd = ["multichaind", "logChain@172.18.0.2:7010"]
- 
+    cmd = ["multichaind", "logChain@172.18.0.2:7010", "-subscribe=pubkeys,data"]
     # Get the address string after connecting
     result = subprocess.run(cmd, capture_output=True, text=True)
     # Extract address from output string
@@ -44,7 +42,8 @@ def logChainInit():
     else:
         print(bcolors.FAIL + "ADDRESS NOT FOUND" + bcolors.ENDC)
     # time.sleep(2)
-
+    # Set params
+    
     # Connect to logChain
     print(bcolors.WARNING + "Connecting to Chain" + bcolors.ENDC)
     connectToChain(walletAddress)
@@ -53,8 +52,7 @@ def logChainInit():
     # Start daemon
     print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
     subprocess.run(["multichaind", "logChain", "-daemon"])
-    time.sleep(2)
-
+    
     # Connect and grant permissions on an existing chain
     connectAndPerm("logChain", "pubkeys", walletAddress)
     connectAndPerm("logChain", "data", walletAddress)

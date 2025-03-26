@@ -14,12 +14,12 @@ def genChain():
      subprocess.run(cmd, shell=True)
 
      # Editing the logChain config file
-     # Path to conf file
      confPath = "/root/.multichain/logChain/multichain.conf"
      # Custom values
      rpcuser = "genesis"
      rpcpassword = "logChain"
      rpcallowip = "rpcallowip=172.18.0.0/16"
+     rAutoSub = ""
 
      # Wait for log chain to be initialised
      for i in range(120):
