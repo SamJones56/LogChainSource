@@ -1,0 +1,17 @@
+FROM python:3.10-slim
+
+# Example: If you need additional packages
+RUN apt-get update && apt-get install -y curl unzip
+
+# Install MultiChain
+RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
+    tar -xvzf multichain-2.3.3.tar.gz && \
+    cd multichain-* && ./install.sh
+
+# Clean up
+RUN rm -rf /var/lib/apt/lists/* multichain-2.3.3.tar.gz
+
+WORKDIR /root
+COPY node.py .
+
+CMD ["python3", "node.py"]
