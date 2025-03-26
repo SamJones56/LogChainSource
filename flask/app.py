@@ -1,6 +1,7 @@
 # https://flask.palletsprojects.com/en/stable/quickstart/
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, render_template
 from logReader import readDecryptSave
+import json
 
 # USAGE
 # python3 ../flask/app.py
@@ -15,18 +16,20 @@ def hello_world():
     # Run readDecryptSave to get the current status of the file
     readDecryptSave("/logChain/app/streamDataDec.json", "data")
 
-    log = []
+    # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
+
+    logs = []
+    list_key = []
 
     with open(decryptedFilepath,"r") as logFile:
         # Save the log entry
         for logLine in logFile:
-            log.append(logLine)
+            result = json.loads(logLine)
+            list_key = list_key.append(list(result.keys()))
+            # logs.append(data)
+        return render_template('index.html', data = data_input, result = result, keys = list_key )
 
-        entries = [jLine for jLine in log]
-        # return f"{entries}\n<hr>"
-        for index,entry in enumerate(entries):
-            return f"{index} : {entry} \n"
-
+        # return jsonify(logs)
 
     # return "<p>Hello, World!</p>"
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
