@@ -8,6 +8,7 @@ import json
 def readDecryptSave(fileName, streamName):
     # Get stream data
     streamData = getStreamData(streamName, False)
+    results= []
     for line in streamData:
         # Decrypt
         try:
@@ -26,12 +27,15 @@ def readDecryptSave(fileName, streamName):
                 "FileHash":encrypted["FileHash"],
                 "json":decrypted
             }
-            with open(fileName, "a") as f:
-                json.dump(data,f)
-                f.write("\n")
-   
+            results.append(data)
         except Exception as e:
             print(f"{e}")
+        
+        with open(fileName, "w") as f:
+            for item in results:
+                json.dump(item,f)
+                f.write("\n")
+   
         
 
 # readDecryptSave("streamDataDec.txt", "data")
