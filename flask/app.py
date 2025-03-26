@@ -18,4 +18,8 @@ def hello_world():
         for logLine in logFile:
             return f"{logLine}"
 
+
     # return "<p>Hello, World!</p>"
+# https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="8000")

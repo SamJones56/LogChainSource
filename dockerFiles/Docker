@@ -38,6 +38,9 @@ WORKDIR /logChain/app
 # Create python virtual enviroment and path
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+# https://stackoverflow.com/questions/49631146/how-do-you-add-a-path-to-pythonpath-in-a-dockerfile
+ENV PYTHONPATH="/logChain"
+
 
 # Install kyber post quantumn & aes
 RUN pip install quantcrypt && \
