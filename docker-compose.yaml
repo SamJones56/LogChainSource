@@ -79,3 +79,14 @@ services:
     - 7031:7031
     entrypoint: ["sh", "-c", "python3 node.py && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&
+
+  ui_node:
+    build: ./interface
+    container_name: ui_node
+    networks:
+      - test
+    ports:
+      - "5000:5000"
+    depends_on:
+      node2:
+        condition: service_healthy

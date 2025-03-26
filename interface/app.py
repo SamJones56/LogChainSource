@@ -1,33 +1,52 @@
-from flask import Flask, render_template
+# app.py
+from flask import Flask, render_template, request
 import requests
 
 app = Flask(__name__)
 
-# Replace with your Multichain node's actual RPC credentials and URL
-RPC_USER = 'multichainrpc'
-RPC_PASSWORD = 'password'
-RPC_PORT = '8000'
-RPC_HOST = 'multichain_node'  # this should match the service name in docker-compose
-RPC_URL = f'http://{RPC_USER}:{RPC_PASSWORD}@{RPC_HOST}:{RPC_PORT}'
-
-def get_logs():
-    payload = {
-        "method": "liststreamitems",
-        "params": ["data"],
-        "id": 1,
-        "jsonrpc": "2.0"
-    }
-    try:
-        response = requests.post(RPC_URL, json=payload)
-        response.raise_for_status()
-        return response.json().get("result", [])
-    except Exception as e:
-        return [{"key": "error", "data": str(e)}]
+# Replace with your chain's JSON-RPC endpoint
+RPC_URL = "http://multichain_node:1234"  # Example: container name is `multichain_node`, port 1234
 
 @app.route("/")
 def index():
-    logs = get_logs()
-    return render_template("index.html", logs=logs)
+    try:
+        # Minimal JSON-RPC example:
+        # This "liststreamitems" call is specific to MultiChain, but adapt as you like.
+        # For other blockchains, change method/params accordingly.
+        payload = {
+            "jsonrpc": "1.0",
+            "id": "curltest",
+            "method": "liststreamitems",
+            "params": ["YOUR_STREAM_NAME"]  # Replace with the stream name you want
+        }
+        headers = {"content-type": "application/json"}
+
+        response = requests.post(RPC_URL, json=payload, headers=headers, timeout=5, auth=('multichainrpc','YOUR_RPC_PASSWORD'))
+        data = response.json()
+
+        if "result" in data:
+            chain_data = data["result"]
+        else:
+            chain_data = ["No 'result' found in JSON-RPC response. Check your node configuration."]
+
+    except Exception as e:
+        chain_data = [f"Error connecting to chain: {e}"]
+
+    # Render a simple HTML table or list
+    return """
+    <html>
+    <head><title>Chain Logs</title></head>
+    <body>
+      <h1>Blockchain Logs</h1>
+      <p>Below are raw items from the chain:</p>
+      <ul>
+        {}
+      </ul>
+      <a href="/">Refresh</a>
+    </body>
+    </html>
+    """.format("".join(f"<li>{item}</li>" for item in chain_data))
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
