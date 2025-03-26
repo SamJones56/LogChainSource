@@ -13,8 +13,8 @@ services:
   genesis:
     hostname: genesis
     build:
-      context: ./dockerFiles
-      dockerfile: Docker
+      context: .
+      dockerfile: dockerFiles/Docker
     container_name: genesis
     networks:
       - mcNet
@@ -26,7 +26,7 @@ services:
       - 7010:7010
       - 7011:7011
       - 8000:8000
-    entrypoint: ["sh", "-c", "python3 dockerFiles/genesis.py && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 genesisInit.py && touch /root/done && tail -f /dev/null"]
 # python3 genesis.py && 
     # wait for genesis to finish
     healthcheck: 
@@ -39,8 +39,8 @@ services:
   node1:
     hostname: node1
     build:
-      context: ./dockerFiles
-      dockerfile: Docker
+      context: .
+      dockerfile: dockerFiles/Docker
     container_name: node1
     networks:
       - mcNet
@@ -52,7 +52,7 @@ services:
     ports:
       - 7020:7020
       - 7021:7021
-    entrypoint: ["sh", "-c", "python3 -m dockerFiles.node && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 nodeInit.py && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&
     # wait for node to finish
     healthcheck: 
@@ -65,8 +65,8 @@ services:
   node2:
     hostname: node2
     build:
-      context: ./dockerFiles
-      dockerfile: Docker
+      context: .
+      dockerfile: dockerFiles/Docker
     container_name: node2
     networks:
       - mcNet
@@ -78,5 +78,5 @@ services:
     ports:
     - 7030:7030
     - 7031:7031
-    entrypoint: ["sh", "-c", "python3 -m dockerFiles.node && touch /root/done && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "python3 nodeInit.py && touch /root/done && tail -f /dev/null"]
     # python3 node.py &&

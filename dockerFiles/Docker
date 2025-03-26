@@ -34,7 +34,7 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 
 # Set working directory
 WORKDIR /app
-COPY . .
+COPY ./app ./csv ./flask ./
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path
