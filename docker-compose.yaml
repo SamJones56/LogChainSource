@@ -1,4 +1,4 @@
-# version: '3.8'
+version: '3.8'
 
 volumes:
   genesis:
@@ -20,6 +20,8 @@ services:
       - mcNet
     volumes:
       - ../multichain/genesis_data:/root/.multichain
+      - ./flask:/logChain/flask
+      - ./app:/logChain/app
     # privileged: true
     # working_dir: /root
     ports:
