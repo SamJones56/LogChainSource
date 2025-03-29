@@ -2,7 +2,7 @@ import subprocess
 import re
 import time
 from colours import bcolors
-from mcController import connectToChain, subStream, grantStream ,getPubKey
+from mcController import connectToChain, grantStream ,getPubKey
 
 # Connect and grant permissions on an existing chain
 def connectAndPerm(streamName, walletAddress, permission):

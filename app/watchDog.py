@@ -5,7 +5,8 @@ from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
 from colours import bcolors
-from utils import logEncryptor, getFileHash, postToChain,compareLogs
+from utils import getFileHash, postToChain,compareLogs
+from cryptoUtils import logEncryptor
 
 # https://www.askpython.com/python/built-in-methods/callback-functions-in-python
 def doggy(filePath, fileType, key, streamName, copyPath):

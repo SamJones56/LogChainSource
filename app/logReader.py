@@ -1,5 +1,5 @@
 from mcController import getStreamData
-from aesController import decAes
+from cryptoUtils import decAes
 from colours import bcolors
 # from compareCheck import logCompare
 import json

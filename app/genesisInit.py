@@ -3,7 +3,7 @@ import time
 import os
 from colours import bcolors
 from mcController import createStream, addToStream, subStream
-from kyberController import genKeys
+from app.cryptoUtils import genKeys
 from utils import readFromFile
 
 # multihain Generation

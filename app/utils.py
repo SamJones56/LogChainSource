@@ -1,6 +1,5 @@
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
-from kyberController import encapsulate
 import hashlib
 from mcController import addToStreamOptions
 
@@ -32,23 +31,6 @@ def getFileHash(fileName):
     with open(fileName, "rb") as f:
         digest = hashlib.file_digest(f,"sha256")
     return digest.hexdigest()
-
-# Convert log to binary, encrypt with AES, return JSON data for upload
-def logEncryptor(log):
-    from aesController import encAes
-    # Convert log to binary
-    binaryLog = log.encode('utf-8')
-    # Get kyber shared secret and ciphertext
-    kCipherText, ksharedsecret = encapsulate(publicKey)
-    # AES encrypt the log using hashed kyber generated shared secret
-    nonce,cipherText,tag = encAes(binaryLog, ksharedsecret)
-    # Data for posting to data stream
-    data = {
-        "kyberct":kCipherText.hex(),
-        "nonce":nonce.hex(),
-        "log":cipherText.hex(),
-        "tag":tag.hex()}
-    return data
 
 # data -> JSON for blockchain
 def blockConverter(fileType,hashDigest,log):

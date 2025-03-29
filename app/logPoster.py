@@ -1,7 +1,8 @@
 # https://docs.python.org/3/library/pathlib.html
 from userInterface import dataConfig
 from colours import bcolors
-from utils import getFileHash, logEncryptor, postToChain, saveCopy
+from utils import getFileHash, postToChain, saveCopy
+from cryptoUtils import logEncryptor
 # Watchdog
 from watchDog import doggy
 
