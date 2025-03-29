@@ -1,19 +1,23 @@
 # https://docs.python.org/3/library/pathlib.html
 from userInterface import dataConfig
 from colours import bcolors
-from utils import getFileHash, logEncryptor, postToChain
+from utils import getFileHash, logEncryptor, postToChain, saveCopy
 # Watchdog
 from watchDog import doggy
 
+
+    
 # Initial upload of file to blockchain
 def initialUpload():
     # Get user input
-    filePath, fileType, streamName, key, selection = dataConfig()
+    filePath, fileType, streamName, key, selection, copyPath = dataConfig()
     # Get file hash
     hashDigest = getFileHash(filePath)
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
         for logLine in logFile:
+            print(bcolors.WARNING + f"Saving copy: {logLine} to {copyPath}\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
+            saveCopy(copyPath, logLine)
             # Encrypt log
             log = logEncryptor(logLine)
             # Post to stream
@@ -22,13 +26,6 @@ def initialUpload():
     # Check for selection
     if selection:
         print("WHO LET THE DOGS OUT")
-        doggy(filePath ,fileType, key, streamName)
+        doggy(filePath ,fileType, key, streamName, copyPath)
 
 initialUpload()
-
-# This should be its own python file
-# def liveReader():
-
-# fileName,fileType,streamName,key = usrInput()
-
-# postToChain(fileName,fileType,streamName,key)

@@ -2,7 +2,7 @@
 # https://github.com/aabmets/quantcrypt
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 from colours import bcolors
-from fileController import writeToFile, readFromFile
+from utils import writeToFile, readFromFile
 from quantcrypt.kem import MLKEM_512, PQAVariant
 
 kem = MLKEM_512(PQAVariant.REF)

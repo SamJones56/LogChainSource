@@ -48,3 +48,31 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = {"json":data}
     print("added")
     addToStreamOptions(streamName, key, data, "offchain")
+
+# https://www.w3schools.com/python/ref_file_readlines.asp
+def compareLogs(copyPath, filePath):
+    with copyPath.open("r") as copy, filePath.open("r") as current:
+        copySet = set(copy.readlines())
+        currentSet = set(current.readlines())
+        diff = copySet ^ currentSet
+        if diff:
+            return diff
+
+# Writing data to a file
+def writeToFile(file, data):
+    with open(file,"wb") as f:
+        f.write(data)
+
+def appendToFile(file,data):
+    with open(file,"a") as f:
+        f.write(data)
+
+# Get pubkey
+def readFromFile(file):
+    with open(file,"rb") as f:
+        return f.read()
+    
+# Copy log 
+def saveCopy(filePath, line):
+    with filePath.open("w") as file:
+        file.write(line)

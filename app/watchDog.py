@@ -4,16 +4,12 @@ from watchdog.events import PatternMatchingEventHandler
 from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
-import os.path
 from colours import bcolors
-# from mcController import addToStreamOptions
-import json
-from utils import logEncryptor, getFileHash, postToChain
+from utils import logEncryptor, getFileHash, postToChain, writeToFile,readFromFile, compareLogs
 
 # https://www.askpython.com/python/built-in-methods/callback-functions-in-python
-def doggy(filePath, fileType, key, streamName):
+def doggy(filePath, fileType, key, streamName, copyPath):
     filePath=[f"{filePath}"]
-
     #converts paths from list to string and then converts to special path for file check
     pathString=''.join(map(str, filePath))
     checkPath= Path(pathString)
@@ -28,6 +24,11 @@ def doggy(filePath, fileType, key, streamName):
         def on_modified(self, event):
                 #check for if the file exists, else outputs an error
                 if checkPath.is_file():
+                    # Send current file off to be checked
+                    diff = compareLogs(copyPath, filePath)
+                    if diff:
+                        for x in diff:
+                            print(x)
                     #prints last line on unix system
                     for line in tail("-n 1",filePath, _iter=True):
                         line = line.strip()

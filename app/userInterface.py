@@ -45,6 +45,11 @@ def dataConfig():
     # Get the FilePath and fileName
     filePath = input(bcolors.WARNING + f"Enter Path to Log File:"+bcolors.OKBLUE+ f"\n:")
     filePath = fileValidator(supportedFileTypes, filePath)
+
+    # Get copy path
+    copyPath = input(bcolors.WARNING + f"Enter Path for Copy File:"+bcolors.OKBLUE+ f"\n:")
+    copyPath = fileValidator(supportedFileTypes, filePath)
+
     # Get the name of the file
     fileType = filePath.name
     streamName = input(bcolors.WARNING + f"Select Stream: {supportedStreams}"+bcolors.OKBLUE+ f"\n:")
@@ -55,4 +60,4 @@ def dataConfig():
     # https://www.stratascratch.com/blog/python-threading-like-a-pro/#:~:text=We%20start%20the%20thread%20by,thread%20will%20actually%20start%20running.
     selection = input(bcolors.WARNING + f"Start File Listener: y/n\n" + bcolors.ENDC)
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
-    return filePath, fileType, streamName, key, selection
+    return filePath, fileType, streamName, key, selection, copyPath
