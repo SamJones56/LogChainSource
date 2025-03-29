@@ -28,10 +28,13 @@ RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \
 
 # Set working directory
 WORKDIR /logChain
+
+# Copy files accross
 COPY ./app ./app
 COPY ./logs ./logs 
 COPY ./flask ./flask
 
+# Change into app working directory
 WORKDIR /logChain/app
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
@@ -40,7 +43,6 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 # https://stackoverflow.com/questions/49631146/how-do-you-add-a-path-to-pythonpath-in-a-dockerfile
 ENV PYTHONPATH="/logChain/app:$PYTHONPATH"
-
 
 # Add python tools
 RUN pip install quantcrypt && \

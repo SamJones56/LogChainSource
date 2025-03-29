@@ -7,11 +7,10 @@ from kyberController import genKeys, readFromFile
 
 # multihain Generation
 def genChain():
-
      # Generate logChain with correct params
      print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
-     cmd = "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011"
-     subprocess.run(cmd, shell=True)
+     # cmd = "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011"
+     subprocess.run(["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"])
 
      # Editing the logChain config file
      confPath = "/root/.multichain/logChain/multichain.conf"
@@ -19,7 +18,6 @@ def genChain():
      rpcuser = "genesis"
      rpcpassword = "logChain"
      rpcallowip = "rpcallowip=172.18.0.0/16"
-     rAutoSub = ""
 
      # Wait for log chain to be initialised
      for i in range(120):
@@ -62,7 +60,6 @@ def genChain():
      createStream(streamName, restrictions)
      time.sleep(2)
      subStream(chainName, streamName)
-
      # Data stream
      restrictions = {"restrict":"write"}
      streamName = "data"
@@ -80,7 +77,7 @@ def genChain():
      streamName = "pubkeys"
      print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
      addToStream(streamName, "genesis", kpk.hex())
-
+     # Print when Done
      print(bcolors.OKGREEN + "----- GENESIS DONE ----- " + bcolors.ENDC)
 
 genChain()

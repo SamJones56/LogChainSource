@@ -1,4 +1,3 @@
-
 # Delete old volumes
 echo "-------- Removing old volumes --------"
 rm -rf ../multichain/genesis_data/

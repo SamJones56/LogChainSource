@@ -20,14 +20,11 @@ services:
       - mcNet
     volumes:
       - ../multichain/genesis_data:/root/.multichain
-    # privileged: true
-    # working_dir: /root
     ports:
       - 7010:7010
       - 7011:7011
       - 8000:8000
     entrypoint: ["sh", "-c", "python3 genesisInit.py && touch /root/done && tail -f /dev/null"]
-# python3 genesis.py && 
     # wait for genesis to finish
     healthcheck: 
       test: ["CMD", "test", "-f", "/root/done"]
@@ -53,7 +50,6 @@ services:
       - 7020:7020
       - 7021:7021
     entrypoint: ["sh", "-c", "python3 nodeInit.py && touch /root/done && tail -f /dev/null"]
-    # python3 node.py &&
     # wait for node to finish
     healthcheck: 
       test: ["CMD", "test", "-f", "/root/done"]
@@ -79,4 +75,3 @@ services:
     - 7030:7030
     - 7031:7031
     entrypoint: ["sh", "-c", "python3 nodeInit.py && touch /root/done && tail -f /dev/null"]
-    # python3 node.py &&

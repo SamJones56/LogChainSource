@@ -5,21 +5,18 @@ from colours import bcolors
 from mcController import connectToChain, subStream, grantStream ,getPubKey
 
 # Connect and grant permissions on an existing chain
-def connectAndPerm(streamName, walletAddress):
+def connectAndPerm(streamName, walletAddress, permission):
     time.sleep(5)
     # Set permissions
     print(bcolors.WARNING + "Subscribing to " + streamName + bcolors.ENDC)
     # Subscribe to stream
     subprocess.run(["multichain-cli","logChain","subscribe", f"{streamName}"])
-    
     # Request permissions on stream
     print(bcolors.WARNING + "Granting on " + streamName + bcolors.ENDC)
-    permissions = streamName + ".write,read"
+    permissions = streamName + permission
     grantStream(walletAddress ,permissions)
     time.sleep(5)
     
-    
-
 def savePk():
     time.sleep(5)
     print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
@@ -51,10 +48,9 @@ def logChainInit():
     print(bcolors.OKCYAN + "multichaind logChain -daemon" + bcolors.ENDC)
     subprocess.run(["multichaind", "logChain", "-daemon"])
     
-    # time.sleep(10)
     # Connect and grant permissions on an existing chain
-    connectAndPerm("pubkeys", walletAddress)
-    connectAndPerm("data", walletAddress)
+    connectAndPerm("pubkeys", walletAddress, ".write,read")
+    connectAndPerm("data", walletAddress, ".read")
 
     # Save genesis public key
     savePk()
