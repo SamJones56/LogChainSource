@@ -5,12 +5,13 @@ from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
 import os.path
-from mcController import addToStreamOptions#
+from colours import bcolors
+# from mcController import addToStreamOptions
 import json
-from logPoster import logEncryptor, getFileHash
+from utils import logEncryptor, getFileHash, postToChain
 
 # https://www.askpython.com/python/built-in-methods/callback-functions-in-python
-def doggy(filePath, callBack, fileType, key, streamName):
+def doggy(filePath, fileType, key, streamName):
     filePath=[f"{filePath}"]
 
     #converts paths from list to string and then converts to special path for file check
@@ -30,9 +31,10 @@ def doggy(filePath, callBack, fileType, key, streamName):
                     #prints last line on unix system
                     for line in tail("-n 1",filePath, _iter=True):
                         line = line.strip()
-                        hashDigest = getFileHash(filePath)
+                        hashDigest = getFileHash(pathString)
                         log = logEncryptor(line)
-                        callBack(key, fileType, hashDigest, log, streamName)
+                        print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
+                        postToChain(key, fileType, hashDigest, log, streamName)
                         # update
                 else:
                     print("oopsie, ya file got gone")
