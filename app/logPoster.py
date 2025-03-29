@@ -74,7 +74,7 @@ def initialUpload():
     # Check for selection
     if selection:
         print("WHO LET THE DOGS OUT")
-        doggy(filePath,hashDigest, key, fileType, streamName)
+        postToChain(filePath, postToChain ,fileType, key, streamName)
     
     # HERE CAN START WATCHDOG LISTENER
     # filePath is the full path to file to listen to

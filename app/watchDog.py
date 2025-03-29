@@ -7,27 +7,10 @@ from pathlib import Path
 import os.path
 from mcController import addToStreamOptions#
 import json
+from logPoster import logEncryptor, getFileHash
 
-# from logPoster import postToChain, getFileHash
-# data -> JSON for blockchain
-def blockConverter(fileType,hashDigest,log):
-    # Data for identification
-    entry = {
-        "Type":fileType,
-        "FileHash":hashDigest,
-    }
-    entry.update(log)
-    return entry
-
-def postToChain(key, fileType, hashDigest, log, streamName):
-    data = blockConverter(fileType,hashDigest,log)
-    # Add to the data stream
-    data = {"json":data}
-    print("added")
-    addToStreamOptions(streamName, key, data, "offchain")
-# postToChain(key, fileType, hashDigest, log, streamName)
-
-def doggy(filePath, hashDigest, key, fileType, streamName):
+# https://www.askpython.com/python/built-in-methods/callback-functions-in-python
+def doggy(filePath, callBack, fileType, key, streamName):
     filePath=[f"{filePath}"]
 
     #converts paths from list to string and then converts to special path for file check
@@ -47,14 +30,10 @@ def doggy(filePath, hashDigest, key, fileType, streamName):
                     #prints last line on unix system
                     for line in tail("-n 1",filePath, _iter=True):
                         line = line.strip()
-                        if not line:
-                            continue
-                        log = {line}
+                        hashDigest = getFileHash(filePath)
+                        log = logEncryptor(line)
+                        callBack(key, fileType, hashDigest, log, streamName)
                         # update
-                        print(log)
-                        postToChain(key, fileType, hashDigest, log, streamName)
-
-
                 else:
                     print("oopsie, ya file got gone")
 
