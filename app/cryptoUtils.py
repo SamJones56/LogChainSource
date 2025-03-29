@@ -3,7 +3,6 @@
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 from colours import bcolors
 from Crypto.Cipher import AES
-from utils import writeToFile, readFromFile
 from quantcrypt.kem import MLKEM_512, PQAVariant
 
 kem = MLKEM_512(PQAVariant.REF)
@@ -12,8 +11,20 @@ kem = MLKEM_512(PQAVariant.REF)
 publicKeyFile="kPk.key"
 secretKeyFile="kSk.key"
 
+# publicKey = readFromFile(publicKeyFile)
+
+# Get pubkey
+def readFromFile(file):
+    with open(file,"rb") as f:
+        return f.read()
+
+# Writing data to a file
+def writeToFile(file, data):
+    with open(file,"wb") as f:
+        f.write(data)
+
 # # Generate and save private/public keys ~ TODO make files private
-def genKeys():
+def kyberGenKeys():
     # Generate kyber keys
     pk,sk = kem.keygen()
     # Write keys to file
@@ -22,12 +33,12 @@ def genKeys():
     print(bcolors.OKGREEN + "Wrote keys to files: " + publicKeyFile + secretKeyFile + bcolors.ENDC)
 
 # Encrypt data
-def encapsulate(publicKey):
+def kyberEncapsulate(publicKey):
     cipherText, sharedSecret = kem.encaps(publicKey)
     return cipherText, sharedSecret
 
 # Decrypt data
-def decapsulate(cipherText):
+def kyberDecapsulate(cipherText):
     secretKey = readFromFile(secretKeyFile)
     sharedSecret = kem.decaps(secretKey, cipherText)
     return sharedSecret
@@ -51,7 +62,7 @@ def decAes(kCipherText, nonce, cipherText, tag):
         cipherText = bytes.fromhex(cipherText)
         tag = bytes.fromhex(tag)
         # Get the shared secret from the kyber ciphertext
-        aesKey = decapsulate(kCipherText)
+        aesKey = kyberDecapsulate(kCipherText)
         # Decrypt AES
         cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
         decrypted = cipher.decrypt(cipherText)
@@ -67,8 +78,9 @@ def decAes(kCipherText, nonce, cipherText, tag):
 def logEncryptor(log):
     # Convert log to binary
     binaryLog = log.encode('utf-8')
+    publicKey = readFromFile(publicKeyFile)
     # Get kyber shared secret and ciphertext
-    kCipherText, ksharedsecret = encapsulate(publicKeyFile)
+    kCipherText, ksharedsecret = kyberEncapsulate(publicKey)
     # AES encrypt the log using hashed kyber generated shared secret
     nonce,cipherText,tag = encAes(binaryLog, ksharedsecret)
     # Data for posting to data stream

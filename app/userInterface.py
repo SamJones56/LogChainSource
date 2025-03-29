@@ -23,6 +23,7 @@ def fileCreator(supportedFileTypes, filePath):
     else:
         with open(filePath, "w") as f:
             pass
+        return path
 
 # Validate stream
 def streamValidator(supportedStreams, streamName):
@@ -57,7 +58,7 @@ def dataConfig():
 
     # Get copy path
     copyPath = input(bcolors.WARNING + f"Enter Path for Copy File:"+bcolors.OKBLUE+ f"\n:")
-    copyPath = fileCreator(supportedFileTypes, filePath)
+    copyPath = fileCreator(supportedFileTypes, copyPath)
 
     # Get the name of the file
     fileType = filePath.name

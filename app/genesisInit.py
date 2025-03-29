@@ -3,8 +3,8 @@ import time
 import os
 from colours import bcolors
 from mcController import createStream, addToStream, subStream
-from app.cryptoUtils import genKeys
-from utils import readFromFile
+from cryptoUtils import kyberGenKeys
+from cryptoUtils import readFromFile
 
 # multihain Generation
 def genChain():
@@ -71,7 +71,7 @@ def genChain():
 
      # Generate kyber
      print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
-     genKeys()
+     kyberGenKeys()
      # Get the public key
      kpk = readFromFile("kPk.key")
      # Post the pk to the pubkeys stream

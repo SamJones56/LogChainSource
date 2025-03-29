@@ -24,8 +24,6 @@ def initialUpload():
             postToChain(key, fileType, hashDigest, log, streamName)
     # Check for selection
     if selection:
-        # print("WHO LET THE DOGS OUT")
-        # print("test",filePath ,fileType, key, streamName, copyPath)
         doggy(filePath ,fileType, key, streamName, copyPath)
 
 initialUpload()
