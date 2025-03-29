@@ -9,6 +9,8 @@ from random import randrange
 from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 from kyberController import encapsulate, readFromFile
+# Watchdog
+from watchDog import doggy
 
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
@@ -51,6 +53,7 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(fileType,hashDigest,log)
     # Add to the data stream
     data = {"json":data}
+    print("added")
     addToStreamOptions(streamName, key, data, "offchain")
     
 
@@ -71,6 +74,8 @@ def initialUpload():
     # Check for selection
     if selection:
         print("WHO LET THE DOGS OUT")
+        doggy(filePath,hashDigest, key, fileType, streamName)
+    
     # HERE CAN START WATCHDOG LISTENER
     # filePath is the full path to file to listen to
     # selection is a True/False boolean
