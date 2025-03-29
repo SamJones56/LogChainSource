@@ -36,6 +36,8 @@ COPY ./flask ./flask
 
 # Change into app working directory
 WORKDIR /logChain/app
+# Make web.sh runnable
+RUN chmod +x web.sh
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path
