@@ -1,5 +1,4 @@
 from Crypto.Cipher import AES
-from kyberController import decapsulate
 from colours import bcolors
 
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
@@ -15,6 +14,7 @@ def encAes(data, aesKey):
 
 # Decrypting AES using KyberCipherText, shared nonce, and ciphertext
 def decAes(kCipherText, nonce, cipherText, tag):
+        from kyberController import decapsulate
         # Convert to bytes
         kCipherText = bytes.fromhex(kCipherText)
         nonce = bytes.fromhex(nonce)

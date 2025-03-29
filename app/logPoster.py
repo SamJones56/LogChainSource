@@ -5,8 +5,6 @@ from utils import getFileHash, logEncryptor, postToChain, saveCopy
 # Watchdog
 from watchDog import doggy
 
-
-    
 # Initial upload of file to blockchain
 def initialUpload():
     # Get user input
@@ -25,7 +23,8 @@ def initialUpload():
             postToChain(key, fileType, hashDigest, log, streamName)
     # Check for selection
     if selection:
-        print("WHO LET THE DOGS OUT")
+        # print("WHO LET THE DOGS OUT")
+        # print("test",filePath ,fileType, key, streamName, copyPath)
         doggy(filePath ,fileType, key, streamName, copyPath)
 
 initialUpload()

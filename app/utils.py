@@ -1,12 +1,30 @@
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
-from aesController import encAes
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
-from kyberController import encapsulate, readFromFile
+from kyberController import encapsulate
 import hashlib
 from mcController import addToStreamOptions
 
+# Get pubkey
+def readFromFile(file):
+    with open(file,"rb") as f:
+        return f.read()
+
 pkFile="kPk.key"
 publicKey = readFromFile(pkFile)
+
+# Writing data to a file
+def writeToFile(file, data):
+    with open(file,"wb") as f:
+        f.write(data)
+
+def appendToFile(file,data):
+    with open(file,"a") as f:
+        f.write(data)
+    
+# Copy log 
+def saveCopy(filePath, line):
+    with filePath.open("w") as file:
+        file.write(line)
 
 # https://docs.python.org/3/library/hashlib.html
 # Get the hash of the log file
@@ -17,6 +35,7 @@ def getFileHash(fileName):
 
 # Convert log to binary, encrypt with AES, return JSON data for upload
 def logEncryptor(log):
+    from aesController import encAes
     # Convert log to binary
     binaryLog = log.encode('utf-8')
     # Get kyber shared secret and ciphertext
@@ -57,22 +76,3 @@ def compareLogs(copyPath, filePath):
         diff = copySet ^ currentSet
         if diff:
             return diff
-
-# Writing data to a file
-def writeToFile(file, data):
-    with open(file,"wb") as f:
-        f.write(data)
-
-def appendToFile(file,data):
-    with open(file,"a") as f:
-        f.write(data)
-
-# Get pubkey
-def readFromFile(file):
-    with open(file,"rb") as f:
-        return f.read()
-    
-# Copy log 
-def saveCopy(filePath, line):
-    with filePath.open("w") as file:
-        file.write(line)

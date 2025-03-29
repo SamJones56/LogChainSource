@@ -15,6 +15,15 @@ def fileValidator(supportedFileTypes, filePath):
         exit()
     return path
 
+def fileCreator(supportedFileTypes, filePath):
+    path = Path(filePath)
+    if path.suffix not in supportedFileTypes:
+        print(bcolors.FAIL + f"Unsupported file type: {path.suffix}" + bcolors.ENDC)
+        exit()
+    else:
+        with open(filePath, "w") as f:
+            pass
+
 # Validate stream
 def streamValidator(supportedStreams, streamName):
     if streamName not in supportedStreams:
@@ -48,7 +57,7 @@ def dataConfig():
 
     # Get copy path
     copyPath = input(bcolors.WARNING + f"Enter Path for Copy File:"+bcolors.OKBLUE+ f"\n:")
-    copyPath = fileValidator(supportedFileTypes, filePath)
+    copyPath = fileCreator(supportedFileTypes, filePath)
 
     # Get the name of the file
     fileType = filePath.name
