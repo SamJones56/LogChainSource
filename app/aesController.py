@@ -1,7 +1,6 @@
 from Crypto.Cipher import AES
 from kyberController import decapsulate
 from colours import bcolors
-import json
 
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 def encAes(data, aesKey):

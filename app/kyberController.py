@@ -2,6 +2,7 @@
 # https://github.com/aabmets/quantcrypt
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 from colours import bcolors
+from fileController import writeToFile, readFromFile
 from quantcrypt.kem import MLKEM_512, PQAVariant
 
 kem = MLKEM_512(PQAVariant.REF)
@@ -9,16 +10,6 @@ kem = MLKEM_512(PQAVariant.REF)
 # file locations
 publicKeyFile="kPk.key"
 secretKeyFile="kSk.key"
-
-# Writing data to a file
-def writeToFile(file, data):
-    with open(file,"wb") as f:
-        f.write(data)
-
-# Get pubkey
-def readFromFile(file):
-    with open(file,"rb") as f:
-        return f.read()
 
 # # Generate and save private/public keys ~ TODO make files private
 def genKeys():

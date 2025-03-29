@@ -3,24 +3,12 @@ import time
 from colours import bcolors
 
 # https://www.multichain.com/developers/json-rpc-api/
-
 rpcuser = 'genesis'
 rpcpassword = 'logChain'
 rpchost = '172.18.0.2' 
 rpcport = '7011'         
-
 # Setup client
 mc = MultiChainClient(rpchost, rpcport, rpcuser, rpcpassword)
-
-# def connect(txid):
-#     for i in range(60):
-#         mc.getrawtransaction(txid)
-#         if mc.success():
-#             print(bcolors.OKGREEN + "Successful: ", txid + bcolors.ENDC)
-#             break
-#         time.sleep(1)
-#         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
-#         print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
 
 # Take wallet address as input and connect to genesis node
 def connectToChain(walletAddress):
@@ -35,8 +23,6 @@ def connectToChain(walletAddress):
         time.sleep(1)
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
         print(bcolors.FAIL + 'Error message: '+mc.errormessage()+ bcolors.ENDC +'\n')
-
-
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(streamName, streamRestrictions):
