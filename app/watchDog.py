@@ -35,32 +35,32 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                     # postToChain(key, fileType, hashDigest, log, streamName)
                         # update
                     # Send current file off to be checked
-                    diff, flag = compareLogs(copyPath, pathString)
+                    compareLogs(copyPath, pathString)
                     # Detect difference in files
-                    if diff:
+                    # if diff:
                         # print("Difference Detected")
-                        print(diff)
+                        # print(diff)
                         # for x in diff:
                         #     print(x)
 
                         # Add to the chain
                         # Get hash digest of file
-                        hashDigest = getFileHash(pathString)
+                        # hashDigest = getFileHash(pathString)
                         # Encrypt log
-                        log = logEncryptor(diff)
+                        # log = logEncryptor(diff)
                         # Print to console
-                        print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{diff}" + bcolors.ENDC)
+                        # print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{diff}" + bcolors.ENDC)
                         # Check for deletion
-                        if flag:
-                            print(bcolors.FAIL + f"DELETION DETECTED" + bcolors.ENDC)
-                            postToChain(key, fileType, hashDigest, log, streamName)
+                        # if flag:
+                        #     print(bcolors.FAIL + f"DELETION DETECTED" + bcolors.ENDC)
+                        #     postToChain(key, fileType, hashDigest, log, streamName)
 
 
 
                         # Save new copy
-                        saveCopy(copyPath, pathString)
+                    saveCopy(copyPath, pathString)
                         # Reset difference
-                    diff = None
+                    # diff = None
                 # else:
                     # print("oopsie, ya file got gone")
 

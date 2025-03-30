@@ -3,6 +3,7 @@
 import hashlib
 from mcController import addToStreamOptions
 from pathlib import Path
+import difflib
 
 def appendToFile(file,data):
     with open(file,"a") as f:
@@ -52,37 +53,44 @@ def endOfFile(filePath):
 
 # https://www.w3schools.com/python/ref_file_readlines.asp
 # https://www.w3schools.com/python/ref_set_issubset.asp
-def compareLogs(copyPath, filePath):
-    flag = False
-    with open(copyPath,"r") as copy, open(filePath, "r") as current:
-        # Get the lines
-        copyLines = copy.readlines()
-        currentLines = current.readlines()
+# https://www.geeksforgeeks.org/compare-two-files-line-by-line-in-python/
+def compareLogs(copyPath, currentPath):
+    # flag = False
+    # with open(copyPath,"r") as copy, open(currentPath, "r") as current:
+    #     # Get the lines
+    #     copyLines = copy.readlines()
+    #     currentLines = current.readlines()
     # Get the length
-    copyCount = len(copyLines)
-    currentCount = len(currentLines)
+    # copyCount = len(copyLines)
+    # currentCount = len(currentLines)
 
-    # Get and compare sets
-    copySet = set(copyLines)
-    currentSet = set(currentLines)
-    # Get difference
-    diff = copySet ^ currentSet
+    # # Get and compare sets
+    # copySet = set(copyLines)
+    # currentSet = set(currentLines)
+    # # Get difference
+    # diff = copySet ^ currentSet
 
-    # Line deletion detection
-    if diff:
-        # File deleted
-        if currentCount<copyCount and currentSet.issubset(copySet):
-            flag=True
-            print("line deletion detected")
-            return(diff, flag)
-        # Line added
-        elif currentCount>copyCount and copySet.issubset(currentSet):
-            print("line addition detected")
-            return(diff, flag)
-        elif currentCount == copyCount:
-            print("edit detected")
-            return(diff, flag)
-        else:
-            print("edit and deletion detected")
-            flag = True
-            return(diff, flag)
+    # # Line deletion detection
+    # if diff:
+    #     # File deleted
+    #     if currentCount<copyCount and currentSet.issubset(copySet):
+    #         flag=True
+    #         print("line deletion detected")
+    #         return(diff, flag)
+    #     # Line added
+    #     elif currentCount>copyCount and copySet.issubset(currentSet):
+    #         print("line addition detected")
+    #         return(diff, flag)
+    #     elif currentCount == copyCount:
+    #         print("edit detected")
+    #         return(diff, flag)
+    #     else:
+    #         print("edit and deletion detected")
+    #         flag = True
+    #         return(diff, flag)
+    # Trying difflib
+    with open(currentPath) as current, open(copyPath) as copy:
+        currentLines = current.readlines()
+        copyLines = copy.readlines()
+    for line in difflib.unified_diff(currentLines, copyLines, fromfile=str(currentPath), tofile=str(copyPath),lineterm=''):
+        print(line)
