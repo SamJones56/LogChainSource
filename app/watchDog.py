@@ -5,7 +5,7 @@ from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
 from colours import bcolors
-from utils import getFileHash, postToChain,compareLogs, endOfFile
+from utils import getFileHash, postToChain,compareLogs, endOfFile, saveCopy
 from cryptoUtils import logEncryptor
 
 # https://www.askpython.com/python/built-in-methods/callback-functions-in-python
@@ -26,21 +26,26 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                 if checkPath.is_file():
                     #prints last line on unix system
                     # for line in tail("-n 1",filePath, _iter=True):
-                    line = endOfFile(pathString)
-                    line = line.strip()
-                    hashDigest = getFileHash(pathString)
-                    log = logEncryptor(line)
-                    print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
-                    postToChain(key, fileType, hashDigest, log, streamName)
+                    # Get last line in file
+                    # line = endOfFile(pathString)
+                    # line = line.strip()
+                    # hashDigest = getFileHash(pathString)
+                    # log = logEncryptor(line)
+                    # print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
+                    # postToChain(key, fileType, hashDigest, log, streamName)
                         # update
                     # Send current file off to be checked
-                    diff,tell = compareLogs(copyPath, pathString)
+                    diff = compareLogs(copyPath, pathString)
+                    # Detect difference in files
                     if diff:
-                        
                         print("Difference Detected")
-                        print(diff, "seek", tell)
+                        print(diff)
                         # for x in diff:
                         #     print(x)
+                        # Save new copy
+                        saveCopy(copyPath, pathString)
+                        # Reset difference
+                    diff = None
                 # else:
                     # print("oopsie, ya file got gone")
 

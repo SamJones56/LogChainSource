@@ -13,7 +13,7 @@ def appendToFile(file,data):
 def saveCopy(copyPath, filePath):
     copyPath = Path(copyPath)
     filePath = Path(filePath)
-    with filePath.open("r") as file, copyPath.open("a") as copy:
+    with filePath.open("r") as file, copyPath.open("w") as copy:
         file.seek(0)
         copy.writelines(file.readlines())
 
@@ -48,13 +48,19 @@ def endOfFile(filePath):
     with open(filePath, "r") as f:
         lines = f.readlines()
         return lines[-1]
+
+
 # https://www.w3schools.com/python/ref_file_readlines.asp
 def compareLogs(copyPath, filePath):
     differences = []
     with open(copyPath,"r") as copy, open(filePath, "r") as current:
+        # Get the line counts
+        c
+        # Get the sets
         copySet = set(copy.readlines())
         currentSet = set(current.readlines())
         diff = copySet ^ currentSet
         differences = diff
         if diff:
-            return differences, current.tell()
+            return diff
+
