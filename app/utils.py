@@ -4,6 +4,7 @@ import hashlib
 from mcController import addToStreamOptions
 from pathlib import Path
 import difflib
+from datetime import datetime
 
 def appendToFile(file,data):
     with open(file,"a") as f:
@@ -26,11 +27,15 @@ def getFileHash(fileName):
     return digest.hexdigest()
 
 # data -> JSON for blockchain
+# https://www.programiz.com/python-programming/datetime/current-time
 def blockConverter(fileType,hashDigest,log):
     # Data for identification
+    now = datetime.now()
+    time = now.strftime("%D %H:%M:%S")
     entry = {
         "Type":fileType,
         "FileHash":hashDigest,
+        "Time":time
     }
     entry.update(log)
     return entry
@@ -75,6 +80,8 @@ def compareLogs(copyPath, currentPath):
     elif added:
         edited={"added":added}
         return edited
-    else:
+    elif removed and not added:
         edited={"removed":removed}
         return edited
+    else:
+        return None
