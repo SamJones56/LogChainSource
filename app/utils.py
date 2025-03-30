@@ -2,15 +2,20 @@
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 import hashlib
 from mcController import addToStreamOptions
+from pathlib import Path
 
 def appendToFile(file,data):
     with open(file,"a") as f:
         f.write(data)
     
 # Copy log 
-def saveCopy(filePath, logFile):
-    with filePath.open("a") as file:
-        file.writelines(logFile)
+# https://www.geeksforgeeks.org/python-seek-function/
+def saveCopy(copyPath, filePath):
+    copyPath = Path(copyPath)
+    filePath = Path(filePath)
+    with filePath.open("r") as file, copyPath.open("a") as copy:
+        filePath.seek(0)
+        copy.writelines(file.readlines())
 
 # https://docs.python.org/3/library/hashlib.html
 # Get the hash of the log file

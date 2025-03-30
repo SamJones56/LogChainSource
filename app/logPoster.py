@@ -12,11 +12,11 @@ def initialUpload():
     filePath, fileType, streamName, key, selection, copyPath = dataConfig()
     # Get file hash
     hashDigest = getFileHash(filePath)
+    # Save a opy of the log file
+    print(bcolors.WARNING + f"Saving copy: {filePath} to {copyPath}\n" + bcolors.ENDC)
+    saveCopy(copyPath, filePath)
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
-        # Save a opy of the log file
-        print(bcolors.WARNING + f"Saving copy: {logFile} to {copyPath}\n" + bcolors.ENDC)
-        saveCopy(copyPath, logFile)
         for logLine in logFile:
             # Encrypt log
             log = logEncryptor(logLine)

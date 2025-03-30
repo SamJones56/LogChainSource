@@ -24,8 +24,6 @@ def doggy(filePath, fileType, key, streamName, copyPath):
         def on_modified(self, event):
                 #check for if the file exists, else outputs an error
                 if checkPath.is_file():
-                    # Send current file off to be checked
-                    diff = compareLogs(copyPath, filePath)
                     #prints last line on unix system
                     for line in tail("-n 1",filePath, _iter=True):
                         line = line.strip()
@@ -34,10 +32,14 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                         print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
                         postToChain(key, fileType, hashDigest, log, streamName)
                         # update
+                    # Send current file off to be checked
+                    diff = compareLogs(copyPath, pathString)
                     if diff:
+                        
                         print("Difference Detected")
-                        for x in diff:
-                            print(x)
+                        print(diff)
+                        # for x in diff:
+                        #     print(x)
                 else:
                     print("oopsie, ya file got gone")
 
