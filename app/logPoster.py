@@ -5,6 +5,7 @@ from utils import getFileHash, postToChain, saveCopy
 from cryptoUtils import logEncryptor
 # Watchdog
 from watchDog import doggy
+import json
 
 # Initial upload of file to blockchain
 def initialUpload():
@@ -18,7 +19,8 @@ def initialUpload():
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
         for logLine in logFile:
-            logLine = {"added":log}
+            logLine = {"added:"+logLine}
+            logLine = json.dumps(logLine)
             # Encrypt log
             log = logEncryptor(logLine)
             # Post to stream
