@@ -74,5 +74,7 @@ def compareLogs(copyPath, currentPath):
         return edited
     elif added:
         edited={"added":added}
+        return edited
     else:
-        edited={"removed"}
+        edited={"removed":removed}
+        return edited

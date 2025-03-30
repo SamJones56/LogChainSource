@@ -19,7 +19,7 @@ def initialUpload():
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
         for logLine in logFile:
-            logLine = {"added:"+logLine}
+            logLine = {"added:":logLine}
             logLine = json.dumps(logLine)
             # Encrypt log
             log = logEncryptor(logLine)
