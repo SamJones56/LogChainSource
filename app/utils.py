@@ -70,9 +70,14 @@ def compareLogs(copyPath, filePath):
 
     # Line deletion detection
     if diff:
-        if currentCount<copyCount:
+        # File deleted
+        if currentCount<copyCount and currentSet.issubset(copySet):
             flag=True
             print("line deletion detected")
+            return(diff, flag)
+        # Line added
+        elif currentCount>copyCount and copySet.issubset(currentSet):
+            print("line addition detected")
             return(diff, flag)
         elif currentCount == copyCount:
             print("edit detected")
