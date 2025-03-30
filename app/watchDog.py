@@ -38,7 +38,7 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                     diff = compareLogs(copyPath, pathString)
                     # Detect difference in files
                     if diff:
-                        print("Difference Detected")
+                        # print("Difference Detected")
                         print(diff)
                         # for x in diff:
                         #     print(x)

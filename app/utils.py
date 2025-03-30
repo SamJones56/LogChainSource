@@ -52,15 +52,32 @@ def endOfFile(filePath):
 
 # https://www.w3schools.com/python/ref_file_readlines.asp
 def compareLogs(copyPath, filePath):
-    differences = []
+    flag = False
     with open(copyPath,"r") as copy, open(filePath, "r") as current:
-        # Get the line counts
-        c
-        # Get the sets
-        copySet = set(copy.readlines())
-        currentSet = set(current.readlines())
-        diff = copySet ^ currentSet
-        differences = diff
-        if diff:
-            return diff
+        # Get the lines
+        copyLines = copy.readlines()
+        currentLines = current.readlines()
+    # Get the length
+    copyCount = len(copyLines)
+    currentCount = len(currentLines)
+
+    # Get and compare sets
+    copySet = set(copyLines)
+    currentSet = set(currentLines)
+    # Get difference
+    diff = copySet ^ currentSet
+
+    # Line deletion detection
+    if currentCount<copyCount:
+        flag=True
+        print("line deletion detected")
+        return(diff, flag)
+    # Lengths the same but difference detected
+    # elif currentCount == copyCount and not diff:
+    #     print("edit but no change")
+    #     pass
+    # Edit detected
+    elif diff:
+        print("edit detected")
+        return diff,flag
 
