@@ -5,6 +5,7 @@ from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
 from colours import bcolors
+import json
 from utils import getFileHash, postToChain,compareLogs, endOfFile, saveCopy
 from cryptoUtils import logEncryptor
 
@@ -24,45 +25,18 @@ def doggy(filePath, fileType, key, streamName, copyPath):
         def on_modified(self, event):
                 #check for if the file exists, else outputs an error
                 if checkPath.is_file():
-                    #prints last line on unix system
-                    # for line in tail("-n 1",filePath, _iter=True):
-                    # Get last line in file
-                    # line = endOfFile(pathString)
-                    # line = line.strip()
-                    # hashDigest = getFileHash(pathString)
-                    # log = logEncryptor(line)
-                    # print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
-                    # postToChain(key, fileType, hashDigest, log, streamName)
-                        # update
-                    # Send current file off to be checked
-                    compareLogs(copyPath, pathString)
-                    # Detect difference in files
-                    # if diff:
-                        # print("Difference Detected")
-                        # print(diff)
-                        # for x in diff:
-                        #     print(x)
-
-                        # Add to the chain
-                        # Get hash digest of file
-                        # hashDigest = getFileHash(pathString)
-                        # Encrypt log
-                        # log = logEncryptor(diff)
-                        # Print to console
-                        # print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{diff}" + bcolors.ENDC)
-                        # Check for deletion
-                        # if flag:
-                        #     print(bcolors.FAIL + f"DELETION DETECTED" + bcolors.ENDC)
-                        #     postToChain(key, fileType, hashDigest, log, streamName)
-
-
-
-                        # Save new copy
+                    edited = compareLogs(copyPath, pathString)
+                    if edited:
+                        line = json.dumps(edited)
+                        hashDigest = getFileHash(pathString)
+                        log = logEncryptor(line)
+                        print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
+                        postToChain(key, fileType, hashDigest, log, streamName)
+                    # Save new copy of log
                     saveCopy(copyPath, pathString)
-                        # Reset difference
-                    # diff = None
-                # else:
-                    # print("oopsie, ya file got gone")
+            # Fiile deleted
+                else:
+                    print("oopsie, ya file got gone")
 
     event_handler = Monitorclass()
     observer= Observer()

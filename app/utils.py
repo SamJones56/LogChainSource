@@ -55,40 +55,6 @@ def endOfFile(filePath):
 # https://www.w3schools.com/python/ref_set_issubset.asp
 # https://www.geeksforgeeks.org/compare-two-files-line-by-line-in-python/
 def compareLogs(copyPath, currentPath):
-    # flag = False
-    # with open(copyPath,"r") as copy, open(currentPath, "r") as current:
-    #     # Get the lines
-    #     copyLines = copy.readlines()
-    #     currentLines = current.readlines()
-    # Get the length
-    # copyCount = len(copyLines)
-    # currentCount = len(currentLines)
-
-    # # Get and compare sets
-    # copySet = set(copyLines)
-    # currentSet = set(currentLines)
-    # # Get difference
-    # diff = copySet ^ currentSet
-
-    # # Line deletion detection
-    # if diff:
-    #     # File deleted
-    #     if currentCount<copyCount and currentSet.issubset(copySet):
-    #         flag=True
-    #         print("line deletion detected")
-    #         return(diff, flag)
-    #     # Line added
-    #     elif currentCount>copyCount and copySet.issubset(currentSet):
-    #         print("line addition detected")
-    #         return(diff, flag)
-    #     elif currentCount == copyCount:
-    #         print("edit detected")
-    #         return(diff, flag)
-    #     else:
-    #         print("edit and deletion detected")
-    #         flag = True
-    #         return(diff, flag)
-    # Trying difflib
     added =[]
     removed =[]
     with open(currentPath) as current, open(copyPath) as copy:
