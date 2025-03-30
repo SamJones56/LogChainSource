@@ -51,6 +51,7 @@ def endOfFile(filePath):
 
 
 # https://www.w3schools.com/python/ref_file_readlines.asp
+# https://www.w3schools.com/python/ref_set_issubset.asp
 def compareLogs(copyPath, filePath):
     flag = False
     with open(copyPath,"r") as copy, open(filePath, "r") as current:
@@ -68,14 +69,15 @@ def compareLogs(copyPath, filePath):
     diff = copySet ^ currentSet
 
     # Line deletion detection
-    if currentCount<copyCount:
-        flag=True
-        print("line deletion detected")
-        return(diff, flag)
-    elif diff and currentCount == copyCount:
-        print("edit detected")
-        return diff,flag
-    elif diff and currentCount != copyCount:
-        flag = True
-        print("edit and deletion detected")
-        return diff, flag
+    if diff:
+        if currentCount<copyCount:
+            flag=True
+            print("line deletion detected")
+            return(diff, flag)
+        elif currentCount == copyCount:
+            print("edit detected")
+            return(diff, flag)
+        else:
+            print("edit and deletion detected")
+            flag = True
+            return(diff, flag)
