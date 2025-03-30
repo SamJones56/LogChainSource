@@ -14,7 +14,7 @@ def saveCopy(copyPath, filePath):
     copyPath = Path(copyPath)
     filePath = Path(filePath)
     with filePath.open("r") as file, copyPath.open("a") as copy:
-        filePath.seek(0)
+        file.seek(0)
         copy.writelines(file.readlines())
 
 # https://docs.python.org/3/library/hashlib.html
@@ -42,6 +42,12 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     print("added")
     addToStreamOptions(streamName, key, data, "offchain")
 
+# Get last line in files
+# for line in tail("-n 1",filePath, _iter=True):
+def endOfFile(filePath):
+    with open(filePath, "r") as f:
+        lines = f.readlines()
+        return lines[-1]
 # https://www.w3schools.com/python/ref_file_readlines.asp
 def compareLogs(copyPath, filePath):
     differences = []
@@ -49,6 +55,6 @@ def compareLogs(copyPath, filePath):
         copySet = set(copy.readlines())
         currentSet = set(current.readlines())
         diff = copySet ^ currentSet
-        differences.append(diff)
+        differences = diff
         if diff:
-            return diff
+            return differences, current.tell()

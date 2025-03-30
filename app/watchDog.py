@@ -5,7 +5,7 @@ from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
 from colours import bcolors
-from utils import getFileHash, postToChain,compareLogs
+from utils import getFileHash, postToChain,compareLogs, endOfFile
 from cryptoUtils import logEncryptor
 
 # https://www.askpython.com/python/built-in-methods/callback-functions-in-python
@@ -25,23 +25,24 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                 #check for if the file exists, else outputs an error
                 if checkPath.is_file():
                     #prints last line on unix system
-                    for line in tail("-n 1",filePath, _iter=True):
-                        line = line.strip()
-                        hashDigest = getFileHash(pathString)
-                        log = logEncryptor(line)
-                        print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
-                        postToChain(key, fileType, hashDigest, log, streamName)
+                    # for line in tail("-n 1",filePath, _iter=True):
+                    line = endOfFile(pathString)
+                    line = line.strip()
+                    hashDigest = getFileHash(pathString)
+                    log = logEncryptor(line)
+                    print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
+                    postToChain(key, fileType, hashDigest, log, streamName)
                         # update
                     # Send current file off to be checked
-                    diff = compareLogs(copyPath, pathString)
+                    diff,tell = compareLogs(copyPath, pathString)
                     if diff:
                         
                         print("Difference Detected")
-                        print(diff)
+                        print(diff, "seek", tell)
                         # for x in diff:
                         #     print(x)
-                else:
-                    print("oopsie, ya file got gone")
+                # else:
+                    # print("oopsie, ya file got gone")
 
     event_handler = Monitorclass()
     observer= Observer()
