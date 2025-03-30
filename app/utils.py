@@ -72,12 +72,10 @@ def compareLogs(copyPath, filePath):
         flag=True
         print("line deletion detected")
         return(diff, flag)
-    # Lengths the same but difference detected
-    # elif currentCount == copyCount and not diff:
-    #     print("edit but no change")
-    #     pass
-    # Edit detected
-    elif diff:
+    elif diff and currentCount == copyCount:
         print("edit detected")
         return diff,flag
-
+    elif diff and currentCount != copyCount:
+        flag = True
+        print("edit and deletion detected")
+        return diff, flag
