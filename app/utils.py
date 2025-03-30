@@ -89,8 +89,20 @@ def compareLogs(copyPath, currentPath):
     #         flag = True
     #         return(diff, flag)
     # Trying difflib
+    added =[]
+    removed =[]
     with open(currentPath) as current, open(copyPath) as copy:
         currentLines = current.readlines()
         copyLines = copy.readlines()
-    for line in difflib.unified_diff(currentLines, copyLines, fromfile=str(currentPath), tofile=str(copyPath),lineterm=''):
-        print(line)
+    # for line in difflib.unified_diff(currentLines, copyLines, fromfile=str(currentPath), tofile=str(copyPath),lineterm=''):
+    for line in difflib.unified_diff(copyLines, currentLines,tofile=str(copyPath), fromfile=str(currentPath),lineterm=''):
+        # Filtering for added items
+        if line.startswith("+") and not line.startswith("+++"):
+            added.append(line[1:].strip())
+        # Filtering for deleted items
+        if line.startswith("-") and not line.startswith("---"):
+            removed.append(line[1:].strip())
+    # Add an edited JSON
+    edited ={"added":added,
+          "removed":removed}
+    return edited
