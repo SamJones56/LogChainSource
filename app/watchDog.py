@@ -17,7 +17,6 @@ def doggy(filePath, fileType, key, streamName, copyPath):
     # fileList = [filePath]
     ##Class for monitor rules, defines what happens when a file is modified or deleted using a pattern
     class Monitorclass(PatternMatchingEventHandler):
-        
         #pattern for monitoring pulled from filepath defined
         patterns=filePath
         #rules for printing that the file has been modified, to be replaced with reading the last line of the file
@@ -27,9 +26,6 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                 if checkPath.is_file():
                     # Send current file off to be checked
                     diff = compareLogs(copyPath, filePath)
-                    if diff:
-                        for x in diff:
-                            print(x)
                     #prints last line on unix system
                     for line in tail("-n 1",filePath, _iter=True):
                         line = line.strip()
@@ -38,6 +34,10 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                         print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
                         postToChain(key, fileType, hashDigest, log, streamName)
                         # update
+                    if diff:
+                        print("Difference Detected")
+                        for x in diff:
+                            print(x)
                 else:
                     print("oopsie, ya file got gone")
 

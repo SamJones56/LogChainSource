@@ -14,9 +14,10 @@ def initialUpload():
     hashDigest = getFileHash(filePath)
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
+        # Save a opy of the log file
+        print(bcolors.WARNING + f"Saving copy: {logFile} to {copyPath}\n" + bcolors.ENDC)
+        saveCopy(copyPath, logFile)
         for logLine in logFile:
-            print(bcolors.WARNING + f"Saving copy: {logLine} to {copyPath}\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
-            saveCopy(copyPath, logLine)
             # Encrypt log
             log = logEncryptor(logLine)
             # Post to stream

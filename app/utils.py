@@ -8,9 +8,9 @@ def appendToFile(file,data):
         f.write(data)
     
 # Copy log 
-def saveCopy(filePath, line):
+def saveCopy(filePath, logFile):
     with filePath.open("a") as file:
-        file.write(line)
+        file.writelines(logFile)
 
 # https://docs.python.org/3/library/hashlib.html
 # Get the hash of the log file
@@ -39,10 +39,11 @@ def postToChain(key, fileType, hashDigest, log, streamName):
 
 # https://www.w3schools.com/python/ref_file_readlines.asp
 def compareLogs(copyPath, filePath):
-
+    differences = []
     with open(copyPath,"r") as copy, open(filePath, "r") as current:
         copySet = set(copy.readlines())
         currentSet = set(current.readlines())
         diff = copySet ^ currentSet
+        differences.append(diff)
         if diff:
             return diff
