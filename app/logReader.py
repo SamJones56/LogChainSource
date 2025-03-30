@@ -24,7 +24,7 @@ def readDecryptSave(fileName, streamName):
                 "WalletAddress":line["publishers"],
                 "Node":line["keys"],
                 "TransactionID":line["txid"],
-                "FileType":line["Type"],
+                "FileType":encrypted["Type"],
                 "FileHash":encrypted["FileHash"],
                 "json":decrypted
             }
