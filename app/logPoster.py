@@ -18,6 +18,7 @@ def initialUpload():
     # Read log file line by line posting each to stream
     with filePath.open("r") as logFile:
         for logLine in logFile:
+            logLine = {"added":log}
             # Encrypt log
             log = logEncryptor(logLine)
             # Post to stream

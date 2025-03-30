@@ -40,7 +40,6 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(fileType,hashDigest,log)
     # Add to the data stream
     data = {"json":data}
-    print("added")
     addToStreamOptions(streamName, key, data, "offchain")
 
 # Get last line in files
@@ -69,6 +68,11 @@ def compareLogs(copyPath, currentPath):
         if line.startswith("-") and not line.startswith("---"):
             removed.append(line[1:].strip())
     # Add an edited JSON
-    edited ={"added":added,
+    if added and removed:
+        edited ={"added":added,
           "removed":removed}
-    return edited
+        return edited
+    elif added:
+        edited={"added":added}
+    else:
+        edited={"removed"}
