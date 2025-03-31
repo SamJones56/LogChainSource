@@ -5,6 +5,7 @@ from watchdog.observers import Observer
 from sh import tail
 from pathlib import Path
 from colours import bcolors
+import os
 import json
 from utils import getFileHash, postToChain,compareLogs, saveCopy
 from cryptoUtils import logEncryptor
@@ -35,11 +36,15 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                     # Save new copy of log
                     saveCopy(copyPath, pathString)
             # Fiile deleted
-                else:
-                    log = {f"FILE AT {pathString} DELETED"}
-                    hashDigest = 000000000
-                    postToChain(key, fileType, hashDigest, log, streamName)
-                    
+        def on_deleted(self,event):
+            line = {"DELETION":f"{pathString} DELETED"}
+            log = logEncryptor(json.dumps(line))
+            hashDigest = "000000000"
+            print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
+            postToChain(key, fileType, hashDigest, log, streamName)
+            print(bcolors.FAIL + f"DELETION OF {pathString} DETECTED\n########## EXITING ##########" + bcolors.ENDC)
+            # https://www.geeksforgeeks.org/python-exit-commands-quit-exit-sys-exit-and-os-_exit/
+            os._exit(0)                   
 
     event_handler = Monitorclass()
     observer= Observer()
