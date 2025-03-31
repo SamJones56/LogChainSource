@@ -6,7 +6,7 @@ from sh import tail
 from pathlib import Path
 from colours import bcolors
 import json
-from utils import getFileHash, postToChain,compareLogs, endOfFile, saveCopy
+from utils import getFileHash, postToChain,compareLogs, saveCopy
 from cryptoUtils import logEncryptor
 
 # https://www.askpython.com/python/built-in-methods/callback-functions-in-python

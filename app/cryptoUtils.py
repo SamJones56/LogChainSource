@@ -1,4 +1,3 @@
-# This python class will be used to generate and post to stream the kyber public key
 # https://github.com/aabmets/quantcrypt
 # https://github.com/aabmets/quantcrypt/wiki/Code-Examples
 from colours import bcolors
@@ -11,8 +10,6 @@ kem = MLKEM_512(PQAVariant.REF)
 publicKeyFile="kPk.key"
 secretKeyFile="kSk.key"
 
-# publicKey = readFromFile(publicKeyFile)
-
 # Get pubkey
 def readFromFile(file):
     with open(file,"rb") as f:
@@ -23,7 +20,7 @@ def writeToFile(file, data):
     with open(file,"wb") as f:
         f.write(data)
 
-# # Generate and save private/public keys ~ TODO make files private
+# Generate and save private/public keys ~ TODO make files private
 def kyberGenKeys():
     # Generate kyber keys
     pk,sk = kem.keygen()

@@ -6,10 +6,6 @@ from pathlib import Path
 import difflib
 from datetime import datetime
 
-def appendToFile(file,data):
-    with open(file,"a") as f:
-        f.write(data)
-    
 # Copy log 
 # https://www.geeksforgeeks.org/python-seek-function/
 def saveCopy(copyPath, filePath):
@@ -18,7 +14,7 @@ def saveCopy(copyPath, filePath):
     with filePath.open("r") as file, copyPath.open("w") as copy:
         file.seek(0)
         copy.writelines(file.readlines())
-
+        
 # https://docs.python.org/3/library/hashlib.html
 # Get the hash of the log file
 def getFileHash(fileName):
@@ -47,16 +43,7 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = {"json":data}
     addToStreamOptions(streamName, key, data, "offchain")
 
-# Get last line in files
-# for line in tail("-n 1",filePath, _iter=True):
-def endOfFile(filePath):
-    with open(filePath, "r") as f:
-        lines = f.readlines()
-        return lines[-1]
-
-
 # https://www.w3schools.com/python/ref_file_readlines.asp
-# https://www.w3schools.com/python/ref_set_issubset.asp
 # https://www.geeksforgeeks.org/compare-two-files-line-by-line-in-python/
 def compareLogs(copyPath, currentPath):
     added =[]
