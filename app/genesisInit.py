@@ -10,7 +10,6 @@ from cryptoUtils import readFromFile
 def genChain():
      # Generate logChain with correct params
      print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
-     # cmd = "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011"
      subprocess.run(["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"])
 
      # Editing the logChain config file

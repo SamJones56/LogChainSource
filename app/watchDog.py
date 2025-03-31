@@ -36,7 +36,10 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                     saveCopy(copyPath, pathString)
             # Fiile deleted
                 else:
-                    print("oopsie, ya file got gone")
+                    log = {f"FILE AT {pathString} DELETED"}
+                    hashDigest = 000000000
+                    postToChain(key, fileType, hashDigest, log, streamName)
+                    
 
     event_handler = Monitorclass()
     observer= Observer()

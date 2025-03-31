@@ -2,6 +2,9 @@ from colours import bcolors
 from pathlib import Path
 import socket
 
+# https://www.w3schools.com/python/ref_string_format.asp
+# https://docs.python.org/3/library/pathlib.html
+# https://dev.to/itsmycode/how-to-get-hostname-in-python-1981#:~:text=Syntax%20%E2%80%93%20socket.gethostname(),the%20machine%20in%20string%20format.
 # Validate file
 def fileValidator(supportedFileTypes, filePath):
     path = Path(filePath)
@@ -44,9 +47,6 @@ def selectionValidator(selection):
         return True
 
 # Get user input for blockchain config
-# https://www.w3schools.com/python/ref_string_format.asp
-# https://docs.python.org/3/library/pathlib.html
-# https://dev.to/itsmycode/how-to-get-hostname-in-python-1981#:~:text=Syntax%20%E2%80%93%20socket.gethostname(),the%20machine%20in%20string%20format.
 def dataConfig():
     # declare supported filetypes
     supportedFileTypes = [".log",".csv"]

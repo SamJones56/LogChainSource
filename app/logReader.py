@@ -1,9 +1,10 @@
 from mcController import getStreamData
 from cryptoUtils import decAes
 from colours import bcolors
-# from compareCheck import logCompare
+from userInterface import fileValidator
 import json
 
+supportedFileTypes = [".log"]
 
 def readDecryptSave(fileName, streamName):
     # Get stream data
@@ -37,7 +38,7 @@ def readDecryptSave(fileName, streamName):
             for item in results:
                 json.dump(item,f)
                 f.write("\n")
-   
-        
 
-# readDecryptSave("streamDataDec.txt", "data")
+filePath = input(bcolors.WARNING + f"Enter Path to Log File:"+bcolors.OKBLUE+ f"\n:")
+filePath = fileValidator(supportedFileTypes, filePath)
+readDecryptSave(filePath, "data")
