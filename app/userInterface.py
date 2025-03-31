@@ -47,7 +47,6 @@ def selectionValidator(selection):
 # https://www.w3schools.com/python/ref_string_format.asp
 # https://docs.python.org/3/library/pathlib.html
 # https://dev.to/itsmycode/how-to-get-hostname-in-python-1981#:~:text=Syntax%20%E2%80%93%20socket.gethostname(),the%20machine%20in%20string%20format.
-
 def dataConfig():
     # declare supported filetypes
     supportedFileTypes = [".log",".csv"]
@@ -67,7 +66,8 @@ def dataConfig():
     # Get the current system
     key = socket.gethostname()
     # Selector for listener
-    # https://www.stratascratch.com/blog/python-threading-like-a-pro/#:~:text=We%20start%20the%20thread%20by,thread%20will%20actually%20start%20running.
     selection = input(bcolors.WARNING + f"Start File Listener: y/n\n" + bcolors.ENDC)
+    selection = selectionValidator(selection)
+    
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
     return filePath, fileType, streamName, key, selection, copyPath
