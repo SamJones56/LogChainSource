@@ -38,13 +38,14 @@ def writeToFile(file, data):
         f.write(data)
 
 # Generate and save private/public keys ~ TODO make files private
+# writeToFileEnc(path, password, data):
 def kyberGenKeys(password):
     # Generate kyber keys
     pk,sk = kem.keygen()
     # Write keys to file
     writeToFile(publicKeyFile, pk)
     # Encrypt private key
-    writeToFileEnc(secretKeyFile, sk, password)
+    writeToFileEnc(secretKeyFile, password,sk)
     print(bcolors.OKGREEN + "Wrote keys to files: " + publicKeyFile + secretKeyFile + bcolors.ENDC)
 
 # Encrypt data
@@ -114,12 +115,33 @@ def writeToFileEnc(path, password, data):
     # Number of iteration
     iterations = 500_000
     # String to bytes
-    password = password.encode()
+    # password = password.encode()
     # Using password generate new AES key
     key = pbkdf2_hmac("sha256",password,salt,iterations,dklen=32)
     # Encrypt the data
-    
     nonce,ciphertext,tag = encAes(data, key)
+    
     encData = salt + nonce + tag + ciphertext
-
     writeToFile(path,encData)
+
+def readFromFileEnc(path, password):
+    # slice up encrypted file
+    enc = readFromFile(path)
+    salt = enc[:16]
+    nonce = enc[16:32]
+    tag = enc[32:48]
+    cipherText = enc[48:]
+
+    iterations = 500_000
+    # regen the AES key from supplied password
+    aesKey = pbkdf2_hmac("sha256",password,salt,iterations,dklen=32)
+    # Decrypt AES
+    cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
+    decrypted = cipher.decrypt(cipherText)
+    try:
+        # Verify tag for authenticity
+        cipher.verify(tag)
+        # Convert to json
+        return decrypted.decode("utf-8")
+    except:
+        print(bcolors.FAIL + "Invalid Tag" + bcolors.ENDC)

@@ -69,11 +69,12 @@ def genChain():
      subStream(chainName, streamName)
 
      # Get password
-     password = getPassword()
+     # password = getPassword()
+     password = "password"
 
      # Generate key files
-     genSudoFile("keys/kPk.key", password)
-     genSudoFile("keys/kSk.key", password)
+     genSudoFile("keys/kPk.key")
+     genSudoFile("keys/kSk.key")
      # Generate kyber
      print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
      kyberGenKeys(password)
