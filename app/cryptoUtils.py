@@ -115,7 +115,6 @@ def writeToFileEnc(path, password, data):
     # Number of iteration
     iterations = 500_000
     # String to bytes
-    # password = password.encode()
     # Using password generate new AES key
     key = pbkdf2_hmac("sha256",password,salt,iterations,dklen=32)
     # Encrypt the data

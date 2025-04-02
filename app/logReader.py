@@ -1,5 +1,5 @@
 from mcController import getStreamData
-from cryptoUtils import decAes
+from cryptoUtils import decAes, writeToFileEnc
 from colours import bcolors
 from userInterface import fileCreator
 import json
@@ -34,10 +34,15 @@ def readDecryptSave(fileName, streamName):
         except Exception as e:
             print(f"{e}")
         
-        with open(fileName, "w") as f:
-            for item in results:
-                json.dump(item,f)
-                f.write("\n")
+        jdata = json.dumps(results).encode()
+
+        password = b"password"
+        writeToFileEnc(fileName,password,jdata)
+
+        # with open(fileName, "w") as f:
+        #     for item in results:
+        #         json.dump(item,f)
+        #         f.write("\n")
 
 # filePath = input(bcolors.WARNING + f"Enter Path to Log File:"+bcolors.OKBLUE+ f"\n:")
 # filePath = fileCreator(supportedFileTypes, filePath)

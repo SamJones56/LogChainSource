@@ -70,7 +70,7 @@ def genChain():
 
      # Get password
      # password = getPassword()
-     password = "password"
+     password = b"password"
 
      # Generate key files
      genSudoFile("keys/kPk.key")
