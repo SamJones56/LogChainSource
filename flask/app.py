@@ -27,21 +27,30 @@ def displayLog():
     # with open(decryptedFilepath,"r") as logFile:
     password = b"password"
     logFile = readFromFileEnc(path, password)
+
+    for line in logFile.decode().splitlines():
+        log = json.loads(line)
+        logs.append(log)
+        logKeys = list(log.keys())
+
+    # logs = json.loads(logFile.decode())
+    # for logLine in logs:
+    #      logKeys = list(logLine.keys())
     # read through the open file
     # log file = data of the entire file
     # log line = each line in the logFile ~ for loop
-    for logLine in logFile:
-        try:
-            # save each of the lines as a json log entry
-            logEntry = json.loads(logLine)
-            # add logs to the logs variable
-            logs.append(logEntry)
-            # Set the list keys - used in table header
-            logKeys = list(logEntry.keys())
+    # for logLine in logFile:
+    #     try:
+    #         # save each of the lines as a json log entry
+    #         logEntry = json.loads(logLine)
+    #         # add logs to the logs variable
+    #         logs.append(logEntry)
+    #         # Set the list keys - used in table header
+    #         logKeys = list(logEntry.keys())
         
-        # throw error
-        except Exception as e:
-            print(f"e")
+        # # throw error
+        # except Exception as e:
+        #     print(f"e")
     # Render index.html with the data
     return render_template('index.html', logs=logs, keys=logKeys)
 

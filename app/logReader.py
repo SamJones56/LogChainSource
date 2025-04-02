@@ -34,11 +34,20 @@ def readDecryptSave(fileName, streamName):
             results.append(data)
         except Exception as e:
             print(f"{e}")
-        
-        jdata = json.dumps(results).encode()
+    password = b"password"
+    with open(fileName, "wb") as f:
+        for item in results:
+            line = json.dumps(item).encode()
+            f.write(line + b"\n")
+    
+    with open(fileName,"rb") as f:
+        data = f.read()
+    writeToFileEnc(fileName,password,data)
 
-        password = b"password"
-        writeToFileEnc(fileName,password,jdata)
+        # jdata = json.dumps(results).encode()
+
+        # password = b"password"
+        # writeToFileEnc(fileName,password,jdata)
 
         # with open(fileName, "w") as f:
         #     for item in results:

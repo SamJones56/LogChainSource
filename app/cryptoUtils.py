@@ -142,8 +142,8 @@ def readFromFileEnc(path, password):
             # Verify tag for authenticity
             cipher.verify(tag)
             # Convert to json
-            return decrypted.decode("utf-8")
+            return decrypted
         except:
-            print(bcolors.FAIL + "Invalid Tag" + bcolors.ENDC)
+            print(bcolors.FAIL + f"Invalid Tag {e}" + bcolors.ENDC)
     except Exception as e:
-        print(bcolors.FAIL + "FAIL: readFromFileEnc" + bcolors.ENDC)
+        print(bcolors.FAIL + f"FAIL: {e}" + bcolors.ENDC)
