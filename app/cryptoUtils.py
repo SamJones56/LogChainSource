@@ -16,9 +16,10 @@ secretKeyFile="kSk.key"
 # Generate sudo files
 def genSudoFile(path):
     try:
-        subprocess.run(["sudo","touch",f"{path}"])
-        subprocess.run(["sudo","chown","root:root",f"{path}"])
-        subprocess.run(["sudo","chmod","600", f"{path}"])
+        subprocess.run(["touch",f"{path}"])
+        subprocess.run(["chown","root:root",f"{path}"])
+        subprocess.run(["chmod","600", f"{path}"])
+        print(bcolors.OKGREEN + "Generated: " + publicKeyFile + " " + secretKeyFile + bcolors.ENDC)
     except PermissionError:
         print("Process Error")
         return None
