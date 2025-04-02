@@ -14,24 +14,30 @@ path = "/logChain/app/streamData.json"
 
 app = Flask(__name__)
 
+readDecryptSave(path, "data")
+
 @app.route("/")
 def displayLog():
     # Run readDecryptSave to get the current status of the file
-    readDecryptSave(path, "data")
+    
 
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
     # init logs and listkeys
     logs = []
     logKeys = []
-    # Open decrypted file from blockchain
-    # with open(decryptedFilepath,"r") as logFile:
     password = b"password"
     logFile = readFromFileEnc(path, password)
 
-    for line in logFile.decode().splitlines():
-        log = json.loads(line)
-        logs.append(log)
-        logKeys = list(log.keys())
+    logLines = logFile.decode().splitlines()
+    for line in logLines:
+        logs.append(json.loads(line))
+    logKeys = list(logs[0].keys())
+    # for line in logFile.decode().splitlines():
+    #     log = json.loads(line)
+    #     logs.append(log)
+    #     logKeys = list(log.keys())
+
+    
 
     # logs = json.loads(logFile.decode())
     # for logLine in logs:
