@@ -3,8 +3,7 @@ import time
 import os
 from colours import bcolors
 from mcController import createStream, addToStream, subStream
-from cryptoUtils import kyberGenKeys
-from cryptoUtils import readFromFile
+from cryptoUtils import kyberGenKeys, readFromFile, genSudoFile
 
 # multihain Generation
 def genChain():
@@ -67,7 +66,10 @@ def genChain():
      createStream(streamName, restrictions)
      time.sleep(2)
      subStream(chainName, streamName)
-
+     
+     # Generate key files
+     genSudoFile("kPk.key")
+     genSudoFile("kSk.key")
      # Generate kyber
      print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
      kyberGenKeys()

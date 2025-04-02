@@ -3,12 +3,25 @@
 from colours import bcolors
 from Crypto.Cipher import AES
 from quantcrypt.kem import MLKEM_512, PQAVariant
+from hashlib import pbkdf2_hmac
+import os
+import subprocess
 
 kem = MLKEM_512(PQAVariant.REF)
 
 # file locations
 publicKeyFile="kPk.key"
 secretKeyFile="kSk.key"
+
+# Generate sudo files
+def genSudoFile(path):
+    try:
+        subprocess.run(["sudo","touch",f"{path}"])
+        subprocess.run(["sudo","chown","root:root",f"{path}"])
+        subprocess.run(["sudo","chmod","600", f"{path}"])
+    except PermissionError:
+        print("Process Error")
+        return None
 
 # Get pubkey
 def readFromFile(file):
@@ -87,3 +100,11 @@ def logEncryptor(log):
         "log":cipherText.hex(),
         "tag":tag.hex()}
     return data
+
+# https://docs.python.org/3/library/hashlib.html
+def fileEncryptor(path, password):
+    # Generate hash of password for bcrypt
+    salt = os.urandom(16)
+    # Number of iteration
+    iterations = 500_000
+    dk = pbkdf2_hmac()
