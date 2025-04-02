@@ -4,6 +4,7 @@ import os
 from colours import bcolors
 from mcController import createStream, addToStream, subStream
 from cryptoUtils import kyberGenKeys, readFromFile, genSudoFile
+from userInterface import getPassword
 
 # multihain Generation
 def genChain():
@@ -66,15 +67,18 @@ def genChain():
      createStream(streamName, restrictions)
      time.sleep(2)
      subStream(chainName, streamName)
-     
+
+     # Get password
+     password = getPassword()
+
      # Generate key files
-     genSudoFile("kPk.key")
-     genSudoFile("kSk.key")
+     genSudoFile("keys/kPk.key", password)
+     genSudoFile("keys/kSk.key", password)
      # Generate kyber
      print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
-     kyberGenKeys()
+     kyberGenKeys(password)
      # Get the public key
-     kpk = readFromFile("kPk.key")
+     kpk = readFromFile("keys/kPk.key")
      # Post the pk to the pubkeys stream
      streamName = "pubkeys"
      print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)

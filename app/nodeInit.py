@@ -3,6 +3,9 @@ import re
 import time
 from colours import bcolors
 from mcController import connectToChain, grantStream ,getPubKey
+from cryptoUtils import genSudoFile
+
+keyFile = "keys/kPk.key"
 
 # Connect and grant permissions on an existing chain
 def connectAndPerm(streamName, walletAddress, permission):
@@ -20,9 +23,8 @@ def connectAndPerm(streamName, walletAddress, permission):
 def savePk():
     time.sleep(5)
     print(bcolors.WARNING + "Saving puiblic key " + bcolors.ENDC)
-    pkFile="kPk.key"
     data = getPubKey("pubkeys","genesis")
-    with open(pkFile,"wb") as f:
+    with open(keyFile,"wb") as f:
         f.write(data)
 
 def logChainInit():
@@ -52,9 +54,13 @@ def logChainInit():
     connectAndPerm("pubkeys", walletAddress, ".write,read")
     connectAndPerm("data", walletAddress, ".read")
 
+    # Generate public key file
+    genSudoFile(keyFile)
     # Save genesis public key
     savePk()
     print(bcolors.OKGREEN + "----- NODE DONE ----- " + bcolors.ENDC)
+
+    
 
 
 logChainInit()

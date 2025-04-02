@@ -71,3 +71,7 @@ def dataConfig():
     
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
     return filePath, fileType, streamName, key, selection, copyPath
+
+def getPassword():
+    password = input(bcolors.WARNING + "Enter Password: " + bcolors.ENDC)
+    return password

@@ -4,24 +4,27 @@ from colours import bcolors
 from Crypto.Cipher import AES
 from quantcrypt.kem import MLKEM_512, PQAVariant
 from hashlib import pbkdf2_hmac
+from pathlib import Path
 import os
-import subprocess
 
 kem = MLKEM_512(PQAVariant.REF)
 
 # file locations
-publicKeyFile="kPk.key"
-secretKeyFile="kSk.key"
+publicKeyFile="keys/kPk.key"
+secretKeyFile="keys/kSk.key"
 
 # Generate sudo files
-def genSudoFile(path):
+# https://docs.python.org/3/library/os.html
+def genSudoFile(filePath):
     try:
-        subprocess.run(["touch",f"{path}"])
-        subprocess.run(["chown","root:root",f"{path}"])
-        subprocess.run(["chmod","600", f"{path}"])
-        print(bcolors.OKGREEN + "Generated: " + publicKeyFile + " " + secretKeyFile + bcolors.ENDC)
-    except PermissionError:
-        print("Process Error")
+        path = Path(filePath)
+        dir = path.parent
+        # Set up directory
+        dir.mkdir(exist_ok=True)
+        dir.chmod(0o700)
+        print(bcolors.OKGREEN + "Generated: " + str(dir) + " & " + str(path) + bcolors.ENDC)
+    except Exception as e:
+        print(f"Process Error {e}")
         return None
 
 # Get pubkey
@@ -35,12 +38,13 @@ def writeToFile(file, data):
         f.write(data)
 
 # Generate and save private/public keys ~ TODO make files private
-def kyberGenKeys():
+def kyberGenKeys(password):
     # Generate kyber keys
     pk,sk = kem.keygen()
     # Write keys to file
     writeToFile(publicKeyFile, pk)
-    writeToFile(secretKeyFile, sk)
+    # Encrypt private key
+    writeToFileEnc(secretKeyFile, sk, password)
     print(bcolors.OKGREEN + "Wrote keys to files: " + publicKeyFile + secretKeyFile + bcolors.ENDC)
 
 # Encrypt data
@@ -103,9 +107,19 @@ def logEncryptor(log):
     return data
 
 # https://docs.python.org/3/library/hashlib.html
-def fileEncryptor(path, password):
+def writeToFileEnc(path, password, data):
+    # Get AES key
     # Generate hash of password for bcrypt
     salt = os.urandom(16)
     # Number of iteration
     iterations = 500_000
-    dk = pbkdf2_hmac()
+    # String to bytes
+    password = password.encode()
+    # Using password generate new AES key
+    key = pbkdf2_hmac("sha256",password,salt,iterations,dklen=32)
+    # Encrypt the data
+    
+    nonce,ciphertext,tag = encAes(data, key)
+    encData = salt + nonce + tag + ciphertext
+
+    writeToFile(path,encData)
