@@ -53,10 +53,13 @@ def kyberEncapsulate(publicKey):
     cipherText, sharedSecret = kem.encaps(publicKey)
     return cipherText, sharedSecret
 
+kyberSecret = None
 # Decrypt data
 def kyberDecapsulate(cipherText, password=b"password"):
-    secretKey = readFromFileEnc(secretKeyFile,password)
-    sharedSecret = kem.decaps(secretKey, cipherText)
+    global kyberSecret
+    if kyberSecret is None:
+        kyberSecret = readFromFileEnc(secretKeyFile,password)
+    sharedSecret = kem.decaps(kyberSecret, cipherText)
     return sharedSecret
 
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html

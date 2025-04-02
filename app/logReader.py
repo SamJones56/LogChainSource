@@ -3,10 +3,11 @@ from cryptoUtils import decAes, writeToFileEnc
 from colours import bcolors
 from userInterface import fileCreator
 import json
+import os
 
 # supportedFileTypes = [".json"]
 
-def readDecryptSave(fileName, streamName):
+def readDecryptSave(fileName, copyName, streamName):
     # Get stream data
     streamData = getStreamData(streamName, False)
     results= []
@@ -34,6 +35,8 @@ def readDecryptSave(fileName, streamName):
             results.append(data)
         except Exception as e:
             print(f"{e}")
+
+    # Reading and writing from file
     password = b"password"
     with open(fileName, "wb") as f:
         for item in results:
@@ -42,7 +45,10 @@ def readDecryptSave(fileName, streamName):
     
     with open(fileName,"rb") as f:
         data = f.read()
-    writeToFileEnc(fileName,password,data)
+    
+    writeToFileEnc(copyName,password,data)
+
+    os.remove(fileName)
 
         # jdata = json.dumps(results).encode()
 
