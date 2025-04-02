@@ -17,7 +17,8 @@ def readDecryptSave(fileName, streamName):
             decrypted = decAes(encrypted["kyberct"],
                                 encrypted["nonce"],
                                 encrypted["log"],
-                                encrypted["tag"]
+                                encrypted["tag"],
+                                password=b"password"
             )
             if decrypted is None:
                 print(bcolors.FAIL + f"FAIL TXID: {line['txid']}" + bcolors.ENDC)

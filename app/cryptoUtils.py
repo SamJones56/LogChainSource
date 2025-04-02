@@ -54,8 +54,8 @@ def kyberEncapsulate(publicKey):
     return cipherText, sharedSecret
 
 # Decrypt data
-def kyberDecapsulate(cipherText):
-    secretKey = readFromFile(secretKeyFile)
+def kyberDecapsulate(cipherText, password=b"password"):
+    secretKey = readFromFileEnc(secretKeyFile,password)
     sharedSecret = kem.decaps(secretKey, cipherText)
     return sharedSecret
 
@@ -71,14 +71,14 @@ def encAes(data, aesKey):
         return(nonce,ciphertext,tag)
 
 # Decrypting AES using KyberCipherText, shared nonce, and ciphertext
-def decAes(kCipherText, nonce, cipherText, tag):
+def decAes(kCipherText, nonce, cipherText, tag, password=b"password"):
         # Convert to bytes
         kCipherText = bytes.fromhex(kCipherText)
         nonce = bytes.fromhex(nonce)
         cipherText = bytes.fromhex(cipherText)
         tag = bytes.fromhex(tag)
         # Get the shared secret from the kyber ciphertext
-        aesKey = kyberDecapsulate(kCipherText)
+        aesKey = kyberDecapsulate(kCipherText,password)
         # Decrypt AES
         cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
         decrypted = cipher.decrypt(cipherText)
@@ -124,23 +124,26 @@ def writeToFileEnc(path, password, data):
     writeToFile(path,encData)
 
 def readFromFileEnc(path, password):
-    # slice up encrypted file
-    enc = readFromFile(path)
-    salt = enc[:16]
-    nonce = enc[16:32]
-    tag = enc[32:48]
-    cipherText = enc[48:]
-
-    iterations = 500_000
-    # regen the AES key from supplied password
-    aesKey = pbkdf2_hmac("sha256",password,salt,iterations,dklen=32)
-    # Decrypt AES
-    cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
-    decrypted = cipher.decrypt(cipherText)
     try:
-        # Verify tag for authenticity
-        cipher.verify(tag)
-        # Convert to json
-        return decrypted.decode("utf-8")
-    except:
-        print(bcolors.FAIL + "Invalid Tag" + bcolors.ENDC)
+        # slice up encrypted file
+        enc = readFromFile(path)
+        salt = enc[:16]
+        nonce = enc[16:32]
+        tag = enc[32:48]
+        cipherText = enc[48:]
+
+        iterations = 500_000
+        # regen the AES key from supplied password
+        aesKey = pbkdf2_hmac("sha256",password,salt,iterations,dklen=32)
+        # Decrypt AES
+        cipher = AES.new(aesKey, AES.MODE_EAX, nonce=nonce)
+        decrypted = cipher.decrypt(cipherText)
+        try:
+            # Verify tag for authenticity
+            cipher.verify(tag)
+            # Convert to json
+            return decrypted.decode("utf-8")
+        except:
+            print(bcolors.FAIL + "Invalid Tag" + bcolors.ENDC)
+    except Exception as e:
+        print(bcolors.FAIL + "FAIL: readFromFileEnc" + bcolors.ENDC)
