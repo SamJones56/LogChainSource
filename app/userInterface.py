@@ -2,6 +2,8 @@ from colours import bcolors
 from pathlib import Path
 import socket
 from getpass import getpass
+# https://pypi.org/project/password-strength/
+from password_Strength import PasswordPolicy
 
 # https://www.w3schools.com/python/ref_string_format.asp
 # https://docs.python.org/3/library/pathlib.html
@@ -74,6 +76,21 @@ def dataConfig():
     return filePath, fileType, streamName, key, selection, copyPath
 
 # https://stackoverflow.com/questions/9202224/getting-a-hidden-password-input
+# https://pypi.org/project/password-strength/
+policy = PasswordPolicy.from_names(
+        length = 8,
+        uppercase=1,
+        numbers=2,
+        special=1,
+        nonletters=2
+    )
 def getPassword(prompt):
+    global policy
+    print(bcolors.WARNING + f"Policy {policy}" + bcolors.ENDC)
     password = getpass(prompt)
-    return password.encode()
+    ok = policy.test(password)
+    if ok:
+        print(bcolors.FAIL + f"Password Failed on {ok}" + bcolors.ENDC)
+        getpass(prompt)
+    else:
+        return password.encode()

@@ -51,4 +51,5 @@ RUN pip install quantcrypt && \
     pip install pycryptodome && \
     pip install Flask && \
 	pip install watchdog && \
-    pip install sh
+    pip install sh && \
+    pip install password-strength
