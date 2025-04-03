@@ -84,6 +84,7 @@ policy = PasswordPolicy.from_names(
     )
 def getPassword(prompt):
     global policy
+    rePrompt = bcolors.WARNING + "Please re-enter: " + bcolors.ENDC
     rules = {
         "length": 8,
         "uppercase":1,
@@ -95,8 +96,12 @@ def getPassword(prompt):
     print(bcolors.ENDC)
     while True:
         password = getpass(prompt)
+        rePassword = getpass(rePrompt)
         issues = policy.test(password)
+        if password != rePassword:
+            issues.append("Password missmatch")
         if issues:
             print(bcolors.FAIL + f"Password Failed on {issues}" + bcolors.ENDC)
         else:
+            print(bcolors.OKGREEN + "Password Accepted!" + bcolors.ENDC)
             return password.encode()
