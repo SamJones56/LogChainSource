@@ -39,12 +39,12 @@ Extras:
 4. To initiate Nodes: `python3 nodeInit.py`
     - Wait for `NODE DONE`
  
-5.  To upload from Node do `python3 logPoster.py`
+5.  To upload from **Node** do `python3 logPoster.py`
      You will be prompted for path to log file, path for a copy of the log file, stream name `data`, and to start a listener on the log file `y` or `no`
       - Example file path `/var/log/alternatives.log`
       - Example copy path `copy.log`
  
-6.  To start the web app and read from the `data` stream on Genesis do `./web.sh`
+6.  To start the web app and read from the `data` stream on **Genesis** do `./web.sh`
       
       You will be prompted for two passwords: 
       1. Kyber private key file password you set earlier
