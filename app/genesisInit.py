@@ -9,7 +9,7 @@ from userInterface import getPassword
 # multihain Generation
 def genChain():
      # Generate logChain with correct params
-     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
+     print(bcolors.OKCYAN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
      subprocess.run(["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"])
 
      # Editing the logChain config file
@@ -39,7 +39,7 @@ def genChain():
 
      # Write to file
      with open(confPath, "w") as f:    
-          print(bcolors.OKGREEN + f"writing {confPath} : rpcuser={rpcuser}, rpcpassword={rpcpassword}, {rpcallowip}" + bcolors.ENDC)
+          print(bcolors.OKCYAN + f"writing {confPath} : rpcuser={rpcuser}, rpcpassword={rpcpassword}, {rpcallowip}" + bcolors.ENDC)
           f.writelines(lines)
 
      # Writing time
@@ -56,14 +56,14 @@ def genChain():
      restrictions = {"restrict":"write"}
      streamName = "pubkeys"
      chainName = "logChain"
-     print(bcolors.OKGREEN + "Create stream:" + streamName + bcolors.ENDC)
+     print(bcolors.OKCYAN + "Create stream:" + streamName + bcolors.ENDC)
      createStream(streamName, restrictions)
      time.sleep(2)
      subStream(chainName, streamName)
      # Data stream
      restrictions = {"restrict":"write"}
      streamName = "data"
-     print(bcolors.OKGREEN + "Create stream:" + streamName + bcolors.ENDC)
+     print(bcolors.OKCYAN + "Create stream:" + streamName + bcolors.ENDC)
      createStream(streamName, restrictions)
      time.sleep(2)
      subStream(chainName, streamName)
@@ -73,16 +73,17 @@ def genChain():
      # password = b"password"
 
      # Generate key files
+     print(bcolors.OKCYAN + "Generating Restricted Files" + streamName + bcolors.ENDC)
      genSudoFile("keys/kPk.key")
      genSudoFile("keys/kSk.key")
      # Generate kyber
-     print(bcolors.OKGREEN + "Generating kyber keys" + bcolors.ENDC)
+     print(bcolors.OKCYAN + "Generating kyber keys" + bcolors.ENDC)
      kyberGenKeys(password)
      # Get the public key
      kpk = readFromFile("keys/kPk.key")
      # Post the pk to the pubkeys stream
      streamName = "pubkeys"
-     print(bcolors.OKGREEN + "Adding public kypher key to stream " + bcolors.ENDC)
+     print(bcolors.OKCYAN + "Adding public kypher key to stream " + bcolors.ENDC)
      addToStream(streamName, "genesis", kpk.hex())
      # Print when Done
      print(bcolors.OKGREEN + "----- GENESIS DONE ----- " + bcolors.ENDC)

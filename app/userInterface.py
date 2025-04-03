@@ -73,5 +73,5 @@ def dataConfig():
     return filePath, fileType, streamName, key, selection, copyPath
 
 def getPassword():
-    password = input(bcolors.WARNING + "Enter Password: " + bcolors.ENDC)
+    password = input(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC)
     return password

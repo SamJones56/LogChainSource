@@ -18,7 +18,7 @@ def connectToChain(walletAddress):
     for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
-            print(bcolors.OKGREEN + "Successfully granted: " + walletAddress + permissions + bcolors.ENDC)
+            print(bcolors.OKGREEN + f"Successfully Connected: {walletAddress} with Permissions {permissions}" + bcolors.ENDC)
             break
         time.sleep(1)
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
@@ -31,7 +31,7 @@ def createStream(streamName, streamRestrictions):
     for i in range(60):
         mc.getrawtransaction(txid)
         if mc.success():
-            print(bcolors.OKGREEN + "Successfully created stream : ", streamName + bcolors.ENDC)
+            print(bcolors.OKGREEN + f"Successfully created stream: {streamName}" + bcolors.ENDC)
             break
         time.sleep(1)
         print(bcolors.FAIL + 'Error code: '+str(mc.errorcode())+ bcolors.ENDC +'\n')
@@ -40,7 +40,7 @@ def createStream(streamName, streamRestrictions):
 
 # Subscribe to existing stream
 def subStream(chainName, streamName):
-    print(bcolors.OKGREEN + "Subscribed to stream:" + streamName + " on: " + chainName +bcolors.ENDC)
+    print(bcolors.OKCYAN + f"Subscribed to stream: {streamName} on {chainName}" +bcolors.ENDC)
     mc.subscribe(streamName)
 
 # Grant stream permissions
@@ -48,8 +48,7 @@ def grantStream(walletAddress, permissions):
     txid = mc.grant(walletAddress, permissions)
     # connect(txid)
     if mc.success():
-        print(bcolors.OKGREEN +"Success: " + txid + bcolors.ENDC)
-        print(permissions)
+        print(bcolors.OKGREEN +f"Success. Permissions {permissions} Granted. {txid}" + bcolors.ENDC)
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')
@@ -58,7 +57,7 @@ def grantStream(walletAddress, permissions):
 def addToStream(streamName, key, data):
     txid = mc.publish(streamName, key, data)
     if mc.success():
-        print(bcolors.OKGREEN + "Successfully added to " + streamName + bcolors.ENDC)
+        print(bcolors.OKGREEN + f"Successfully added to {streamName}" + bcolors.ENDC)
         return txid 
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
@@ -68,7 +67,7 @@ def addToStream(streamName, key, data):
 def addToStreamOptions(streamName, key, data, options=""):
     txid = mc.publish(streamName, key, data, options)
     if mc.success():
-        print(bcolors.OKGREEN + "Successfully added to " + streamName + bcolors.ENDC)
+        print(bcolors.OKGREEN + f"Successfully added to {streamName}" + bcolors.ENDC)
         return txid 
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
@@ -116,6 +115,7 @@ def listPublisherItems(stream, address, verbose, count):
 def getPubKey(stream,key):
     txid = mc.liststreamkeyitems(stream, key)
     if mc.success():
+        print(bcolors.OKGREEN + "Data Pulled" + bcolors.ENDC)
         pubkeyH = txid[0]["data"]
         return bytes.fromhex(pubkeyH)
     else:
