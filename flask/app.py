@@ -19,21 +19,22 @@ app = Flask(__name__)
 
 @app.route("/")
 def displayLog():
+    password = input("Local file encryption password: ")
     # Run readDecryptSave to get the current status of the file
-    readDecryptSave(path,copyPath,"data")
+    readDecryptSave(path,copyPath,"data", password)
 
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
     # init logs and listkeys
     logs = []
     logKeys = []
-    password = b"password"
+    # password = b"password"
     logFile = readFromFileEnc(copyPath, password)
 
     logLines = logFile.splitlines()
     for line in logLines:
         logs.append(json.loads(line))
     logKeys = list(logs[0].keys())
-    
+
     return render_template('index.html', logs=logs, keys=logKeys)
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application

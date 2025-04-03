@@ -7,7 +7,7 @@ import os
 
 # supportedFileTypes = [".json"]
 
-def readDecryptSave(fileName, copyName, streamName):
+def readDecryptSave(fileName, copyName, streamName, password):
     # Get stream data
     streamData = getStreamData(streamName, False)
     results= []
@@ -19,7 +19,7 @@ def readDecryptSave(fileName, copyName, streamName):
                                 encrypted["nonce"],
                                 encrypted["log"],
                                 encrypted["tag"],
-                                password=b"password"
+                                password
             )
             if decrypted is None:
                 print(bcolors.FAIL + f"FAIL TXID: {line['txid']}" + bcolors.ENDC)
@@ -37,7 +37,7 @@ def readDecryptSave(fileName, copyName, streamName):
             print(f"{e}")
 
     # Reading and writing from file
-    password = b"password"
+    # password = b"password"
     with open(fileName, "wb") as f:
         for item in results:
             line = json.dumps(item).encode()

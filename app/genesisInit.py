@@ -69,8 +69,8 @@ def genChain():
      subStream(chainName, streamName)
 
      # Get password
-     # password = getPassword()
-     password = b"password"
+     password = getPassword()
+     # password = b"password"
 
      # Generate key files
      genSudoFile("keys/kPk.key")

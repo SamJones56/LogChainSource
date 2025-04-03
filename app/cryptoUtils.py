@@ -55,7 +55,7 @@ def kyberEncapsulate(publicKey):
 
 kyberSecret = None
 # Decrypt data
-def kyberDecapsulate(cipherText, password=b"password"):
+def kyberDecapsulate(cipherText, password):
     global kyberSecret
     if kyberSecret is None:
         kyberSecret = readFromFileEnc(secretKeyFile,password)
@@ -74,7 +74,7 @@ def encAes(data, aesKey):
         return(nonce,ciphertext,tag)
 
 # Decrypting AES using KyberCipherText, shared nonce, and ciphertext
-def decAes(kCipherText, nonce, cipherText, tag, password=b"password"):
+def decAes(kCipherText, nonce, cipherText, tag, password):
         # Convert to bytes
         kCipherText = bytes.fromhex(kCipherText)
         nonce = bytes.fromhex(nonce)
