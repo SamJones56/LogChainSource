@@ -54,8 +54,8 @@ def logChainInit():
     subprocess.run(["multichaind", "logChain", "-daemon"])
     
     # Connect and grant permissions on an existing chain
-    connectAndPerm("pubkeys", walletAddress, ".write,read")
-    connectAndPerm("data", walletAddress, ".read")
+    connectAndPerm("pubkeys", walletAddress, ".read")
+    connectAndPerm("data", walletAddress, ".write,read")
 
     # Generate public key file
     genSudoFile(keyFile)

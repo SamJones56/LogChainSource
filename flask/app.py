@@ -2,9 +2,10 @@
 from flask import Flask, jsonify, request, render_template
 # To use methods Sam wrote : from [name.py] import [method_name] e.g. look below this line
 from logReader import readDecryptSave
-from mcController import addToStream
 import json
 from cryptoUtils import readFromFileEnc
+from userInterface import getPassword
+from colours import bcolors
 
 # USAGE
 # ./web.sh
@@ -15,20 +16,23 @@ copyPath = "/logChain/app/streamDataEnc.json"
 
 app = Flask(__name__)
 
-# readDecryptSave(path,copyPath,"data")
+keyPass = getPassword(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC)
+logPass = getPassword(bcolors.WARNING + "Enter Password for Log Encryption: " + bcolors.ENDC)
+
+readDecryptSave(path,copyPath,"data",keyPass,logPass)
 
 @app.route("/")
 def displayLog():
-    password = input("Local file encryption password: ")
+    global keyPass, logPass
     # Run readDecryptSave to get the current status of the file
-    readDecryptSave(path,copyPath,"data", password)
+    readDecryptSave(path,copyPath,"data", keyPass, logPass)
 
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
     # init logs and listkeys
     logs = []
     logKeys = []
     # password = b"password"
-    logFile = readFromFileEnc(copyPath, password)
+    logFile = readFromFileEnc(copyPath, logPass)
 
     logLines = logFile.splitlines()
     for line in logLines:

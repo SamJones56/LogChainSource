@@ -69,8 +69,7 @@ def genChain():
      subStream(chainName, streamName)
 
      # Get password
-     password = getPassword()
-     # password = b"password"
+     password = getPassword(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC)
 
      # Generate key files
      print(bcolors.OKCYAN + "Generating Restricted Files" + streamName + bcolors.ENDC)

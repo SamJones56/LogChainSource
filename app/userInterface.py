@@ -1,6 +1,7 @@
 from colours import bcolors
 from pathlib import Path
 import socket
+from getpass import getpass
 
 # https://www.w3schools.com/python/ref_string_format.asp
 # https://docs.python.org/3/library/pathlib.html
@@ -72,6 +73,7 @@ def dataConfig():
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
     return filePath, fileType, streamName, key, selection, copyPath
 
-def getPassword():
-    password = input(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC)
-    return password
+# https://stackoverflow.com/questions/9202224/getting-a-hidden-password-input
+def getPassword(prompt):
+    password = getpass(prompt)
+    return password.encode()

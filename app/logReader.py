@@ -7,7 +7,7 @@ import os
 
 # supportedFileTypes = [".json"]
 
-def readDecryptSave(fileName, copyName, streamName, password):
+def readDecryptSave(fileName, copyName, streamName, keyPass, logPass):
     # Get stream data
     streamData = getStreamData(streamName, False)
     results= []
@@ -15,11 +15,12 @@ def readDecryptSave(fileName, copyName, streamName, password):
         # Decrypt
         try:
             encrypted = line["data"]["json"]
+            # Decrypt the data
             decrypted = decAes(encrypted["kyberct"],
                                 encrypted["nonce"],
                                 encrypted["log"],
                                 encrypted["tag"],
-                                password
+                                keyPass
             )
             if decrypted is None:
                 print(bcolors.FAIL + f"FAIL TXID: {line['txid']}" + bcolors.ENDC)
@@ -46,7 +47,7 @@ def readDecryptSave(fileName, copyName, streamName, password):
     with open(fileName,"rb") as f:
         data = f.read()
     
-    writeToFileEnc(copyName,password,data)
+    writeToFileEnc(copyName,logPass,data)
 
     os.remove(fileName)
 
