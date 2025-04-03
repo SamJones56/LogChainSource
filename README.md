@@ -43,6 +43,7 @@ Extras:
      You will be prompted for path to log file, path for a copy of the log file, stream name `data`, and to start a listener on the log file `y` or `no`
       - Example file path `/var/log/alternatives.log`
       - Example copy path `copy.log`
+      - Example to add a line to the alternatives.log `update-alternatives --install /usr/bin/hello hello /bin/echo 10`
  
 6.  To start the web app and read from the `data` stream on **Genesis** do `./web.sh`
       

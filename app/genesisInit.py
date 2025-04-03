@@ -15,7 +15,6 @@ def genChain():
 
      # Editing the logChain config file
      confPath = "/root/.multichain/logChain/multichain.conf"
-     logPath = "/root/.multichain/logChain/debug.log"
      # Custom values
      rpcuser = "genesis"
      rpcpassword = "logChain"

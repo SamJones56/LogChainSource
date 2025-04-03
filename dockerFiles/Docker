@@ -9,15 +9,23 @@ RUN apt-get update && apt-get install -y \
 
 # Add linux tools
 RUN apt update && apt install -y \
+    # nano \
+    # git \
+    # net-tools \
+    # python3 \
+    # iputils-ping \
+    # netcat-openbsd \
+    # python3-requests \
+    # python3-pip \
+    # python3.12-venv
+    # Revised list
     nano \
-    git \
-    net-tools \
     python3 \
-    iputils-ping \
-    netcat-openbsd \
     python3-requests \
     python3-pip \
     python3.12-venv
+
+
 
 # Download and install MultiChain
 RUN curl -O https://www.multichain.com/download/multichain-2.3.3.tar.gz && \

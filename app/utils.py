@@ -1,7 +1,7 @@
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 import hashlib
-from mcController import addToStreamOptions
+from mcController import addToStreamOptions, addToStream
 from pathlib import Path
 import difflib
 from datetime import datetime
@@ -41,7 +41,8 @@ def postToChain(key, fileType, hashDigest, log, streamName):
     data = blockConverter(fileType,hashDigest,log)
     # Add to the data stream
     data = {"json":data}
-    addToStreamOptions(streamName, key, data, "offchain")
+    # addToStreamOptions(streamName, key, data, "offchain")
+    addToStream(streamName, key, data)
 
 # https://www.w3schools.com/python/ref_file_readlines.asp
 # https://www.geeksforgeeks.org/compare-two-files-line-by-line-in-python/
