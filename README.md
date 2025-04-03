@@ -45,6 +45,7 @@ Extras:
       - Example copy path `copy.log`
  
 6.  To start the web app and read from the `data` stream on Genesis do `./web.sh`
+      
       You will be prompted for two passwords: 
       1. Kyber private key file password you set earlier
       2. New password to encrypt downloaded log file
