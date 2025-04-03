@@ -4,26 +4,29 @@
 
 2. Install git `sudo apt update && install git -y`
 
-4. Install Vscode `sudo snap install --classic code`
 
-5. Get docker, github, python extension on vscode
-6. Sign into github on vscode
 
-7. Create directories
+3. Create directories
     - `mkdir ~/src`
     - `mkdir ~/src/multichain` (this is where the images get saved)
 
-9. Change directory to LogChainSource & clone repo `cd ~/src/`
+4. Change directory to LogChainSource & clone repo `cd ~/src/`
   
   Clone the repo `git clone https://github.com/SamJones56/LogChainSource.git`
 
-10. Build and run
+5. Build and run
     - `cd LogChainSource`
     - `sudo ./init.sh`
 
-11. Enter docker container `sudo docker exec -it [name] /bin/bash`
+6. Enter docker container `sudo docker exec -it [name] /bin/bash`
 
-12. Prune if necessary `sudo docker system prune -a`
+Extras:
+- Prune if necessary `sudo docker system prune -a`
+- Install Vscode `sudo snap install --classic code`
+    - Get docker, github, python extension on vscode
+    - Sign into github on vscode
+
+
 
 # Using the Application
 1. Start docker: `./init.sh`
