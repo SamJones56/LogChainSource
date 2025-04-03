@@ -16,8 +16,8 @@ copyPath = "/logChain/app/streamDataEnc.json"
 
 app = Flask(__name__)
 
-keyPass = getPassword(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC)
-logPass = getPassword(bcolors.WARNING + "Enter Password for Log Encryption: " + bcolors.ENDC)
+keyPass = getPassword(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC, True)
+logPass = getPassword(bcolors.WARNING + "Enter Password for Log Encryption: " + bcolors.ENDC, False)
 
 readDecryptSave(path,copyPath,"data",keyPass,logPass)
 

@@ -82,7 +82,7 @@ policy = PasswordPolicy.from_names(
         uppercase=1,
         numbers=2,
     )
-def getPassword(prompt):
+def getPassword(prompt, access):
     global policy
     rePrompt = bcolors.WARNING + "Please re-enter: " + bcolors.ENDC
     rules = {
@@ -96,9 +96,10 @@ def getPassword(prompt):
     print(bcolors.ENDC)
     while True:
         password = getpass(prompt)
-        rePassword = getpass(rePrompt)
+        if not access:
+            rePassword = getpass(rePrompt)
         issues = policy.test(password)
-        if password != rePassword:
+        if not access and password != rePassword:
             issues.append("Password missmatch")
         if issues:
             print(bcolors.FAIL + f"Password Failed on {issues}" + bcolors.ENDC)
