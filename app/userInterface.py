@@ -87,10 +87,10 @@ policy = PasswordPolicy.from_names(
 def getPassword(prompt):
     global policy
     print(bcolors.WARNING + f"Policy {policy}" + bcolors.ENDC)
-    password = getpass(prompt)
-    ok = policy.test(password)
-    if ok:
-        print(bcolors.FAIL + f"Password Failed on {ok}" + bcolors.ENDC)
-        getpass(prompt)
-    else:
-        return password.encode()
+    while True:
+        password = getpass(prompt)
+        issues = policy.test(password)
+        if issues:
+            print(bcolors.FAIL + f"Password Failed on {issues}" + bcolors.ENDC)
+        else:
+            return password.encode()
