@@ -47,9 +47,9 @@ def readDecryptSave(fileName, copyName, streamName, keyPass, logPass):
     with open(fileName,"rb") as f:
         data = f.read()
     
-    writeToFileEnc(copyName,logPass,data)
+    writeToFileEnc(fileName,logPass,data)
 
-    os.remove(fileName)
+    # os.remove(fileName)
 
         # jdata = json.dumps(results).encode()
 

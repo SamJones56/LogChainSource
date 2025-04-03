@@ -32,7 +32,8 @@ def displayLog():
     logs = []
     logKeys = []
     # password = b"password"
-    logFile = readFromFileEnc(copyPath, logPass)
+    # logFile = readFromFileEnc(copyPath, logPass)
+    logFile = readFromFileEnc(path, logPass)
 
     logLines = logFile.splitlines()
     for line in logLines:
