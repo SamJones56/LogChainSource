@@ -26,7 +26,7 @@ def connectToChain(walletAddress):
 
 # Create a stream -> give name + restrictions in JSON format
 def createStream(streamName, streamRestrictions):
-    txid=mc.create('stream', streamName, streamRestrictions)
+    txid=mc.create("stream", streamName, streamRestrictions)
     # connect(txid)
     for i in range(60):
         mc.getrawtransaction(txid)
@@ -48,7 +48,7 @@ def grantStream(walletAddress, permissions):
     txid = mc.grant(walletAddress, permissions)
     # connect(txid)
     if mc.success():
-        print(bcolors.OKGREEN +f"Success. Permissions {permissions} Granted. {txid}" + bcolors.ENDC)
+        print(bcolors.OKGREEN +f"Success. Permissions {permissions} Granted." + bcolors.ENDC)
     else:
         print(bcolors.FAIL +'Error code: ' + str(mc.errorcode()) + bcolors.ENDC + '\n')
         print(bcolors.FAIL +'Error message: ' + mc.errormessage() + bcolors.ENDC + '\n')

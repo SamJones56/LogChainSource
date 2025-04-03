@@ -9,11 +9,13 @@ from userInterface import getPassword
 # multihain Generation
 def genChain():
      # Generate logChain with correct params
-     print(bcolors.OKCYAN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
+     print(bcolors.OKCYAN + "Creating Multichain Blockchain" + bcolors.ENDC)
+     print(bcolors.OKGREEN + "multichain-util create logChain -default-network-port=7010 -default-rpc-port=7011" + bcolors.ENDC)
      subprocess.run(["multichain-util", "create", "logChain", "-default-network-port=7010", "-default-rpc-port=7011"])
 
      # Editing the logChain config file
      confPath = "/root/.multichain/logChain/multichain.conf"
+     logPath = "/root/.multichain/logChain/debug.log"
      # Custom values
      rpcuser = "genesis"
      rpcpassword = "logChain"
@@ -22,7 +24,7 @@ def genChain():
      # Wait for log chain to be initialised
      for i in range(120):
           if os.path.exists(confPath):
-               print(bcolors.OKGREEN + "------------------ PATH FOUND -------------------"+ bcolors.ENDC) 
+               print(bcolors.OKGREEN + "MultiChain Created"+ bcolors.ENDC) 
                break
           time.sleep(1)
 
@@ -39,18 +41,18 @@ def genChain():
 
      # Write to file
      with open(confPath, "w") as f:    
-          print(bcolors.OKCYAN + f"writing {confPath} : rpcuser={rpcuser}, rpcpassword={rpcpassword}, {rpcallowip}" + bcolors.ENDC)
+          print(bcolors.OKCYAN + f"Writing to {confPath}: rpcuser={rpcuser}, rpcpassword={rpcpassword}, {rpcallowip}" + bcolors.ENDC)
           f.writelines(lines)
 
      # Writing time
      time.sleep(5)
 
      # Starting the daemon
+     print(bcolors.OKCYAN + "Initialising MultiChain" + bcolors.ENDC)
      print(bcolors.OKGREEN + "multichaind logChain -daemon" + bcolors.ENDC)
      cmd = ["multichaind", "logChain", "-daemon"]
      subprocess.run(cmd)
-
-     time.sleep(20)
+     time.sleep(3)
      # Create the streams
      # Key stream
      restrictions = {"restrict":"write"}
@@ -63,7 +65,7 @@ def genChain():
      # Data stream
      restrictions = {"restrict":"write"}
      streamName = "data"
-     print(bcolors.OKCYAN + "Create stream:" + streamName + bcolors.ENDC)
+     print(bcolors.OKCYAN + "Create stream: " + streamName + bcolors.ENDC)
      createStream(streamName, restrictions)
      time.sleep(2)
      subStream(chainName, streamName)
