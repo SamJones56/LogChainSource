@@ -3,7 +3,7 @@ from pathlib import Path
 import socket
 from getpass import getpass
 # https://pypi.org/project/password-strength/
-from password_Strength import PasswordPolicy
+from password_strength import PasswordPolicy
 
 # https://www.w3schools.com/python/ref_string_format.asp
 # https://docs.python.org/3/library/pathlib.html
@@ -81,12 +81,18 @@ policy = PasswordPolicy.from_names(
         length = 8,
         uppercase=1,
         numbers=2,
-        special=1,
-        nonletters=2
     )
 def getPassword(prompt):
     global policy
-    print(bcolors.WARNING + f"Policy {policy}" + bcolors.ENDC)
+    rules = {
+        "length": 8,
+        "uppercase":1,
+        "numbers":2,
+    }
+    print(bcolors.WARNING + "Password Policy: ")
+    for rule, value in rules.items():
+        print(f"{rule}: {value}")
+    print(bcolors.ENDC)
     while True:
         password = getpass(prompt)
         issues = policy.test(password)
