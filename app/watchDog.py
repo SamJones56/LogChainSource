@@ -2,7 +2,6 @@
 import time
 from watchdog.events import PatternMatchingEventHandler
 from watchdog.observers import Observer
-from sh import tail
 from pathlib import Path
 from colours import bcolors
 import json
