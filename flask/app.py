@@ -24,21 +24,26 @@ readDecryptSave(path,copyPath,"data",keyPass,logPass)
 @app.route("/")
 def displayLog():
     global keyPass, logPass
-    # Run readDecryptSave to get the current status of the file
-    # readDecryptSave(path,copyPath,"data", keyPass, logPass)
 
-    # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
-    # init logs and listkeys
+    # Get the filter string from the search box
+    filter_query = request.args.get("filter", "").lower()
+
     logs = []
     logKeys = []
-    # password = b"password"
-    # logFile = readFromFileEnc(copyPath, logPass)
-    logFile = readFromFileEnc(path, logPass)
 
+    # Decrypt log contents
+    logFile = readFromFileEnc(path, logPass)
     logLines = logFile.splitlines()
+
     for line in logLines:
-        logs.append(json.loads(line))
-    logKeys = list(logs[0].keys())
+        try:
+            logEntry = json.loads(line)
+            # Only include logs that match the filter (if any)
+            if not filter_query or any(filter_query in str(value).lower() for value in logEntry.values()):
+                logs.append(logEntry)
+                logKeys = list(logEntry.keys())
+        except Exception as e:
+            print(f"Error reading log line: {e}")
 
     return render_template('index.html', logs=logs, keys=logKeys)
 

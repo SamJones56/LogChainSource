@@ -13,6 +13,13 @@
 </head>
 <body>
     <h1>Logs</h1>
+    <form method="get" class="form-inline" style="margin-bottom: 20px;">
+        <div class="form-group">
+            <label for="filter">Filter:</label>
+            <input type="text" class="form-control" id="filter" name="filter" placeholder="Enter keyword...">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
     <table class="table">
         <tr>
             <!-- https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed -->
