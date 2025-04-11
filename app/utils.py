@@ -1,7 +1,7 @@
 # https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
 # https://medium.com/@hwupathum/using-crystals-kyber-kem-for-hybrid-encryption-with-java-0ab6c70d41fc
 import hashlib
-from mcController import addToStreamOptions, addToStream
+from mcController import addToStream
 from pathlib import Path
 import difflib
 from datetime import datetime

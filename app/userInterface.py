@@ -2,7 +2,6 @@ from colours import bcolors
 from pathlib import Path
 import socket
 from getpass import getpass
-import json
 # https://pypi.org/project/password-strength/
 from password_strength import PasswordPolicy
 

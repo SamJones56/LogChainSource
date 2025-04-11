@@ -2,8 +2,6 @@ from mcController import getStreamData
 from cryptoUtils import decAes, writeToFileEnc
 from colours import bcolors
 import json
-# import os
-# from userInterface import getPassword, selectionValidator
 
 path = "/logChain/app/streamDataDec.json"
 copyPath = "/logChain/app/streamDataEnc.json"
