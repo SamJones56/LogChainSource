@@ -5,6 +5,7 @@ from watchdog.observers import Observer
 from pathlib import Path
 from colours import bcolors
 import json
+import os
 from utils import getFileHash, postToChain,compareLogs, saveCopy
 from cryptoUtils import logEncryptor
 
