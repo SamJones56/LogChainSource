@@ -42,12 +42,14 @@ def streamValidator(supportedStreams, streamName):
 # Validate selection
 def selectionValidator(selection):
     selection = str.upper(selection)
-    allowed = ["Y","YES","N","NO"]
+    allowed = ["Y","N"]
     if selection not in allowed:
         print(bcolors.FAIL + f"Invalid Selection: {selection}" + bcolors.ENDC)
         exit()
-    else:
+    elif selection == "Y":
         return True
+    else:
+        return False
 
 # Get user input for blockchain config
 def dataConfig():
@@ -106,3 +108,21 @@ def getPassword(prompt, access):
         else:
             print(bcolors.OKGREEN + "Password Accepted!" + bcolors.ENDC)
             return password.encode()
+        
+def printLogLine(line):
+    added = "added"
+    removed = "removed"
+    deletion = "DELETION"
+    # If a line was removed and one was added eg. potentially a modified line
+    if added and removed in line:
+        print(bcolors.WARNING + f"{line}" + bcolors.ENDC)
+    # Line added to log file
+    elif added in line:
+        print(bcolors.OKGREEN + f"{line}" + bcolors.ENDC)
+    # Log removed from log file
+    elif removed in line:
+        print(bcolors.WARNING + f"{line}" + bcolors.ENDC)
+    # Log deleted from log file
+    elif deletion in line:
+        print(bcolors.FAIL + f"{line}" + bcolors.ENDC)
+    

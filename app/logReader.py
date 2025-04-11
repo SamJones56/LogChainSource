@@ -1,13 +1,15 @@
 from mcController import getStreamData
 from cryptoUtils import decAes, writeToFileEnc
 from colours import bcolors
-from userInterface import fileCreator
+from userInterface import printLogLine
 import json
 import os
+from userInterface import getPassword, selectionValidator
 
-# supportedFileTypes = [".json"]
+path = "/logChain/app/streamDataDec.json"
+copyPath = "/logChain/app/streamDataEnc.json"
 
-def readDecryptSave(fileName, copyName, streamName, keyPass, logPass):
+def readDecryptSave(fileName, copyName, streamName, keyPass, logPass, webSelection):
     # Get stream data
     streamData = getStreamData(streamName, False)
     results= []
@@ -33,6 +35,9 @@ def readDecryptSave(fileName, copyName, streamName, keyPass, logPass):
                 "FileHash":encrypted["FileHash"],
                 "json":decrypted
             }
+            # For printing to terminal
+            if webSelection == False:
+                printLogLine(decrypted)
             results.append(data)
         except Exception as e:
             print(f"{e}")
@@ -48,6 +53,13 @@ def readDecryptSave(fileName, copyName, streamName, keyPass, logPass):
         data = f.read()
     
     writeToFileEnc(fileName,logPass,data)
+
+
+
+
+
+
+
 
     # os.remove(fileName)
 
