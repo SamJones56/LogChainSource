@@ -43,7 +43,7 @@ def streamValidator(supportedStreams, streamName):
 # Validate selection
 def selectionValidator(selection):
     selection = str.upper(selection)
-    allowed = ["Y","N"]
+    allowed = ["Y","YES","N","NO"]
     if selection not in allowed:
         print(bcolors.FAIL + f"Invalid Selection: {selection}" + bcolors.ENDC)
         exit()
