@@ -1,10 +1,9 @@
 from mcController import getStreamData
 from cryptoUtils import decAes, writeToFileEnc
 from colours import bcolors
-from userInterface import printLogLine
 import json
-import os
-from userInterface import getPassword, selectionValidator
+# import os
+# from userInterface import getPassword, selectionValidator
 
 path = "/logChain/app/streamDataDec.json"
 copyPath = "/logChain/app/streamDataEnc.json"
@@ -35,9 +34,6 @@ def readDecryptSave(fileName, copyName, streamName, keyPass, logPass, webSelecti
                 "FileHash":encrypted["FileHash"],
                 "json":decrypted
             }
-            # For printing to terminal
-            if webSelection == False:
-                printLogLine(decrypted)
             results.append(data)
         except Exception as e:
             print(f"{e}")
@@ -46,6 +42,9 @@ def readDecryptSave(fileName, copyName, streamName, keyPass, logPass, webSelecti
     # password = b"password"
     with open(fileName, "wb") as f:
         for item in results:
+            # For printing to terminal
+            if not webSelection:
+                printLogLine(item)
             line = json.dumps(item).encode()
             f.write(line + b"\n")
     
@@ -56,6 +55,30 @@ def readDecryptSave(fileName, copyName, streamName, keyPass, logPass, webSelecti
 
 
 
+def printLogLine(data):
+    added = "added:"
+    removed = "removed:"
+    deletion = "DELETION:"
+    
+    log = data.get("json", "")
+    logStr = str(log)
+    # If a line was removed and one was added eg. potentially a modified line
+    if added in logStr and removed in logStr:
+        print(bcolors.OKBLUE + "Log Edited" + bcolors.ENDC)
+        print(bcolors.WARNING + f"{data}" + bcolors.ENDC)
+    # Line added to log file
+    elif added in logStr:
+        print(bcolors.OKBLUE + "Log Added" + bcolors.ENDC)
+        print(bcolors.OKGREEN + f"{data}" + bcolors.ENDC)
+    # Log removed from log file
+    elif removed in logStr:
+        print(bcolors.OKBLUE + "Log Removed" + bcolors.ENDC)
+        print(bcolors.WARNING + f"{data}" + bcolors.ENDC)
+    # Log deleted from log file
+    elif deletion in logStr:
+        print(bcolors.OKBLUE + "File Deleted" + bcolors.ENDC)
+        print(bcolors.FAIL + f"{data}" + bcolors.ENDC)
+    print('─' * 10)  # U+2501, Box Drawings Heavy Horizontal
 
 
 

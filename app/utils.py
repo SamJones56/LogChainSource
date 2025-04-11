@@ -62,14 +62,14 @@ def compareLogs(copyPath, currentPath):
             removed.append(line[1:].strip())
     # Add an edited JSON
     if added and removed:
-        edited ={"added":added,
-          "removed":removed}
+        edited ={"added:":added,
+          "removed:":removed}
         return edited
     elif added:
-        edited={"added":added}
+        edited={"added:":added}
         return edited
     elif removed and not added:
-        edited={"removed":removed}
+        edited={"removed:":removed}
         return edited
     else:
         return None

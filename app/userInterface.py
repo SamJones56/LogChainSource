@@ -2,6 +2,7 @@ from colours import bcolors
 from pathlib import Path
 import socket
 from getpass import getpass
+import json
 # https://pypi.org/project/password-strength/
 from password_strength import PasswordPolicy
 
@@ -109,20 +110,5 @@ def getPassword(prompt, access):
             print(bcolors.OKGREEN + "Password Accepted!" + bcolors.ENDC)
             return password.encode()
         
-def printLogLine(line):
-    added = "added"
-    removed = "removed"
-    deletion = "DELETION"
-    # If a line was removed and one was added eg. potentially a modified line
-    if added and removed in line:
-        print(bcolors.WARNING + f"{line}" + bcolors.ENDC)
-    # Line added to log file
-    elif added in line:
-        print(bcolors.OKGREEN + f"{line}" + bcolors.ENDC)
-    # Log removed from log file
-    elif removed in line:
-        print(bcolors.WARNING + f"{line}" + bcolors.ENDC)
-    # Log deleted from log file
-    elif deletion in line:
-        print(bcolors.FAIL + f"{line}" + bcolors.ENDC)
+
     

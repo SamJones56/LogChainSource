@@ -36,7 +36,7 @@ def doggy(filePath, fileType, key, streamName, copyPath):
                     saveCopy(copyPath, pathString)
             # Fiile deleted
         def on_deleted(self,event):
-            line = {"DELETION":f"{pathString} DELETED"}
+            line = {"DELETION:":f"{pathString} DELETED"}
             log = logEncryptor(json.dumps(line))
             hashDigest = "000000000"
             print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{line}" + bcolors.ENDC)
