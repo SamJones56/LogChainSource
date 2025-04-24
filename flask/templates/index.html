@@ -1,32 +1,90 @@
 <!DOCTYPE html>
-<!-- https://www.w3schools.com/bootstrap/bootstrap_get_started.asp -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<html>
+<html lang="en">
 <head>
-    <title>LogChain</title>
+    <meta charset="UTF-8">
+    <title>LogChain Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-    <h1>Logs</h1>
-    <table class="table">
-        <tr>
-            <!-- https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed -->
-            {% for key in keys %}
-                <th>{{ key }}</th>
-            {% endfor %}
-        </tr>
-        {% for log in logs %}
-            <tr>
-                {% for key in keys %}
-                    <td> {{ log[key]}}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
+
+<div class="navbar">
+    <div class="nav-left">
+        <img src="/static/images/logo.png" alt="LogChain Logo">
+        <span class="brand">LogChain</span>
+    </div>
+    <div class="nav-links">
+        <a href="#" class="nav-button active">Dashboard</a>
+        <a href="#" class="nav-button">Logs</a>
+        <a href="#" class="nav-button">Alerts</a>
+        <a href="#" class="nav-button">Settings</a>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+      <!-- Log Pane -->
+      <div class="row log-pane">
+        <div class="col-sm-12">
+          <div class="log-pane-wrapper">
+            <!-- Filter area -->
+            <div class="log-pane-filters">
+              <!-- Search and filter controls go here -->
+              <input type="text" id="searchBar" class="form-control" placeholder="Search logs...">
+              <select id="filterType" class="form-control">
+                <option value="">All Types</option>
+                <option value="alert">Alert</option>
+                <option value="audit">Audit</option>
+                <option value="error">Error</option>
+                <option value="info">Info</option>
+                <option value="debug">Debug</option>
+                <!-- Add more options as needed -->
+              </select>
+            </div>
+            <!-- Feed area -->
+            <div class="log-pane-feed">
+              {% for log in logs %}
+                <div class="log-entry log-card">
+                  <div class="entry-header card-header">{{ log.FileType|capitalize }} — {{ log.Time }}</div>
+                  <div class="card-body">
+                    {% for key, value in log.items() %}
+                      <div class="card-item"><strong>{{ key }}:</strong> {{ value }}</div>
+                    {% endfor %}
+                  </div>
+                  <div class="card-footer">Node: {{ log.Node }}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<script>
+  // Cache DOM elements
+  const searchInput = document.getElementById('searchBar');
+  const filterSelect = document.getElementById('filterType');
+
+  function filterEntries() {
+    const query = searchInput.value.trim().toLowerCase();
+    const typeFilter = filterSelect.value.trim().toLowerCase();
+    document.querySelectorAll('.log-entry').forEach(entry => {
+      const text = entry.textContent.toLowerCase();
+      // Match search query
+      const matchesSearch = !query || text.includes(query);
+      // Match type filter against FileType (which appears in header)
+      const headerText = entry.querySelector('.entry-header').textContent.toLowerCase();
+      const matchesType = !typeFilter || headerText.startsWith(typeFilter);
+      entry.style.display = (matchesSearch && matchesType) ? '' : 'none';
+    });
+  }
+
+  // Attach events
+  searchInput.addEventListener('input', filterEntries);
+  filterSelect.addEventListener('change', filterEntries);
+</script>
+
 </body>
 </html>

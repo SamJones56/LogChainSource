@@ -20,6 +20,10 @@ services:
       - mcNet
     volumes:
       - ../multichain/genesis_data:/root/.multichain
+      # Add volume mounts for dev mode (no rebuild): 
+      # - ./app:/logChain/app
+      # - ./flask:/logChain/flask
+      # - ./logs:/logChain/logs
     ports:
       - 7010:7010
       - 7011:7011
