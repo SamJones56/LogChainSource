@@ -6,6 +6,7 @@ from cryptoUtils import logEncryptor
 # Watchdog
 from watchDog import doggy
 import json
+import subprocess
 
 # Initial upload of file to blockchain
 def initialUpload():
@@ -29,5 +30,7 @@ def initialUpload():
     # Check for selection
     if selection:
         doggy(filePath ,fileType, key, streamName, copyPath)
+    cmd["rm", copyPath]
+    subprocess.run(cmd)
 
 initialUpload()
