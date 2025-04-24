@@ -86,7 +86,7 @@ policy = PasswordPolicy.from_names(
         numbers=2,
     )
 def getPassword(prompt, access):
-    # Skip password prompts in dev mode: set file+log encryption pwds as standard, close app, enter following (still in genesis /app):
+    # Skip password prompts in dev mode: set file+log encryption pwds as standard, close app, enter following (still inside genesis /app):
     # DEV_NO_PROMPT=1
     # export KEY_PASS="YourPassword1”
     # export LOG_PASS="YourPassword2”
