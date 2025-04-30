@@ -25,7 +25,7 @@ def initialUpload():
             # Encrypt log
             log = logEncryptor(logLine)
             # Post to stream
-            print(bcolors.WARNING + f"Ammending to {streamName} Stream\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
+            print(bcolors.WARNING + f"Amending to {streamName} Stream\n" + bcolors.OKBLUE + f"{logLine}" + bcolors.ENDC)
             postToChain(key, fileType, hashDigest, log, streamName)
     # Check for selection
     if selection:
