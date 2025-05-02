@@ -9,7 +9,7 @@ echo "-------- Creating directories for volumes --------"
 mkdir ../multichain/genesis_data/
 mkdir ../multichain/node1_data/
 mkdir ../multichain/node2_data/
-mkdir ../../multichain/kali/
+mkdir ../multichain/kali/
 
 # Build docker
 echo "---------- Down Docker ----------"

@@ -92,14 +92,18 @@ services:
     container_name: kali
     networks:
       - mcNet
-    tty: true
-    stdin_open: true
+    depends_on:
+        node2:
+          condition: service_healthy
+    # tty: true
+    # stdin_open: true
     volumes:
       - ../multichain/kali:/root
-    entrypoint: ["sh", "-c", "apt update && apt install -y hydra nmap wordlists && gzip -d /usr/share/wordlists/rockyou.txt.gz && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "echo Kali up && tail -f /dev/null"]
     healthcheck: 
       test: ["CMD", "test", "-f", "/root/done"]
       interval: 5s
       retries: 20
       start_period: 5s
       timeout: 3s
+      
