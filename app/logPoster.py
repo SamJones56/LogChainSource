@@ -7,6 +7,7 @@ from cryptoUtils import logEncryptor
 from watchDog import doggy
 import json
 import subprocess
+import cmd
 
 # Initial upload of file to blockchain
 def initialUpload():

@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
     python3-requests \
     python3-pip \
     python3.12-venv \
+    # ssh server for testing
+    openssh-server \
+    rsyslog \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install MultiChain
@@ -31,6 +34,7 @@ COPY ./flask ./flask
 WORKDIR /logChain/app
 # Make app.sh runnable
 RUN chmod +x app.sh
+RUN chmod +x initssh.sh
 
 # https://stackoverflow.com/questions/48561981/activate-python-virtualenv-in-dockerfile
 # Create python virtual enviroment and path
