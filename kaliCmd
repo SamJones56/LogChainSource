@@ -9,3 +9,5 @@ hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://node1
 
 4. Test locally on node if necessary
 test ssh root@localhost
+
+test
