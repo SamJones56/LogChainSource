@@ -87,16 +87,16 @@ services:
       timeout: 3s
 
   kali:
-    image: kalilinux/kali-rolling:latest
     hostname: kali
+    build:
+      context: .
+      dockerfile: kali/Docker
     container_name: kali
     networks:
       - mcNet
     depends_on:
         node2:
           condition: service_healthy
-    # tty: true
-    # stdin_open: true
     volumes:
       - ../multichain/kali:/root
     entrypoint: ["sh", "-c", "echo Kali up && tail -f /dev/null"]

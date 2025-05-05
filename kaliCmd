@@ -1,7 +1,6 @@
-apt update && apt install -y hydra nmap wordlists
-
 gzip -d /usr/share/wordlists/rockyou.txt.gz
-
 hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://node1
 
 test ssh root@localhost
+
+transfer keys accross - scp keys/kSk.key root@node2:/logChain/app/keys/

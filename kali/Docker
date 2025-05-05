@@ -1,0 +1,13 @@
+FROM kalilinux/kali-rolling:latest
+
+RUN apt-get update && apt-get install -y \
+    hydra \
+    wordlists
+
+COPY ./kali/kaliinit.sh ./src/kaliinit.sh
+
+WORKDIR /src
+
+RUN chmod +x kaliinit.sh
+
+ENTRYPOINT ["sh", "-c", "kaliinit.sh && tail -f /dev/null"]
