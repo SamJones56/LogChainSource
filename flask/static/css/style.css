@@ -85,7 +85,6 @@ input.form-control {
     padding: 6px 12px;
 }
 
-/* New curved log pane */
 .log-pane-wrapper {
     background-color: #2f3136;
     border-radius: 15px;
@@ -100,19 +99,16 @@ input.form-control {
     margin-bottom: 15px;
     display: flex;
     gap: 10px;
-    /* Keep filters always visible */
     flex: 0 0 auto;
 }
 .log-pane-feed {
-    /* Hide native scrollbars */
-    scrollbar-width: none;       /* Firefox */
-    -ms-overflow-style: none;    /* IE 10+ */
+    scrollbar-width: none;       
+    -ms-overflow-style: none;    
     flex: 1 1 auto;
     overflow-y: auto;
     padding-right: 5px;
 }
 
-/* Hide WebKit scrollbars */
 .log-pane-feed::-webkit-scrollbar {
     width: 0;
     height: 0;
@@ -142,9 +138,8 @@ input.form-control {
     font-size: 12px;
     color: #ccc;
 }
-/* The main log-pane row should flex to fill and not overflow the page */
+
 .log-pane {
-    /* Fill remaining space below metrics-row */
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
