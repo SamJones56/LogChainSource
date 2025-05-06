@@ -37,15 +37,10 @@ def logThread():
 @app.route("/")
 def displayLog():
     global keyPass, logPass
-    # Run readDecryptSave to get the current status of the file
-    # readDecryptSave(path,copyPath,"data", keyPass, logPass, True)
-
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
     # init logs and listkeys
     logs = []
     logKeys = []
-    # password = b"password"
-    # logFile = readFromFileEnc(copyPath, logPass)
     logFile = readFromFileEnc(path, logPass)
 
     logLines = logFile.splitlines()
