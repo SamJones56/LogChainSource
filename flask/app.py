@@ -55,12 +55,31 @@ def displayLog():
 
     # Pagination
     page = int(request.args.get('page', 1))
-    per_page = 50 
+    # Get the value from the webpage
+    per_page = int(request.args.get('per_page', 50)) 
+    searchBar = request.args.get('searchBar','')
+    dateFrom = request.args.get('dateFrom','')
+    dateTo = request.args.get('dateTo','')
     offset = (page - 1) * per_page 
     items_pagination = logs[offset:offset+per_page] 
     total = len(logs) 
-    pagination = Pagination(page=page, per_page=per_page, offset=offset, total=total) 
-    return render_template('index.html', logs=items_pagination, keys=logKeys, pagination=pagination)
+    pagination = Pagination(page=page, 
+                            per_page=per_page, 
+                            offset=offset, 
+                            total=total, 
+                            href='?page={0}'+
+                            '&per_page=' + str(per_page)+ 
+                            '&searchBar='+searchBar+
+                            '&dateFrom='+dateFrom+
+                            '&dateTo='+dateTo) 
+    return render_template('index.html', 
+                           logs=items_pagination, 
+                           keys=logKeys, 
+                           pagination=pagination, 
+                           per_page = per_page, 
+                           searchBar=searchBar,
+                           dateTo=dateTo,
+                           dateFrom=dateFrom)
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
 if __name__ == "__main__" and webSelection:

@@ -31,15 +31,15 @@
         <div class="col-sm-12">
           <div class="log-pane-wrapper">
             <!-- Filter area -->
-            <div class="log-pane-filters" style="display:flex; gap:10px; align-items:center;">
+            <form method="get" class="log-pane-filters" style="display:flex; gap:10px; align-items:center;">
               <div style="flex:2;">
-                <input type="text" id="searchBar" class="form-control" placeholder="Search logs...">
+                <input type="text" id="searchBar" name="searchBar" class="form-control" placeholder="Search logs..." value="{{ searchBar }}" onchange="this.form.submit()">
               </div>
               <div style="flex:1;">
-                <input type="date" id="dateFrom" class="form-control" placeholder="From date">
+                <input type="date" id="dateFrom" name="dateFrom" class="form-control" placeholder="From date" value="{{ dateFrom }}" onchange="this.form.submit()">
               </div>
               <div style="flex:1;">
-                <input type="date" id="dateTo" class="form-control" placeholder="To date">
+                <input type="date" id="dateTo" name="dateTo" class="form-control" placeholder="To date" value="{{ dateTo }}" onchange="this.form.submit()">
               </div>
               <div style="flex:1;" id="filterNodeContainer">
                 <label style="margin-right: 8px;"><input type="checkbox" class="nodeCheckbox" value="genesis" checked> Genesis</label>
@@ -52,7 +52,10 @@
                   <option value="oldest" selected>Oldest First</option>
                 </select>
               </div>
-            </div>
+              <div style="flex:1;">
+                <input type="number" id="per_page" name="per_page" class="form-control" placeholder="Logs Per Page" min="1" value="{{ per_page }}"  onchange="this.form.submit()">
+              </div>
+            </form>
             <!-- Feed area -->
             <div class="log-pane-feed">
               {% for log in logs %}
