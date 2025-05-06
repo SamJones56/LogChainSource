@@ -66,6 +66,11 @@
                   <div class="card-footer">Node: {{ log.Node }}</div>
                 </div>
               {% endfor %}
+              <!-- Pagination -->
+              <div class="text-center" style="margin-top: 20px;">
+                {{ pagination.info }}
+                {{ pagination.links }}
+              </div>
             </div>
           </div>
         </div>

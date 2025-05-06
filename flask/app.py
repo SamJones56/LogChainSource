@@ -1,14 +1,12 @@
-# https://flask.palletsprojects.com/en/stable/quickstart/
 from flask import Flask, jsonify, request, render_template
+from flask_paginate import Pagination, get_page_args
 # To use methods Sam wrote : from [name.py] import [method_name] e.g. look below this line
 from logReader import readDecryptSave
 import json
 from cryptoUtils import readFromFileEnc
 from userInterface import getPassword, selectionValidator
 from colours import bcolors
-
-# USAGE
-# ./web.sh
+# https://flask.palletsprojects.com/en/stable/quickstart/
 
 # Where stream data decrypted is located
 path = "/logChain/app/streamDataDec.json"
@@ -25,7 +23,8 @@ webSelection = selectionValidator(webSelection)
 
 readDecryptSave(path,copyPath,"data", keyPass, logPass, webSelection)
 
-
+# Pagintation
+# https://www.reddit.com/r/flask/comments/xy4t9o/pagination_with_json/
 @app.route("/")
 def displayLog():
     global keyPass, logPass
@@ -45,7 +44,14 @@ def displayLog():
         logs.append(json.loads(line))
     logKeys = list(logs[0].keys())
 
-    return render_template('index.html', logs=logs, keys=logKeys)
+    # Pagination
+    page = int(request.args.get('page', 1))
+    per_page = 20 
+    offset = (page - 1) * per_page 
+    items_pagination = logs[offset:offset+per_page] 
+    total = len(logs) 
+    pagination = Pagination(page=page, per_page=per_page, offset=offset, total=total, css_framework='bootstrap3') 
+    return render_template('index.html', logs=items_pagination, keys=logKeys, pagination=pagination)
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
 if __name__ == "__main__" and webSelection:
