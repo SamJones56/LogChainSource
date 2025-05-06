@@ -17,7 +17,7 @@ copyPath = "/logChain/app/streamDataEnc.json"
 app = Flask(__name__)
 
 # Get data
-keyPass = getPassword(bcolors.WARNING + "Enter Password for File Encryption: " + bcolors.ENDC, True)
+keyPass = getPassword(bcolors.WARNING + "Enter Password for Decryption: " + bcolors.ENDC, True)
 logPass = getPassword(bcolors.WARNING + "Enter Password for Log Encryption: " + bcolors.ENDC, False)
 
 webSelection = input(bcolors.WARNING + f"Start Web Page: y/n\n" + bcolors.ENDC)
@@ -59,7 +59,7 @@ def displayLog():
     offset = (page - 1) * per_page 
     items_pagination = logs[offset:offset+per_page] 
     total = len(logs) 
-    pagination = Pagination(page=page, per_page=per_page, offset=offset, total=total, css_framework='bootstrap3') 
+    pagination = Pagination(page=page, per_page=per_page, offset=offset, total=total) 
     return render_template('index.html', logs=items_pagination, keys=logKeys, pagination=pagination)
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
