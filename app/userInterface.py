@@ -4,6 +4,7 @@ import socket
 from getpass import getpass
 # https://pypi.org/project/password-strength/
 from password_strength import PasswordPolicy
+import os
 
 # https://www.w3schools.com/python/ref_string_format.asp
 # https://docs.python.org/3/library/pathlib.html
@@ -85,6 +86,14 @@ policy = PasswordPolicy.from_names(
         numbers=2,
     )
 def getPassword(prompt, access):
+    # Skip password prompts in dev mode: set file+log encryption pwds as standard, close app, enter following (still inside genesis /app):
+    # DEV_NO_PROMPT=1
+    # export KEY_PASS="YourPassword1”
+    # export LOG_PASS="YourPassword2”
+    if os.environ.get("DEV_NO_PROMPT"):
+        # Return stored env var as bytes
+        return os.environ.get("KEY_PASS" if access else "LOG_PASS").encode()
+
     global policy
     rePrompt = bcolors.WARNING + "Please re-enter: " + bcolors.ENDC
     rules = {

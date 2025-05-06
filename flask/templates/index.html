@@ -1,32 +1,135 @@
 <!DOCTYPE html>
-<!-- https://www.w3schools.com/bootstrap/bootstrap_get_started.asp -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<html>
+<html lang="en">
 <head>
-    <title>LogChain</title>
+    <meta charset="UTF-8">
+    <title>LogChain Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-    <h1>Logs</h1>
-    <table class="table">
-        <tr>
-            <!-- https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed -->
-            {% for key in keys %}
-                <th>{{ key }}</th>
-            {% endfor %}
-        </tr>
-        {% for log in logs %}
-            <tr>
-                {% for key in keys %}
-                    <td> {{ log[key]}}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
+
+<div class="navbar">
+    <div class="nav-left">
+        <img src="/static/images/logo.png" alt="LogChain Logo">
+        <span class="brand">LogChain</span>
+    </div>
+    <div class="nav-links">
+        <a href="#" class="nav-button active">Dashboard</a>
+        <a href="#" class="nav-button">Logs</a>
+        <a href="#" class="nav-button">Alerts</a>
+        <a href="#" class="nav-button">Settings</a>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+      <!-- Log Pane -->
+      <div class="row log-pane">
+        <div class="col-sm-12">
+          <div class="log-pane-wrapper">
+            <!-- Filter area -->
+            <div class="log-pane-filters" style="display:flex; gap:10px; align-items:center;">
+              <div style="flex:2;">
+                <input type="text" id="searchBar" class="form-control" placeholder="Search logs...">
+              </div>
+              <div style="flex:1;">
+                <input type="date" id="dateFrom" class="form-control" placeholder="From date">
+              </div>
+              <div style="flex:1;">
+                <input type="date" id="dateTo" class="form-control" placeholder="To date">
+              </div>
+              <div style="flex:1;" id="filterNodeContainer">
+                <label style="margin-right: 8px;"><input type="checkbox" class="nodeCheckbox" value="genesis" checked> Genesis</label>
+                <label style="margin-right: 8px;"><input type="checkbox" class="nodeCheckbox" value="node1" checked> Node 1</label>
+                <label><input type="checkbox" class="nodeCheckbox" value="node2" checked> Node 2</label>
+              </div>
+              <div style="flex:1;">
+                <select id="sortOrder" class="form-control">
+                  <option value="newest">Newest First</option>
+                  <option value="oldest" selected>Oldest First</option>
+                </select>
+              </div>
+            </div>
+            <!-- Feed area -->
+            <div class="log-pane-feed">
+              {% for log in logs %}
+                <div class="log-entry log-card">
+                  <div class="entry-header card-header">{{ log.FileType|capitalize }} — {{ log.Time }}</div>
+                  <div class="card-body">
+                    {% for key, value in log.items() %}
+                      <div class="card-item"><strong>{{ key }}:</strong> {{ value }}</div>
+                    {% endfor %}
+                  </div>
+                  <div class="card-footer">Node: {{ log.Node }}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<script>
+  const searchInput = document.getElementById('searchBar');
+  const dateFromIn = document.getElementById('dateFrom');
+  const dateToIn   = document.getElementById('dateTo');
+  const sortSelect = document.getElementById('sortOrder');
+  const entries    = document.querySelectorAll('.log-entry');
+
+  // Helper to get checked node values. If no nodes checked, return empty list (no filter).
+  function getCheckedNodes() {
+    return Array.from(document.querySelectorAll('.nodeCheckbox'))
+      .filter(ch => ch.checked)
+      .map(ch => ch.value.toLowerCase());
+  }
+
+  function filterAndSortEntries() {
+    const q     = searchInput.value.trim().toLowerCase();
+    const from  = dateFromIn.value ? new Date(dateFromIn.value) : null;
+    const to    = dateToIn.value   ? new Date(dateToIn.value)   : null;
+    const nodeFilterList = getCheckedNodes();
+    const order = sortSelect.value;
+
+    // Filter
+    entries.forEach(entry => {
+      const text = entry.textContent.toLowerCase();
+      const header = entry.querySelector('.entry-header').textContent.toLowerCase();
+      const timeText = header.split('—')[1].trim();
+      const rowDate = new Date(timeText);
+      const nodeText = entry.querySelector('.card-footer').textContent.toLowerCase();
+
+      let show = true;
+      if (q && !text.includes(q)) show = false;
+      if (nodeFilterList.length > 0 && !nodeFilterList.some(n => nodeText.includes(n))) show = false;
+      if (from && rowDate < from) show = false;
+      if (to   && rowDate > to)   show = false;
+
+      entry.style.display = show ? '' : 'none';
+    });
+
+    // Sort visible entries
+    const feed = document.querySelector('.log-pane-feed');
+    const visible = Array.from(entries).filter(e => e.style.display !== 'none');
+    visible.sort((a, b) => {
+      const timeA = new Date(a.querySelector('.entry-header').textContent.split('—')[1].trim());
+      const timeB = new Date(b.querySelector('.entry-header').textContent.split('—')[1].trim());
+      return order === 'oldest' ? timeA - timeB : timeB - timeA;
+    });
+    visible.forEach(e => feed.appendChild(e));
+  }
+
+  // Listeners for live filtering
+  searchInput.addEventListener('input', filterAndSortEntries);
+  dateFromIn.addEventListener('change', filterAndSortEntries);
+  dateToIn.addEventListener('change', filterAndSortEntries);
+  sortSelect.addEventListener('change', filterAndSortEntries);
+  document.querySelectorAll('.nodeCheckbox').forEach(ch => ch.addEventListener('change', filterAndSortEntries));
+
+  // Initial filtering and sorting on load
+  filterAndSortEntries();
+</script>
+
 </body>
 </html>
