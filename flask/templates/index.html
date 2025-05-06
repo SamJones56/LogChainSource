@@ -31,18 +31,27 @@
         <div class="col-sm-12">
           <div class="log-pane-wrapper">
             <!-- Filter area -->
-            <div class="log-pane-filters">
-              <!-- Search and filter controls go here -->
-              <input type="text" id="searchBar" class="form-control" placeholder="Search logs...">
-              <select id="filterType" class="form-control">
-                <option value="">All Types</option>
-                <option value="alert">Alert</option>
-                <option value="audit">Audit</option>
-                <option value="error">Error</option>
-                <option value="info">Info</option>
-                <option value="debug">Debug</option>
-                <!-- Add more options as needed -->
-              </select>
+            <div class="log-pane-filters" style="display:flex; gap:10px; align-items:center;">
+              <div style="flex:2;">
+                <input type="text" id="searchBar" class="form-control" placeholder="Search logs...">
+              </div>
+              <div style="flex:1;">
+                <input type="date" id="dateFrom" class="form-control" placeholder="From date">
+              </div>
+              <div style="flex:1;">
+                <input type="date" id="dateTo" class="form-control" placeholder="To date">
+              </div>
+              <div style="flex:1;" id="filterNodeContainer">
+                <label style="margin-right: 8px;"><input type="checkbox" class="nodeCheckbox" value="genesis" checked> Genesis</label>
+                <label style="margin-right: 8px;"><input type="checkbox" class="nodeCheckbox" value="node1" checked> Node 1</label>
+                <label><input type="checkbox" class="nodeCheckbox" value="node2" checked> Node 2</label>
+              </div>
+              <div style="flex:1;">
+                <select id="sortOrder" class="form-control">
+                  <option value="newest">Newest First</option>
+                  <option value="oldest" selected>Oldest First</option>
+                </select>
+              </div>
             </div>
             <!-- Feed area -->
             <div class="log-pane-feed">
@@ -63,27 +72,63 @@
       </div>
 </div>
 <script>
-  // Cache DOM elements
   const searchInput = document.getElementById('searchBar');
-  const filterSelect = document.getElementById('filterType');
+  const dateFromIn = document.getElementById('dateFrom');
+  const dateToIn   = document.getElementById('dateTo');
+  const sortSelect = document.getElementById('sortOrder');
+  const entries    = document.querySelectorAll('.log-entry');
 
-  function filterEntries() {
-    const query = searchInput.value.trim().toLowerCase();
-    const typeFilter = filterSelect.value.trim().toLowerCase();
-    document.querySelectorAll('.log-entry').forEach(entry => {
-      const text = entry.textContent.toLowerCase();
-      // Match search query
-      const matchesSearch = !query || text.includes(query);
-      // Match type filter against FileType (which appears in header)
-      const headerText = entry.querySelector('.entry-header').textContent.toLowerCase();
-      const matchesType = !typeFilter || headerText.startsWith(typeFilter);
-      entry.style.display = (matchesSearch && matchesType) ? '' : 'none';
-    });
+  // Helper to get checked node values. If no nodes checked, return empty list (no filter).
+  function getCheckedNodes() {
+    return Array.from(document.querySelectorAll('.nodeCheckbox'))
+      .filter(ch => ch.checked)
+      .map(ch => ch.value.toLowerCase());
   }
 
-  // Attach events
-  searchInput.addEventListener('input', filterEntries);
-  filterSelect.addEventListener('change', filterEntries);
+  function filterAndSortEntries() {
+    const q     = searchInput.value.trim().toLowerCase();
+    const from  = dateFromIn.value ? new Date(dateFromIn.value) : null;
+    const to    = dateToIn.value   ? new Date(dateToIn.value)   : null;
+    const nodeFilterList = getCheckedNodes();
+    const order = sortSelect.value;
+
+    // Filter
+    entries.forEach(entry => {
+      const text = entry.textContent.toLowerCase();
+      const header = entry.querySelector('.entry-header').textContent.toLowerCase();
+      const timeText = header.split('—')[1].trim();
+      const rowDate = new Date(timeText);
+      const nodeText = entry.querySelector('.card-footer').textContent.toLowerCase();
+
+      let show = true;
+      if (q && !text.includes(q)) show = false;
+      if (nodeFilterList.length > 0 && !nodeFilterList.some(n => nodeText.includes(n))) show = false;
+      if (from && rowDate < from) show = false;
+      if (to   && rowDate > to)   show = false;
+
+      entry.style.display = show ? '' : 'none';
+    });
+
+    // Sort visible entries
+    const feed = document.querySelector('.log-pane-feed');
+    const visible = Array.from(entries).filter(e => e.style.display !== 'none');
+    visible.sort((a, b) => {
+      const timeA = new Date(a.querySelector('.entry-header').textContent.split('—')[1].trim());
+      const timeB = new Date(b.querySelector('.entry-header').textContent.split('—')[1].trim());
+      return order === 'oldest' ? timeA - timeB : timeB - timeA;
+    });
+    visible.forEach(e => feed.appendChild(e));
+  }
+
+  // Listeners for live filtering
+  searchInput.addEventListener('input', filterAndSortEntries);
+  dateFromIn.addEventListener('change', filterAndSortEntries);
+  dateToIn.addEventListener('change', filterAndSortEntries);
+  sortSelect.addEventListener('change', filterAndSortEntries);
+  document.querySelectorAll('.nodeCheckbox').forEach(ch => ch.addEventListener('change', filterAndSortEntries));
+
+  // Initial filtering and sorting on load
+  filterAndSortEntries();
 </script>
 
 </body>
