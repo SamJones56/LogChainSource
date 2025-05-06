@@ -84,7 +84,7 @@ input.form-control {
     border-radius: 5px;
     padding: 6px 12px;
 }
-
+/* Flex https://developer.mozilla.org/en-US/docs/Web/CSS/flex */
 .log-pane-wrapper {
     background-color: #2f3136;
     border-radius: 15px;
@@ -93,7 +93,8 @@ input.form-control {
     flex-direction: column;
     overflow: hidden;
     box-sizing: border-box;
-    height: 600px;
+    flex: 1 1 auto;
+    /* height: 600px; */
 }
 .log-pane-filters {
     margin-bottom: 15px;
@@ -102,7 +103,7 @@ input.form-control {
     flex: 0 0 auto;
 }
 .log-pane-feed {
-    scrollbar-width: none;       
+    scrollbar-width: 8px;       
     -ms-overflow-style: none;    
     flex: 1 1 auto;
     overflow-y: auto;
