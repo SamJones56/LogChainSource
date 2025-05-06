@@ -57,9 +57,12 @@
               </div>
             </form>
             <!-- Pagination style="margin-top: 20px; "-->
-            <div class="text-center" >
+            <div class="text-center" style="padding-bottom: 5px;">
               {{ pagination.info }}
               {{ pagination.links }}
+              <span name="add" style="background-color: #04bd0d; display: inline; padding: 10px; border-radius: 8px; font-size: 18px;">added</span>
+              <span name="ed" style="background-color: #de9c02; display: inline;padding: 10px; border-radius: 8px;font-size: 18px">edited</span>
+              <span name="rem" style="background-color: #bd1004; display: inline;padding: 10px; border-radius: 8px;font-size: 18px">removed</span>
             </div>
             <!-- Feed area https://getbootstrap.com/docs/4.0/components/card/#titles-text-and-links -->
             <div class="log-pane-feed">
