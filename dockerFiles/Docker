@@ -47,5 +47,6 @@ ENV PYTHONPATH="/logChain/app:$PYTHONPATH"
 RUN pip install quantcrypt && \
     pip install pycryptodome && \
     pip install Flask && \
+    pip install flask_paginate && \
 	pip install watchdog && \
     pip install password-strength

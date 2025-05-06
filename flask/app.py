@@ -3,6 +3,8 @@ from flask_paginate import Pagination, get_page_args
 # To use methods Sam wrote : from [name.py] import [method_name] e.g. look below this line
 from logReader import readDecryptSave
 import json
+import threading
+import time
 from cryptoUtils import readFromFileEnc
 from userInterface import getPassword, selectionValidator
 from colours import bcolors
@@ -21,7 +23,14 @@ logPass = getPassword(bcolors.WARNING + "Enter Password for Log Encryption: " + 
 webSelection = input(bcolors.WARNING + f"Start Web Page: y/n\n" + bcolors.ENDC)
 webSelection = selectionValidator(webSelection)
 
-readDecryptSave(path,copyPath,"data", keyPass, logPass, webSelection)
+if webSelection == False:
+    readDecryptSave(path,copyPath,"data", keyPass, logPass, webSelection)
+
+# https://stackoverflow.com/questions/34749331/running-a-background-thread-in-python
+def logThread():
+    while True:
+        readDecryptSave(path,copyPath,"data", keyPass, logPass, True)
+        time.sleep(5)
 
 # Pagintation
 # https://www.reddit.com/r/flask/comments/xy4t9o/pagination_with_json/
@@ -29,7 +38,7 @@ readDecryptSave(path,copyPath,"data", keyPass, logPass, webSelection)
 def displayLog():
     global keyPass, logPass
     # Run readDecryptSave to get the current status of the file
-    readDecryptSave(path,copyPath,"data", keyPass, logPass, True)
+    # readDecryptSave(path,copyPath,"data", keyPass, logPass, True)
 
     # https://medium.com/@junpyoo50/transforming-json-input-into-html-table-view-with-flask-and-jinja-a-step-by-step-guide-1d62e2fa49ed
     # init logs and listkeys
@@ -46,7 +55,7 @@ def displayLog():
 
     # Pagination
     page = int(request.args.get('page', 1))
-    per_page = 20 
+    per_page = 50 
     offset = (page - 1) * per_page 
     items_pagination = logs[offset:offset+per_page] 
     total = len(logs) 
@@ -55,6 +64,9 @@ def displayLog():
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
 if __name__ == "__main__" and webSelection:
+    # Start thread
+    updateThread = threading.Thread(target=logThread, daemon=True)
+    updateThread.start()
     app.run(host="0.0.0.0", port="8000")
 
 
