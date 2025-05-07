@@ -71,12 +71,17 @@ def dataConfig():
     streamName = streamValidator(supportedStreams, streamName)
     # Get the current system
     key = socket.gethostname()
+
+    # Uploal all
+    uploadAll = input(bcolors.WARNING + f"Upload Entire File: y/n\n" + bcolors.ENDC)
+    uploadAll = selectionValidator(uploadAll)
+
     # Selector for listener
     selection = input(bcolors.WARNING + f"Start File Listener: y/n\n" + bcolors.ENDC)
     selection = selectionValidator(selection)
     
     print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
-    return filePath, fileType, streamName, key, selection, copyPath
+    return filePath, fileType, streamName, key, selection, copyPath, uploadAll
 
 # https://stackoverflow.com/questions/9202224/getting-a-hidden-password-input
 # https://pypi.org/project/password-strength/
