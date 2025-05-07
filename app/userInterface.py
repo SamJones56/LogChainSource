@@ -80,7 +80,6 @@ def dataConfig():
     selection = input(bcolors.WARNING + f"Start File Listener: y/n\n" + bcolors.ENDC)
     selection = selectionValidator(selection)
     
-    print(bcolors.OKGREEN, filePath, fileType, streamName, key, bcolors.ENDC)
     return filePath, fileType, streamName, key, selection, copyPath, uploadAll
 
 # https://stackoverflow.com/questions/9202224/getting-a-hidden-password-input
