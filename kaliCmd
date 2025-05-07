@@ -1,5 +1,5 @@
 1. Make sure kali machine has necessary items
-apt update && apt install -y hydra nmap wordlists
+apt update && apt install -y hydra nmap wordlists net-tools
 
 2. Unzip word list
 gzip -d /usr/share/wordlists/rockyou.txt.gz
@@ -11,3 +11,7 @@ hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://node1
 test ssh root@localhost
 
 test
+
+
+For wireshark test
+apt install tcpdump
