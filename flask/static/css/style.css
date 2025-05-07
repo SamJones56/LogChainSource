@@ -167,3 +167,22 @@ input.form-control {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
+
+.icons{
+    margin-bottom: 8px;
+    margin-left: 8px;
+    background-color: #292928;
+    display: inline-flex;
+    max-width: fit-content;
+    padding: 6px;
+    gap: 5px;
+}
+
+.txt{
+    font-size: 20px;
+    display: inline-flex; 
+    padding: 3px; 
+    border-radius: 4px; 
+    font-size: 18px;
+    align-items: center;
+}

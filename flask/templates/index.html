@@ -60,9 +60,12 @@
             <div class="text-center" style="padding-bottom: 5px;">
               {{ pagination.info }}
               {{ pagination.links }}
-              <span name="add" style="background-color: #04bd0d; display: inline; padding: 10px; border-radius: 8px; font-size: 18px;">added</span>
-              <span name="ed" style="background-color: #de9c02; display: inline;padding: 10px; border-radius: 8px;font-size: 18px">edited</span>
-              <span name="rem" style="background-color: #bd1004; display: inline;padding: 10px; border-radius: 8px;font-size: 18px">removed</span>
+            </div>
+            <div class="icons">
+              <span class="txt" style="background-color: #292928;">Legend</span>
+              <span class="txt" name="add" style="background-color: #04bd0d;">added</span>
+              <span class="txt" name="ed" style="background-color: #de9c02;">edited</span>
+              <span class="txt" name="rem" style="background-color: #bd1004;">removed</span>
             </div>
             <!-- Feed area https://getbootstrap.com/docs/4.0/components/card/#titles-text-and-links -->
             <div class="log-pane-feed">
@@ -130,9 +133,6 @@
 
       // Set backgound - https://stackoverflow.com/questions/60559793/changing-the-background-color-with-click-using-queryselector-js
       // https://www.w3schools.com/jsref/jsref_includes_array.asp
-      // if(text.includes(added)){ addCircle(entry, "green")}
-      // if(text.includes(removed)){ addCircle(entry, "orange")}
-      // if(text.includes(deletion)){ addCircle(entry, "red")}
       if(text.includes(added)){ headerObject.style.backgroundColor="#04bd0d";}
       if(text.includes(removed)){ headerObject.style.backgroundColor="#de9c02";}
       if(text.includes(deletion)){ headerObject.style.backgroundColor="#bd1004";}
