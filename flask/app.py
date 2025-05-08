@@ -32,6 +32,18 @@ def logThread():
         readDecryptSave(path,copyPath,"data", keyPass, logPass, True)
         time.sleep(5)
 
+
+def oldNew(new, logLines):
+    logs = []
+    if(new):
+        for line in logLines:
+            logs.append(json.loads(line))
+    else:
+        for line in reversed(logLines):
+            logs.append(json.loads(line))
+    return logs
+
+
 # Pagintation
 # https://www.reddit.com/r/flask/comments/xy4t9o/pagination_with_json/
 @app.route("/")
@@ -42,10 +54,20 @@ def displayLog():
     logs = []
     logKeys = []
     logFile = readFromFileEnc(path, logPass)
+    
 
+    # https://www.geeksforgeeks.org/backward-iteration-in-python/
     logLines = logFile.splitlines()
-    for line in logLines:
-        logs.append(json.loads(line))
+    # for line in reversed(logLines):
+    #     logs.append(json.loads(line))
+    # Old or new selector
+    sortOrder = request.args.get('sortOrder','')
+    if sortOrder == 'newest':
+        new = True
+    else:
+        new = False
+
+    logs = oldNew(new, logLines)
     logKeys = list(logs[0].keys())
 
     # Pagination
@@ -74,7 +96,8 @@ def displayLog():
                            per_page = per_page, 
                            searchBar=searchBar,
                            dateTo=dateTo,
-                           dateFrom=dateFrom)
+                           dateFrom=dateFrom,
+                           new=new)
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
 if __name__ == "__main__" and webSelection:

@@ -57,9 +57,10 @@
             </div>
             <div class="icons">
               <span class="txt" style="background-color: #292928;">Legend</span>
-              <span class="txt" name="add" style="background-color: #04bd0d;">added</span>
-              <span class="txt" name="ed" style="background-color: #de9c02;">edited</span>
-              <span class="txt" name="rem" style="background-color: #bd1004;">removed</span>
+              <span class="txt" name="add" style="background-color: #04bd0d;">Added</span>
+              <span class="txt" name="ed" style="background-color: #eed202;">Edited</span>
+              <span class="txt" name="rem" style="background-color: #FF5F15;">Removed</span>
+              <span class="txt" name="del" style="background-color: #bd1004;">Deleted</span>
             </div>
             <!-- Feed area https://getbootstrap.com/docs/4.0/components/card/#titles-text-and-links -->
             <div class="log-pane-feed">
@@ -127,9 +128,24 @@
 
       // Set backgound - https://stackoverflow.com/questions/60559793/changing-the-background-color-with-click-using-queryselector-js
       // https://www.w3schools.com/jsref/jsref_includes_array.asp
-      if(text.includes(added)){ headerObject.style.backgroundColor="#04bd0d";}
-      if(text.includes(removed)){ headerObject.style.backgroundColor="#de9c02";}
-      if(text.includes(deletion)){ headerObject.style.backgroundColor="#bd1004";}
+      // File deleted
+      if(text.includes(deletion)){
+        headerObject.style.backgroundColor="#bd1004";
+      }
+      // Line removed
+      else if(text.includes(removed) && !text.includes(added)){
+        headerObject.style.backgroundColor="#FF5F15";
+      }
+      // Line edited
+      else if(text.includes(added) && text.includes(removed)){
+        headerObject.style.backgroundColor="#eed202"
+      }
+      // Line added
+      else if(text.includes(added)){
+        headerObject.style.backgroundColor="#04bd0d";
+      }
+      
+      
       entry.style.display = show ? '' : 'none';
     });
     // https://www.w3schools.com/howto/howto_css_circles.asp
