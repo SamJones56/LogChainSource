@@ -33,17 +33,6 @@ def logThread():
         time.sleep(5)
 
 
-def oldNew(new, logLines):
-    logs = []
-    if(new):
-        for line in logLines:
-            logs.append(json.loads(line))
-    else:
-        for line in reversed(logLines):
-            logs.append(json.loads(line))
-    return logs
-
-
 # Pagintation
 # https://www.reddit.com/r/flask/comments/xy4t9o/pagination_with_json/
 @app.route("/")
@@ -63,11 +52,12 @@ def displayLog():
     # Old or new selector
     sortOrder = request.args.get('sortOrder','')
     if sortOrder == 'newest':
-        new = True
+        for line in logLines:
+            logs.append(json.loads(line))
     else:
-        new = False
+        for line in reversed(logLines):
+            logs.append(json.loads(line))
 
-    logs = oldNew(new, logLines)
     logKeys = list(logs[0].keys())
 
     # Pagination
@@ -88,7 +78,8 @@ def displayLog():
                             '&per_page=' + str(per_page)+ 
                             '&searchBar='+searchBar+
                             '&dateFrom='+dateFrom+
-                            '&dateTo='+dateTo) 
+                            '&dateTo='+dateTo+
+                            '&sortOrder='+sortOrder) 
     return render_template('index.html', 
                            logs=items_pagination, 
                            keys=logKeys, 
@@ -97,7 +88,7 @@ def displayLog():
                            searchBar=searchBar,
                            dateTo=dateTo,
                            dateFrom=dateFrom,
-                           new=new)
+                           sortOrder=sortOrder)
 
 # https://stackoverflow.com/questions/29882642/how-to-run-a-flask-application
 if __name__ == "__main__" and webSelection:

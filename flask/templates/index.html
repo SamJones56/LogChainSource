@@ -41,9 +41,9 @@
                 <label><input type="checkbox" class="nodeCheckbox" value="node2" checked> Node 2</label>
               </div>
               <div style="flex:1;">
-                <select id="sortOrder" class="form-control">
-                  <option value="newest" selected>Newest First</option>
-                  <option value="oldest" >Oldest First</option>
+                <select id="sortOrder" name="sortOrder" class="form-control" onchange="this.form.submit()">
+                  <option value="newest"{% if sortOrder == "newest"%} selected {% endif %}>Newest First</option>
+                  <option value="oldest"{% if sortOrder == "oldest"%} selected {% endif %}>Oldest First</option>
                 </select>
               </div>
               <div style="flex:1;">
