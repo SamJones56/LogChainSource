@@ -1,7 +1,7 @@
 # https://medium.com/@habibsemouma/setting-up-metasploitable2-and-kali-in-docker-for-pentesting-6b71a089c4a2
 
 # Set ssh password
-echo 'root:password123' | chpasswd
+echo 'root:password1' | chpasswd
 # allow root login
 sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
